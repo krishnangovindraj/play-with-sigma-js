@@ -3,16 +3,23 @@
   "version": "1.0.0",
   "main": "script.ts",
   "scripts": {
-    "test": "echo \"what\""
+    "build": "./node_modules/.bin/esbuild script.ts --bundle --outfile=script.js"
   },
+  "type": "module",
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@types/node": "^22.13.11",
     "chroma-js": "^3.1.2",
+    "commonjs": "^0.0.1",
     "graphology": "^0.26.0",
     "graphology-layout-force": "^0.2.4",
     "sigma": "^3.0.1",
     "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@types/chroma-js": "^3.1.1",
+    "esbuild": "0.25.1"
   }
 }

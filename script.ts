@@ -11,7 +11,7 @@ type VisualisationContext = {
   renderer: Sigma,
 };
 
-export function getGraph() /*: Graph*/ {
+export function getGraph() : Graph {
     const graph = new Graph();
     graph.addNode("n1", { x: 0, y: 0, size: 10, color: chroma.random().hex() });
     graph.addNode("n2", { x: -5, y: 5, size: 10, color: chroma.random().hex() });
@@ -24,9 +24,9 @@ export function getGraph() /*: Graph*/ {
     return graph;
 };
 
-export function draw_graph_on(graph, container_id) :VisualisationContext {
+export function drawGraphOn(graph: Graph, container_id: string) : VisualisationContext {
   // Retrieve the html document for sigma container
-  let container = document.getElementById(container_id)/* as HTMLElement*/;
+  let container = document.getElementById(container_id) as HTMLElement;
 
   // Create the spring layout and start it
   let layout = new ForceSupervisor(graph, { isNodeFixed: (_, attr) => attr.highlighted });
@@ -85,9 +85,12 @@ export function draw_graph_on(graph, container_id) :VisualisationContext {
   
 return {
   layout, renderer,  graph, 
-}
-
-  return () => {
-    renderer.kill();
-  };
 };
+
+  // return () => {
+  //   renderer.kill();
+  // };
+};
+
+window.drawGraphOn = drawGraphOn;
+window.getGraph = getGraph;
