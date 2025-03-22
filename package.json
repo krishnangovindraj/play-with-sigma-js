@@ -1,0 +1,18 @@
+{
+  "name": "sigmajs-playground",
+  "version": "1.0.0",
+  "main": "script.ts",
+  "scripts": {
+    "test": "echo \"what\""
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "chroma-js": "^3.1.2",
+    "graphology": "^0.26.0",
+    "graphology-layout-force": "^0.2.4",
+    "sigma": "^3.0.1",
+    "uuid": "^11.1.0"
+  }
+}
