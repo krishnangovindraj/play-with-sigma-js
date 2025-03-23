@@ -128,12 +128,8 @@ interface ITypeDBToGraphology {
   put_relation(graph: Graph, answer_index:number, vertex: ObjectVertex): void;
   
   // Edges
-  // put_has(graph: Graph,  answer_index:number, owner: ObjectVertex, attribute: AttributeVertex): void;
-  // put_links(graph: Graph,  answer_index:number, relation: ObjectVertex, player: ObjectVertex, role: TypeVertex): void;
-
-  // TOOD: Revert, possibly. 
-  put_has(graph: Graph,  answer_index:number, owner: string, attribute: string): void;
-  put_links(graph: Graph,  answer_index:number, relation: string, player: string, role: string): void;
+  put_has(graph: Graph,  answer_index:number, owner: ObjectVertex, attribute: AttributeVertex): void;
+  put_links(graph: Graph,  answer_index:number, relation: ObjectVertex, player: ObjectVertex, role: TypeVertex): void;
 }
 
 interface TypeDBResult {
@@ -153,40 +149,60 @@ function buildGraphFromTypeDB(result: TypeDBResult , builder: ITypeDBToGrapholog
 // EXPORTS //
 /////////////
 
+window.createVisualisationContext = createVisualisationContext;
+
+// TODO: I imagine the right way to do this is to separate this into a module, and have a script in the page that imports this?
+window.buildGraphFromTypeDB = buildGraphFromTypeDB;
+
+
+
+///////////////////////////////////////
+// Temporary functions to play with  //
+///////////////////////////////////////
+
+
 // Temporarily here for me to test
 /* It's too simple but it's incremental
 Expects:
   { vertices: Array<vertex>, edges: Array<edge> }
 where:
   * vertex: { kind: (entity|relation|attribute), vertex: VertexAny }
-  * edge: { kind: (has|links), from: VertexAny, to: VertexAny  } 
+  * edge: { kind: (has|links), from: VertexAny.IID, to: VertexAny.IID [, role: VertexAny.IID]  }  
+  *   The role bit is a bit rough.
  */
 
-type ExpectedJSONSchema = {
-  vertices: Array<{ kind: string, vertex: VertexAny }>;
+type JSONGraph = {
+  vertices: Array<JSONVertex>;
   // edges: Array<{ kind: string, edge: { from: VertexAny, to: VertexAny, role: TypeVertex| null }}>;
-  edges: Array<{ kind: string, edge: { from: string, to: string, role: string| null }}>;
+  edges: Array<JSONEdge>;
 }
+type JSONVertex = { kind: string, vertex: VertexAny };
+type JSONEdge = { kind: string, edge: { from: string, to: string, role: string| null }};
+
+
 
 export function drawGraphFromJson(context: VisualisationContext, json_string: string) : Graph {
-  let as_json = JSON.parse(json_string) as ExpectedJSONSchema;
+  let as_json = JSON.parse(json_string) as JSONGraph;
   let converter = new TestConverter();
   let graph = context.graph;
   graph.clear();
+  let vertices_by_id : {[index: string]: JSONVertex }= {};
   as_json.vertices.forEach(entry => {
-    console.log("Add vertex: " );
-    console.log(entry);
+    
     switch (entry.kind) {
       case "entity": {
         converter.put_entity(graph, 0, entry.vertex as ObjectVertex);
+        vertices_by_id[(entry.vertex as ObjectVertex).iid] = entry;
         break;
       }
       case "attribute" : {
         converter.put_attribute(graph, 0, entry.vertex as AttributeVertex);
+        vertices_by_id[(entry.vertex as AttributeVertex).iid] = entry;
         break;
       }
       case "relation" : {
         converter.put_relation(graph, 0, entry.vertex as ObjectVertex);
+        vertices_by_id[(entry.vertex as ObjectVertex).iid] = entry;
         break;
       }
       default : {
@@ -194,17 +210,19 @@ export function drawGraphFromJson(context: VisualisationContext, json_string: st
       }
     }
   });
-  as_json.edges.forEach(entry => {
-    let edge = entry.edge;
+  as_json.edges.map(entry => {
+    let from = vertices_by_id[entry.edge.from].vertex;
+    let to = vertices_by_id[entry.edge.to].vertex;
+    let role = entry.edge.role == null ? vertices_by_id[entry.edge.to].vertex : null;
     switch (entry.kind) {
       case "has": {
         // converter.put_has(graph, 0, edge.from as ObjectVertex, edge.to as AttributeVertex);
-        converter.put_has(graph, 0, edge.from, edge.to);
+        converter.put_has(graph, 0, from, to);
         break;
       }
       case "links" : {
         // converter.put_links(graph, 0, edge.from as ObjectVertex, edge.to as ObjectVertex, edge.role as TypeVertex);
-        converter.put_links(graph, 0, edge.from, edge.to, edge.role as string);
+        converter.put_links(graph, 0, from, to, role);
         break;
       }
       default : {
@@ -214,6 +232,8 @@ export function drawGraphFromJson(context: VisualisationContext, json_string: st
   });
   return graph;
 };
+
+
 
 class TestConverter implements ITypeDBToGraphology {
       // Vertices
@@ -234,25 +254,21 @@ class TestConverter implements ITypeDBToGraphology {
   }
   
   // Edges
-  // put_has(graph: Graph,  answer_index:number, owner: ObjectVertex, attribute: AttributeVertex): void {
-  //   graph.addDirectedEdge(owner.iid, attribute.iid, { label: "has", type: "arrow", size: 10 });
-  // }
-
-  // put_links(graph: Graph,  answer_index:number, relation: ObjectVertex, player: ObjectVertex, role: TypeVertex): void {
-  //   graph.addDirectedEdge(relation.iid, player.iid, { label: role.label, type: "arrow", size: 10 });
-  // }
-  // Simpler: Accept IIDs directly
-  put_has(graph: Graph,  answer_index:number, owner: string, attribute: string): void {
-    graph.addDirectedEdge(owner, attribute, { label: "has", type: "arrow", size: 10});
+  put_has(graph: Graph,  answer_index:number, owner: ObjectVertex, attribute: AttributeVertex): void {
+    graph.addDirectedEdge(owner.iid, attribute.iid, { label: "has", type: "arrow", size: 10 });
   }
 
-  put_links(graph: Graph,  answer_index:number, relation: string, player: string, role: string): void {
-    graph.addDirectedEdge(relation, player, { label: role, type: "arrow", size: 10 });
+  put_links(graph: Graph,  answer_index:number, relation: ObjectVertex, player: ObjectVertex, role: TypeVertex): void {
+    graph.addDirectedEdge(relation.iid, player.iid, { label: role.label, type: "arrow", size: 10 });
   }
+  // // Simpler: Accept IIDs directly
+  // put_has(graph: Graph,  answer_index:number, owner: string, attribute: string): void {
+  //   graph.addDirectedEdge(owner, attribute, { label: "has", type: "arrow", size: 10});
+  // }
+
+  // put_links(graph: Graph,  answer_index:number, relation: string, player: string, role: string): void {
+  //   graph.addDirectedEdge(relation, player, { label: role, type: "arrow", size: 10 });
+  // }
 }
 
 window.drawGraphFromJson = drawGraphFromJson;
-window.createVisualisationContext = createVisualisationContext;
-
-// TODO: I imagine the right way to do this is to separate this into a module, and have a script in the page that imports this?
-window.buildGraphFromTypeDB = buildGraphFromTypeDB;
