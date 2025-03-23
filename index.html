@@ -5,7 +5,14 @@
     <title>Play with sigma js</title>
     <script src="typedb-visualisation.js" type="text/javascript"></script>
     <script>
-        window.onload= (()=> { visualisationContext = createVisualisationContext('sigma-container'); });
+        const custom_force_supervisor_settings = {
+            attraction: 0.01,
+            repulsion: 0.001,
+            gravity: 0.0001,
+            inertia: 0.6,
+            maxMove: 1,
+        };
+        window.onload= (()=> { visualisationContext = createVisualisationContext('sigma-container', custom_force_supervisor_settings); });
     </script>
 </head>
 

@@ -178,20 +178,14 @@ class TestConverter implements ITypeDBToGraphology {
   
   // Edges
   put_has(graph: Graph,  answer_index:number, owner: ObjectVertex, attribute: AttributeVertex): void {
-    graph.addDirectedEdge(owner.iid, attribute.iid, { label: "has", type: "arrow", size: 10 });
+    graph.addEdge(owner.iid, attribute.iid, { label: "has", size: 10 });
+    // graph.addDirectedEdge(owner.iid, attribute.iid, { label: "has", type: "arrow", size: 10 });
   }
 
   put_links(graph: Graph,  answer_index:number, relation: ObjectVertex, player: ObjectVertex, role: TypeVertex): void {
-    graph.addDirectedEdge(relation.iid, player.iid, { label: role.label, type: "arrow", size: 10 });
+    graph.addEdge(relation.iid, player.iid, { label: role.label, size: 10 });
+    // graph.addDirectedEdge(relation.iid, player.iid, { label: role.label, type: "arrow", size: 10 });
   }
-  // // Simpler: Accept IIDs directly
-  // put_has(graph: Graph,  answer_index:number, owner: string, attribute: string): void {
-  //   graph.addDirectedEdge(owner, attribute, { label: "has", type: "arrow", size: 10});
-  // }
-
-  // put_links(graph: Graph,  answer_index:number, relation: string, player: string, role: string): void {
-  //   graph.addDirectedEdge(relation, player, { label: role, type: "arrow", size: 10 });
-  // }
 }
 
 window.drawGraphFromJson = drawGraphFromJson;
