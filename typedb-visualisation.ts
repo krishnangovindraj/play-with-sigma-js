@@ -178,13 +178,11 @@ class TestConverter implements ITypeDBToGraphology {
   
   // Edges
   put_has(graph: Graph,  answer_index:number, owner: ObjectVertex, attribute: AttributeVertex): void {
-    graph.addEdge(owner.iid, attribute.iid, { label: "has", size: 10 });
-    // graph.addDirectedEdge(owner.iid, attribute.iid, { label: "has", type: "arrow", size: 10 });
+    graph.addDirectedEdge(owner.iid, attribute.iid, { label: "has", type: "arrow", size: 10 });
   }
 
   put_links(graph: Graph,  answer_index:number, relation: ObjectVertex, player: ObjectVertex, role: TypeVertex): void {
-    graph.addEdge(relation.iid, player.iid, { label: role.label, size: 10 });
-    // graph.addDirectedEdge(relation.iid, player.iid, { label: role.label, type: "arrow", size: 10 });
+    graph.addDirectedEdge(relation.iid, player.iid, { label: role.label, type: "arrow", size: 10 });
   }
 }
 
