@@ -1,9 +1,9 @@
 {
   "name": "sigmajs-playground",
   "version": "1.0.0",
-  "main": "script.ts",
+  "main": "lib.ts",
   "scripts": {
-    "build": "./node_modules/.bin/esbuild script.ts --bundle --outfile=script.js"
+    "build": "./node_modules/.bin/esbuild typedb-visualisation.ts --bundle --outfile=typedb-visualisation.js"
   },
   "type": "module",
   "author": "",
