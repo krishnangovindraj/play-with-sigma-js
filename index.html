@@ -21,9 +21,14 @@
 
     </div>
     <div id="input">
-        <button onclick="drawGraphFromJson(visualisationContext, document.getElementById('graph-json').value)">draw</button>
+        <div id="buttons">
+            <button onclick="drawGraphFromJson(visualisationContext, document.getElementById('graph-json').value)">draw</button>
+            <button onclick="visualisationContext.layout.stop()">freeze</button>
+            <button onclick="visualisationContext.layout.start()">unfreeze</button>
+        </div>
+        <textarea id='graph-json' style="width:100%;height: 400px" placeholder='See source for example'></textarea>
     </div>
-    <textarea id='graph-json' style="width:100%;height: 400px" placeholder='See source for example'></textarea>
+
     <!--
     {
         "vertices": [ 
