@@ -9,25 +9,13 @@ export type VisualisationContext = {
   renderer: Sigma,
 };
 
-// From: https://graphology.github.io/standard-library/layout-force.html
+// For ForceLayoutSettings, see: https://graphology.github.io/standard-library/layout-force.html
 //   attraction ?number 0.0005: importance of the attraction force, that attracts each pair of connected nodes like elastics.
 //   repulsion ?number 0.1: importance of the repulsion force, that attracts each pair of nodes like magnets.
 //   gravity ?number 0.0001: importance of the gravity force, that attracts all nodes to the center.
 //   inertia ?number 0.6: percentage of a node vector displacement that is preserved at each step. 0 means no inertia, 1 means no friction.
 //   maxMove ?number 200: Maximum length a node can travel at each step, in pixel.
-const FORCE_SUPERVISOR_SETTINGS = {
-    attraction: 0.0005,
-    repulsion: 0.1,
-    gravity: 0.0001,
-    inertia: 0.6,
-    maxMove: 200,
-};
-
 export function createVisualisationContext(container_id: string, force_supervisor_settings: ForceLayoutSettings | undefined) : VisualisationContext {
-    if (force_supervisor_settings == null) {
-        force_supervisor_settings = FORCE_SUPERVISOR_SETTINGS;
-    }
-
   // Retrieve the html document for sigma container
   let graph = new Graph();
   let container = document.getElementById(container_id) as HTMLElement;

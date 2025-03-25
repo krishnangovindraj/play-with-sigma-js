@@ -162,18 +162,18 @@ class TestConverter implements ITypeDBToGraphology {
       // Vertices
   put_attribute(graph: Graph, answer_index:number, vertex: AttributeVertex): void {
     let label = vertex.type.label + ":" + vertex.value;
-    graph.addNode(vertex.iid, { label: label, color: chroma('green').hex(), size: 10, x: Math.random(), y: Math.random() });
+    graph.addNode(vertex.iid, { label: label, color: chroma('green').hex(), size: 40, x: Math.random(), y: Math.random() });
   }
 
   put_entity(graph: Graph, answer_index:number, vertex: ObjectVertex): void {
     let label = vertex.type.label + ":" + vertex.iid;
-    graph.addNode(vertex.iid, { label: label, color: chroma('pink').hex(), size: 10, x: Math.random(), y: Math.random() });
+    graph.addNode(vertex.iid, { label: label, color: chroma('pink').hex(), size: 40, x: Math.random(), y: Math.random() });
     // graph.addNode("n2", { x: -5, y: 5, size: 10, color:  });
   }
 
   put_relation(graph: Graph, answer_index:number, vertex: ObjectVertex): void {
     let label = vertex.type.label + ":" + vertex.iid;
-    graph.addNode(vertex.iid, { label: label, color: chroma('yellow').hex(), size: 10, x: Math.random(), y: Math.random() });
+    graph.addNode(vertex.iid, { label: label, color: chroma('yellow').hex(), size: 40, x: Math.random(), y: Math.random() });
   }
   
   // Edges
