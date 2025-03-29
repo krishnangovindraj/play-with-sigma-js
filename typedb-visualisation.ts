@@ -2,8 +2,8 @@ import chroma from "chroma-js";
 import { v4 as uuid } from "uuid";
 import Graph from "graphology";
 import { createVisualisationContext, VisualisationContext } from "./lib/visualisation";
-import { VertexAny, TypeVertex, ObjectVertex, AttributeVertex, ITypeDBToGraphology } from "./lib/converter";
-
+import { VertexAny, TypeVertex, ObjectVertex, AttributeVertex, ITypeDBToGraphology, buildGraphFromTypeDB } from "./lib/converter";
+import *  as client from "./temp_communication";
 
 /////////////
 // EXPORTS //
@@ -125,3 +125,4 @@ class TestConverter implements ITypeDBToGraphology {
 }
 
 window.drawGraphFromJson = drawGraphFromJson;
+window.core_driver = client.core_driver;
