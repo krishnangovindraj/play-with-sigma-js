@@ -1,71 +1,8 @@
 import chroma from "chroma-js";
 import { v4 as uuid } from "uuid";
 import Graph from "graphology";
-import { createVisualisationContext } from "./lib/visualisation";
-
-//////////////////////////
-// TypeDB -> Graphology //
-//////////////////////////
-type TypeVertex = {
-  iid: string,
-  label: string,
-}
-
-type ObjectVertex = {
-  iid: string,
-  type: TypeVertex,
-}
-
-type AttributeVertex = {
-  iid: string,
-  type: TypeVertex,
-  value: any,
-}
-
-type ValueVertex = {
-  value: any,
-}
-
-type VertexAny = TypeVertex | ObjectVertex | AttributeVertex | ValueVertex;
-
-enum Edge {
-  Has,
-  Links,
-}
-
-type EdgeParameter = TypeVertex | number;
-
-
-/**
- * You will majorly need:
- *  graph.addNode(id, attributes)
- *  graph.addNode(from, to,  attributes)
- * See: https://www.sigmajs.org/docs/advanced/data/ for attributes
- */
-interface ITypeDBToGraphology {
-  // TODO: Functional vertices & edges like expressions, comparisons & function calls
-
-  // Vertices
-  put_attribute(graph: Graph, answer_index:number, vertex: AttributeVertex): void;
-  put_entity(graph: Graph, answer_index:number, vertex: ObjectVertex): void;
-  put_relation(graph: Graph, answer_index:number, vertex: ObjectVertex): void;
-  
-  // Edges
-  put_has(graph: Graph,  answer_index:number, owner: ObjectVertex, attribute: AttributeVertex): void;
-  put_links(graph: Graph,  answer_index:number, relation: ObjectVertex, player: ObjectVertex, role: TypeVertex): void;
-}
-
-interface TypeDBResult {
-  vertices: Array<VertexAny>,
-  edges: Array<Array<any>>,  
-}
-
-function buildGraphFromTypeDB(result: TypeDBResult , builder: ITypeDBToGraphology) : Graph {
-  var graph = new Graph();
-  // TODO: See the getGraph function for now
-  return graph;
-}
-
+import { createVisualisationContext, VisualisationContext } from "./lib/visualisation";
+import { VertexAny, TypeVertex, ObjectVertex, AttributeVertex, ITypeDBToGraphology } from "./lib/converter";
 
 
 /////////////
@@ -82,6 +19,7 @@ window.buildGraphFromTypeDB = buildGraphFromTypeDB;
 ///////////////////////////////////////
 // Temporary functions to play with  //
 ///////////////////////////////////////
+
 
 
 // Temporarily here for me to test

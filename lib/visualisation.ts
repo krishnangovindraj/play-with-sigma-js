@@ -84,3 +84,14 @@ export function createVisualisationContext(container_id: string, force_superviso
 };
 
 
+export interface TypeDBResult {
+  vertices: Array<VertexAny>,
+  edges: Array<Array<any>>,  
+}
+
+export function buildGraphFromTypeDB(result: TypeDBResult , builder: ITypeDBToGraphology) : Graph {
+  var graph = new Graph();
+  // TODO: See the getGraph function for now
+  return graph;
+}
+
