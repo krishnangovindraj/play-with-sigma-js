@@ -90,23 +90,26 @@
         <!-- The graph will be draw in here. Leave empty -->
     </div>
     <div id="status-div" style="text-align: center; border: 2px solid black;"><b>Status: </b><span id="status-message">(TODO)</span></div>
-    <div id="login-db-admin-div">
-        <span id="login-span" style="float: left;">
+    <table id="login-db-admin-div" style="width: 100%;">
+        <tr>
+        <td id="login-span">
             <form id="login-form" onsubmit="doSignin(this); return false">
                 <input type="text" name="address" placeholder="address" value="http://127.0.0.1:8000"/>
                 <input type="text" name="username"  placeholder="username" value="admin"/>
                 <input type="password" name="password" placeholder="password" value="password"/>
                 <input type="submit" value="login"/>
             </form>
-        </span>
-        <span id="db-admin-span" style="float: right;">
+        </td>
+        <td id="db-admin-span" style="text-align: right;">
             <button onclick="doCreateDatabase()">create</button> or <button onclick="doDeleteDatabase()">delete</button> database: <input id="input-database-name" type="text" value="" placeholder="database"/>
-        </span>
+        </td>
+        </tr>
+    </table>
     </div>
     <div id="input">
         <form id="query-or-graph-form" onsubmit="doRunQuery(this); return false">
             <div id="buttons">
-                <span id="input-buttons-left" style="float: left;">
+                <span id="input-buttons-left">
                     Run query as:
                     <input type="submit" onclick="this.form.txType=this.value;" value="schema"/>
                     <input type="submit" onclick="this.form.txType=this.value;" value="write"/>
