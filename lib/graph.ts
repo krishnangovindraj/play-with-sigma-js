@@ -81,10 +81,11 @@ export type VertexUnavailable = { kind: UnavailableKind, iid: string };
 export type EdgeParameter = TypeVertex | number | null;
 
 export type LogicalVertex = VertexAny | VertexUnavailable;
-export type LogicalEdge = { type: LogicalEdgeType, from: LogicalVertex, to: LogicalVertex };
+export type LogicalVertexID = string;
+export type LogicalEdge = { type: LogicalEdgeType, from: LogicalVertexID, to: LogicalVertexID };
 export type LogicalEdgeType = { kind: EdgeKind, param: EdgeParameter };
 
-export type VertexMap = { [id: string]: LogicalVertex };
+export type VertexMap = Map<LogicalVertexID, LogicalVertex>;
 
 export type LogicalGraph = {
   vertices: Array<VertexMap>;
