@@ -34,38 +34,22 @@ export class TypeDBHttpDriver {
     }
 
 
-    async createDatabase(database: string) : Promise<boolean> {
+    async createDatabase(database: string) : Promise<TypeDBResult<boolean>> {
         let response = await this.httpPost("/v1/databases/" + database, undefined);
         if (response.ok) {
-            return true;
+            return {ok : true} as TypeDBResult<boolean>;
         } else {
-            alert("Error. Check log");
-            console.log(response);
-            return false;
+            return { err: await response.text() } as TypeDBResult<boolean>;;
         }
         
     }
 
-    async queryRead(database: string, query: string) : Promise<any> {
-        return this.runQuery(database, query, "read");
-    }
-
-    async queryWrite(database: string, query: string) : Promise<any> {
-        return this.runQuery(database, query, "write");
-    }
-
-    async querySchema(database: string, query: string) : Promise<any> {
-        return this.runQuery(database, query, "write");
-    }
-
-    async runQuery(database: string, query: string, transactionType: string) : Promise<any> {
+    async runQuery(database: string, query: string, transactionType: string) : Promise<TypeDBResult<any>> {
         let response = await this.httpPost("/v1/query", { query: query, databaseName: database, transactionType: transactionType });
         if (response.ok) {
-            return JSON.parse(await response.text());
+            return { ok: JSON.parse(await response.text()) } as TypeDBResult<any>;
         } else {
-            alert("Error. Check log");
-            console.log(response);
-            return response;
+            return { err: await response.text() } as TypeDBResult<any>;
         }
     }
 

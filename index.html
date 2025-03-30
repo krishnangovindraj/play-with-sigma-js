@@ -13,7 +13,10 @@
             maxMove: 1,
         };
         window.onload= (()=> { visualisationContext = createVisualisationContext('sigma-container', custom_force_supervisor_settings); });
+
+        // Set a few globals
         var driver = null;
+        var query_result = null;
 
         async function doSignin(form) {
             driver = null;
@@ -21,23 +24,63 @@
             let username =  form.username.value;
             let password =  form.password.value;
             let result = await connectToTypeDB(address, username, password);
-        
-            if (result.ok != undefined) {
-                driver = result.ok;
-                updateStatus("Success", "green")
-            } else {
-                updateStatus("Login must have failed: " + result.err, "red")
-            }
-            
+            driver = updateStatus(result);
         }
 
-        function updateStatus(new_status, color) {
+
+        async function doCreateDatabase(form) {
+            resetStatus();
+            if (driver == null) {
+                updateStatus({err: "Not logged in!"});  
+            } else {
+                let dbName = document.getElementById("input-database-name").value;
+                let result = await driver.createDatabase(dbName);
+                updateStatus(result);
+            }
+        }
+
+
+        async function doDeleteDatabase(form) {
+            resetStatus();
+            if (driver == null) {
+                updateStatus({err: "Not logged in!"});  
+            } else {
+                alert("Not implemented");
+                return false;
+                let dbName = document.getElementById("input-database-name").value;
+                let result = await driver.deleteDatabase(dbName);
+                updateStatus(result);
+            }
+        }
+
+        async function doRunQuery(form) {
+            resetStatus();
+            if (driver == null) {
+                updateStatus({err: "Not logged in!"});  
+            } else {
+                console.log(form.txType);
+                let result = await driver.runQuery(form.database.value, form.query.value, form.txType);
+                query_result = updateStatus(result);
+            }
+        }
+
+        function resetStatus() {
+            updateStatusImpl("Running...", "white");
+        }
+
+        function updateStatus(result) {       
+            if (result.ok != undefined) {
+                updateStatusImpl("Success", "green");
+                return result.ok;
+            } else {
+                updateStatusImpl("Error: " + result.err, "red");
+                return null;
+            }
+        }
+
+        function updateStatusImpl(new_status, color) {       
             document.getElementById("status-message").innerText = new_status;
             document.getElementById("status-div").style.backgroundColor = color;
-        }
-
-        function doRunQuery() {
-            let query = document.getElementById('query-or-graph-input').value;
         }
     </script>
 </head>
@@ -47,21 +90,38 @@
         <!-- The graph will be draw in here. Leave empty -->
     </div>
     <div id="status-div" style="text-align: center; border: 2px solid black;"><b>Status: </b><span id="status-message">(TODO)</span></div>
-    <div id="login-div">
-        <form id="login-form" onsubmit="doSignin(this); return false">
-            <input type="text" name="address" placeholder="address" value="http://127.0.0.1:8000"/>
-            <input type="text" name="username"  placeholder="username" value="admin"/>
-            <input type="password" name="password" placeholder="password" value="password"/> <input type="submit" value="login"/>
-        </form>
+    <div id="login-db-admin-div">
+        <span id="login-span" style="float: left;">
+            <form id="login-form" onsubmit="doSignin(this); return false">
+                <input type="text" name="address" placeholder="address" value="http://127.0.0.1:8000"/>
+                <input type="text" name="username"  placeholder="username" value="admin"/>
+                <input type="password" name="password" placeholder="password" value="password"/>
+                <input type="submit" value="login"/>
+            </form>
+        </span>
+        <span id="db-admin-span" style="float: right;">
+            <button onclick="doCreateDatabase()">create</button> or <button onclick="doDeleteDatabase()">delete</button> database: <input id="input-database-name" type="text" value="" placeholder="database"/>
+        </span>
     </div>
     <div id="input">
-        <div id="buttons">
-            <button onclick="drawGraphFromJson(visualisationContext, document.getElementById('query-or-graph-input').value)">Draw as Graph</button>
-            <button onclick="doRunQuery()">Run as Query</button>
-            <button onclick="visualisationContext.layout.stop()">freeze</button>
-            <button onclick="visualisationContext.layout.start()">unfreeze</button>
-        </div>
-        <textarea id='query-or-graph-input' style="width:100%;height: 400px" placeholder='Query or Graph (See source for format)'></textarea>
+        <form id="query-or-graph-form" onsubmit="doRunQuery(this); return false">
+            <div id="buttons">
+                <span id="input-buttons-left" style="float: left;">
+                    Run query as:
+                    <input type="submit" onclick="this.form.txType=this.value;" value="schema"/>
+                    <input type="submit" onclick="this.form.txType=this.value;" value="write"/>
+                    <input type="submit" onclick="this.form.txType=this.value;" value="read"/>
+                    in database: <input name="database" type="text" placeholder="database"/>
+                </span>
+                <span id="input-buttons-right" style="float: right;">
+                    GraphControls:
+                    <button onclick="drawGraphFromJson(visualisationContext, document.getElementById('query-or-graph-input').value)">Draw as Graph</button>
+                    <button onclick="visualisationContext.layout.stop()">freeze</button>
+                    <button onclick="visualisationContext.layout.start()">unfreeze</button>
+                </span>
+            </div>
+            <textarea name="query" id='query-or-graph-input' style="width:100%;height: 400px" placeholder='Query or Graph (See source for format)'></textarea>
+        </form>
     </div>
 
     <!-- Sample graph format:
