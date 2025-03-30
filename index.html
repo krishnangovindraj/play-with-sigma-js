@@ -13,23 +13,58 @@
             maxMove: 1,
         };
         window.onload= (()=> { visualisationContext = createVisualisationContext('sigma-container', custom_force_supervisor_settings); });
+        var driver = null;
+
+        async function doSignin(form) {
+            driver = null;
+            let address = form.address.value;
+            let username =  form.username.value;
+            let password =  form.password.value;
+            let result = await connectToTypeDB(address, username, password);
+        
+            if (result.ok != undefined) {
+                driver = result.ok;
+                updateStatus("Success", "green")
+            } else {
+                updateStatus("Login must have failed: " + result.err, "red")
+            }
+            
+        }
+
+        function updateStatus(new_status, color) {
+            document.getElementById("status-message").innerText = new_status;
+            document.getElementById("status-div").style.backgroundColor = color;
+        }
+
+        function doRunQuery() {
+            let query = document.getElementById('query-or-graph-input').value;
+        }
     </script>
 </head>
 
 <body>
     <div id="sigma-container" style="background-color: blueviolet; height: 800px;">
-
+        <!-- The graph will be draw in here. Leave empty -->
+    </div>
+    <div id="status-div" style="text-align: center; border: 2px solid black;"><b>Status: </b><span id="status-message">(TODO)</span></div>
+    <div id="login-div">
+        <form id="login-form" onsubmit="doSignin(this); return false">
+            <input type="text" name="address" placeholder="address" value="http://127.0.0.1:8000"/>
+            <input type="text" name="username"  placeholder="username" value="admin"/>
+            <input type="password" name="password" placeholder="password" value="password"/> <input type="submit" value="login"/>
+        </form>
     </div>
     <div id="input">
         <div id="buttons">
-            <button onclick="drawGraphFromJson(visualisationContext, document.getElementById('graph-json').value)">draw</button>
+            <button onclick="drawGraphFromJson(visualisationContext, document.getElementById('query-or-graph-input').value)">Draw as Graph</button>
+            <button onclick="doRunQuery()">Run as Query</button>
             <button onclick="visualisationContext.layout.stop()">freeze</button>
             <button onclick="visualisationContext.layout.start()">unfreeze</button>
         </div>
-        <textarea id='graph-json' style="width:100%;height: 400px" placeholder='See source for example'></textarea>
+        <textarea id='query-or-graph-input' style="width:100%;height: 400px" placeholder='Query or Graph (See source for format)'></textarea>
     </div>
 
-    <!--
+    <!-- Sample graph format:
     {
         "vertices": [ 
             {"kind": "entity", "vertex": { "iid": "1", "type": { "id": "t1", "label": "person"}  }}, 
@@ -37,15 +72,6 @@
         ] ,
         "edges": [
             { "kind": "has", "edge": { "from": "1", "to": "2" } }
-        ]
-    }
-
-
-    {
-        "vertices": [ 
-            {"kind": "attribute", "vertex": { "iid": "2", "value": "John", "type": { "id": "t2", "label": "name" }  }}
-        ] ,
-        "edges": [
         ]
     }
     -->

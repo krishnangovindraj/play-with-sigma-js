@@ -1,6 +1,11 @@
 
+export type TypeDBResult<OK> = {
+    ok: OK | undefined,
+    err: string | undefined
+}
+
 // let token = await login("http://127.0.0.1:8000", "admin", "password");
-export async function connect_to_typedb(address: string, username: string, password: string) : Promise<TypeDBHttpDriver> {
+export async function connectToTypeDB(address: string, username: string, password: string) : Promise<TypeDBResult<TypeDBHttpDriver>> {
     let headers = {  "Content-Type": "application/json" };
     let body = { username: username, password: password };
     let response = await fetch(address + "/v1/signin", {
@@ -8,7 +13,11 @@ export async function connect_to_typedb(address: string, username: string, passw
         body: JSON.stringify(body),
         headers: headers,
       });
-    return new TypeDBHttpDriver(address, await response.text());
+      if (response.ok) {
+        return { ok: new TypeDBHttpDriver(address, await response.text()) } as TypeDBResult<TypeDBHttpDriver>;
+      } else {
+        return { err: await response.text() } as TypeDBResult<TypeDBHttpDriver>;
+      }
 }
 
 export type TypeDBQueryResponse = {
@@ -25,8 +34,8 @@ export class TypeDBHttpDriver {
     }
 
 
-    async create_database(database: string) : Promise<boolean> {
-        let response = await this.http_post("/v1/databases/" + database, undefined);
+    async createDatabase(database: string) : Promise<boolean> {
+        let response = await this.httpPost("/v1/databases/" + database, undefined);
         if (response.ok) {
             return true;
         } else {
@@ -37,20 +46,20 @@ export class TypeDBHttpDriver {
         
     }
 
-    async query_read(database: string, query: string) : Promise<any> {
-        return this.run_query(database, query, "read");
+    async queryRead(database: string, query: string) : Promise<any> {
+        return this.runQuery(database, query, "read");
     }
 
-    async query_write(database: string, query: string) : Promise<any> {
-        return this.run_query(database, query, "write");
+    async queryWrite(database: string, query: string) : Promise<any> {
+        return this.runQuery(database, query, "write");
     }
 
-    async query_schema(database: string, query: string) : Promise<any> {
-        return this.run_query(database, query, "schema");
+    async querySchema(database: string, query: string) : Promise<any> {
+        return this.runQuery(database, query, "write");
     }
 
-    async run_query(database: string, query: string, transactionType: string) : Promise<any> {
-        let response = await this.http_post("/v1/query", { query: query, databaseName: database, transactionType: transactionType });
+    async runQuery(database: string, query: string, transactionType: string) : Promise<any> {
+        let response = await this.httpPost("/v1/query", { query: query, databaseName: database, transactionType: transactionType });
         if (response.ok) {
             return JSON.parse(await response.text());
         } else {
@@ -60,7 +69,7 @@ export class TypeDBHttpDriver {
         }
     }
 
-    async http_post(endpoint: string, body: any) {
+    async httpPost(endpoint: string, body: any) {
         let headers = { "Authorization": "Bearer " + this.token,  "Content-Type": "application/json" };
         return await fetch(this.address + endpoint, {
             method: "POST",
@@ -69,7 +78,7 @@ export class TypeDBHttpDriver {
           });
     }
 
-    async http_get(endpoint: string) {
+    async httpGet(endpoint: string) {
         let headers = { "Authorization": "Bearer " + this.token,  "Content-Type": "application/json" };
         return await fetch(this.address + endpoint, {
             method: "GET",

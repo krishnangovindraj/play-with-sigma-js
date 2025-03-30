@@ -3,7 +3,7 @@ import { v4 as uuid } from "uuid";
 import Graph from "graphology";
 import { createVisualisationContext, VisualisationContext } from "./lib/visualisation";
 import { VertexAny, TypeVertex, ObjectVertex, AttributeVertex, ITypeDBToGraphology, buildGraphFromTypeDB } from "./lib/converter";
-import { connect_to_typedb, TypeDBHttpDriver  } from "./temp_communication";
+import { connectToTypeDB, TypeDBHttpDriver  } from "./temp_communication";
 
 /////////////
 // EXPORTS //
@@ -125,4 +125,4 @@ class TestConverter implements ITypeDBToGraphology {
 }
 
 window.drawGraphFromJson = drawGraphFromJson;
-window.connect_to_typedb = connect_to_typedb;
+window.connectToTypeDB = connectToTypeDB;
