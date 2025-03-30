@@ -2,15 +2,15 @@ import chroma from "chroma-js";
 import { v4 as uuid } from "uuid";
 import Graph from "graphology";
 import { createVisualisationContext, VisualisationContext } from "./lib/visualisation";
-import { VertexAny, TypeVertex, ObjectVertex, AttributeVertex, ITypeDBToGraphology, buildGraphFromTypeDB } from "./lib/converter";
+import { constructGraphFromRowsResult } from "./lib/common"
+import { VertexAny, TypeVertex, ObjectVertex, AttributeVertex, ITypeDBToGraphology, buildGraphFromTypeDB } from "./lib/graph";
 import { connectToTypeDB, TypeDBHttpDriver  } from "./temp_communication";
-
 /////////////
 // EXPORTS //
 /////////////
 
 window.createVisualisationContext = createVisualisationContext;
-
+window.constructGraphFromRowsResult = constructGraphFromRowsResult;
 // TODO: I imagine the right way to do this is to separate this into a module, and have a script in the page that imports this?
 window.buildGraphFromTypeDB = buildGraphFromTypeDB;
 
@@ -32,22 +32,13 @@ where:
   *   The role bit is a bit rough.
  */
 
-type JSONGraph = {
-  vertices: Array<JSONVertex>;
-  // edges: Array<{ kind: string, edge: { from: VertexAny, to: VertexAny, role: TypeVertex| null }}>;
-  edges: Array<JSONEdge>;
-}
-type JSONVertex = { kind: string, vertex: VertexAny };
-type JSONEdge = { kind: string, edge: { from: string, to: string, role: string| null }};
-
-
 
 export function drawGraphFromJson(context: VisualisationContext, json_string: string) : Graph {
-  let as_json = JSON.parse(json_string) as JSONGraph;
+  let as_json = JSON.parse(json_string) as LogicalGraph;
   let converter = new TestConverter();
   let graph = context.graph;
   graph.clear();
-  let vertices_by_id : {[index: string]: JSONVertex }= {};
+  let vertices_by_id : {[index: string]: LogicalVertex }= {};
   as_json.vertices.forEach(entry => {
     
     switch (entry.kind) {
@@ -78,12 +69,12 @@ export function drawGraphFromJson(context: VisualisationContext, json_string: st
     switch (entry.kind) {
       case "has": {
         // converter.put_has(graph, 0, edge.from as ObjectVertex, edge.to as AttributeVertex);
-        converter.put_has(graph, 0, from, to);
+        converter.put_has(graph, 0, -1, from, to); // TODO: Constraint index
         break;
       }
       case "links" : {
         // converter.put_links(graph, 0, edge.from as ObjectVertex, edge.to as ObjectVertex, edge.role as TypeVertex);
-        converter.put_links(graph, 0, from, to, role);
+        converter.put_links(graph, 0, -1, from, to, role);  // TODO: Constraint index
         break;
       }
       default : {
@@ -115,11 +106,11 @@ class TestConverter implements ITypeDBToGraphology {
   }
   
   // Edges
-  put_has(graph: Graph,  answer_index:number, owner: ObjectVertex, attribute: AttributeVertex): void {
+  put_has(graph: Graph,  answer_index:number, constraint_index: number, owner: ObjectVertex, attribute: AttributeVertex): void {
     graph.addDirectedEdge(owner.iid, attribute.iid, { label: "has", type: "arrow", size: 10 });
   }
 
-  put_links(graph: Graph,  answer_index:number, relation: ObjectVertex, player: ObjectVertex, role: TypeVertex): void {
+  put_links(graph: Graph,  answer_index:number, constraint_index: number, relation: ObjectVertex, player: ObjectVertex, role: TypeVertex): void {
     graph.addDirectedEdge(relation.iid, player.iid, { label: role.label, type: "arrow", size: 10 });
   }
 }

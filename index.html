@@ -12,12 +12,19 @@
             inertia: 0.6,
             maxMove: 1,
         };
-        window.onload= (()=> { visualisationContext = createVisualisationContext('sigma-container', custom_force_supervisor_settings); });
 
         // Set a few globals
         var driver = null;
         var query_result = null;
+        var intermediate_graph = null;
 
+        // On load
+        window.onload= (()=> { 
+            visualisationContext = createVisualisationContext('sigma-container', custom_force_supervisor_settings);
+            updateStatusImpl("ready", "white");
+         });
+
+        // TypeDB requests run by UI
         async function doSignin(form) {
             driver = null;
             let address = form.address.value;
@@ -26,7 +33,6 @@
             let result = await connectToTypeDB(address, username, password);
             driver = updateStatus(result);
         }
-
 
         async function doCreateDatabase(form) {
             resetStatus();
@@ -38,7 +44,6 @@
                 updateStatus(result);
             }
         }
-
 
         async function doDeleteDatabase(form) {
             resetStatus();
@@ -61,9 +66,12 @@
                 console.log(form.txType);
                 let result = await driver.runQuery(form.database.value, form.query.value, form.txType);
                 query_result = updateStatus(result);
+                intermediate_graph = constructGraphFromRowsResult(query_result); // In memory, not visualised
+                
             }
         }
 
+        // Status bar control
         function resetStatus() {
             updateStatusImpl("Running...", "white");
         }
@@ -89,7 +97,7 @@
     <div id="sigma-container" style="background-color: blueviolet; height: 800px;">
         <!-- The graph will be draw in here. Leave empty -->
     </div>
-    <div id="status-div" style="text-align: center; border: 2px solid black;"><b>Status: </b><span id="status-message">(TODO)</span></div>
+    <div id="status-div" style="text-align: center; border: 2px solid black;"><b>Status: </b><span id="status-message">(uninitialised)</span></div>
     <table id="login-db-admin-div" style="width: 100%;">
         <tr>
         <td id="login-span">
