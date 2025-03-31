@@ -57,7 +57,9 @@ export function drawGraphFromJson(context: VisualisationContext, logicalGraph: L
       }
     }
   });
+  let answer_index = 0;
   logicalGraph.edges.forEach(edgeList => {
+    let constraint_index = 0;
     edgeList.forEach(edge => {
       let from = logicalGraph.vertices.get(edge.from);
       let to = logicalGraph.vertices.get(edge.to);
@@ -65,19 +67,21 @@ export function drawGraphFromJson(context: VisualisationContext, logicalGraph: L
       switch (edge.type.kind) {
         case EdgeKind.has: {
           // converter.put_has(graph, 0, edge.from as ObjectVertex, edge.to as AttributeVertex);
-          converter.put_has(graph, 0, -1, from, to); // TODO: Constraint index
+          converter.put_has(graph, answer_index, constraint_index, from, to);
           break;
         }
         case EdgeKind.links : {
           // converter.put_links(graph, 0, edge.from as ObjectVertex, edge.to as ObjectVertex, edge.role as TypeVertex);
-          converter.put_links(graph, 0, -1, from, to, role);  // TODO: Constraint index
+          converter.put_links(graph, answer_index, constraint_index, from, to, role);
           break;
         }
         default : {
           throw new Error();
         }
       }
+      constraint_index += 1;
     });
+    answer_index += 1;
   });
   return graph;
 };
@@ -104,11 +108,13 @@ class TestConverter implements ITypeDBToGraphology {
   
   // Edges
   put_has(graph: Graph,  answer_index:number, constraint_index: number, owner: ObjectVertex, attribute: AttributeVertex): void {
-    graph.addDirectedEdge(owner.iid, attribute.iid, { label: "has", type: "arrow", size: 10 });
+    let edge_key = (answer_index + ":" + constraint_index);
+    graph.addDirectedEdgeWithKey(edge_key, owner.iid, attribute.iid, { label: "has", type: "arrow", size: 10 });
   }
 
   put_links(graph: Graph,  answer_index:number, constraint_index: number, relation: ObjectVertex, player: ObjectVertex, role: TypeVertex): void {
-    graph.addDirectedEdge(relation.iid, player.iid, { label: role.label, type: "arrow", size: 10 });
+    let edge_key = (answer_index + ":" + constraint_index);
+    graph.addDirectedEdgeWithKey(edge_key, relation.iid, player.iid, { label: role.label, type: "arrow", size: 10 });
   }
 }
 
