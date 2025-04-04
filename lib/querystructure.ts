@@ -1,4 +1,4 @@
-import { TypeAny, TypeDBValue, EdgeKind } from "./concept"
+import {TypeAny, TypeDBValue, EdgeKind, ThingKind} from "./concept"
 
 /////////////////////
 // Query structure //
@@ -18,7 +18,7 @@ export type StructureVertex = {
     value: StructureVertexAny,
 }
 export type StructureVertexVariable = { variable: string };
-export type StructureVertexLabel = TypeAny;
+export type StructureVertexLabel = {  kind: ThingKind, label: string }; // Unfortunate that it's ThingKind
 export type StructureVertexValue = TypeDBValue; // { value_type: TypeDBValueType, value: any };
 export type StructureVertexUnavailable = null;
 export type StructureVertexAny = StructureVertexVariable | StructureVertexUnavailable | StructureVertexLabel | StructureVertexValue;

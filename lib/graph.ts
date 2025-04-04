@@ -16,7 +16,7 @@ import {
     StructureEdge,
     StructureEdgTypeAny,
     StructureVertex,
-    StructureVertexKind,
+    StructureVertexKind, StructureVertexLabel,
     StructureVertexVariable
 } from "./querystructure.js"
 
@@ -26,7 +26,7 @@ import {
 export type VertexUnavailable = { kind: UnavailableKind, iid: string };
 export type EdgeParameter = RoleType | VertexUnavailable | number | null;
 
-type LogicalVertexKind = ThingKind | TypeKind | ValueKind | UnavailableKind;
+export type LogicalVertexKind = ThingKind | TypeKind | ValueKind | UnavailableKind;
 export type LogicalVertex = ConceptAny | VertexUnavailable;
 export type LogicalVertexID = string;
 export type LogicalEdge = { type: LogicalEdgeType, from: LogicalVertexID, to: LogicalVertexID };
@@ -120,7 +120,9 @@ class LogicalGraphBuilder {
                 return data[(structure_vertex.value as StructureVertexVariable).variable] as ConceptAny;
             } 
             case StructureVertexKind.label:{
-                return structure_vertex.value as TypeAny;
+                let vertex= structure_vertex.value as StructureVertexLabel;
+                let type_kind = this.translate_thing_kind_to_type_kind(vertex.kind);
+                return { kind: type_kind, label: vertex.label } as TypeAny;
             }
             case StructureVertexKind.value:{
                 return structure_vertex.value as TypeDBValue;
@@ -128,6 +130,18 @@ class LogicalGraphBuilder {
             case StructureVertexKind.unavailable: {
                 nextUnavailable += 1;
                 return { kind: "unavailable", iid: "unavailable_" + nextUnavailable  } as VertexUnavailable;
+            }
+        }
+    }
+
+    translate_thing_kind_to_type_kind(thing_kind: ThingKind | "relation:role"): TypeKind {
+        switch (thing_kind) {
+            case ThingKind.relation: return TypeKind.relationType;
+            case ThingKind.entity: return TypeKind.entityType;
+            case ThingKind.attribute: return TypeKind.attributeType;
+            case "relation:role": return TypeKind.roleType;
+            default: {
+                throw new Error("Unrecognised: " + thing_kind);
             }
         }
     }
@@ -150,7 +164,8 @@ class LogicalGraphBuilder {
                 return { kind: structure_edge_type.kind, param: role as RoleType | VertexUnavailable };
             }
             default: {
-                console.log("Unsupported EdgeKind:"+ structure_edge_type.kind)
+                console.log("Unsupported EdgeKind:"+ structure_edge_type)
+                throw new Error("Unsupported EdgeKind:"+ structure_edge_type.kind);
             }
         }
     }
