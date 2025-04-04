@@ -1,4 +1,4 @@
 .DS_Store
-backups/**
+.idea/**
 node_modules/**
 typedb-visualisation.js
