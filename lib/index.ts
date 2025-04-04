@@ -1,18 +1,23 @@
 import chroma from "chroma-js";
 import Graph from "graphology";
 import {createVisualisationContext, VisualisationContext} from "./visualisation.js";
-import {Attribute, EdgeKind, Entity, Relation, RoleType, ThingKind, TypeKind, UnavailableKind} from "./concept.js";
+import {
+  Attribute,
+  EdgeKind,
+  Entity, ObjectAny,
+  ObjectType,
+  Relation,
+  RoleType,
+  ThingKind,
+  TypeKind,
+  UnavailableKind
+} from "./concept.js";
 import {constructGraphFromRowsResult, LogicalGraph, VertexUnavailable} from "./graph.js";
 import {connectToTypeDB} from "../temp_communication.js";
 
-/////////////
-// EXPORTS //
-/////////////
-
-
-//////////////////////////////
-// TypeDB -> Graphology
-/////////////////////////////
+/////////////////////////////////
+// Logical Graph -> Graphology //
+/////////////////////////////////
 
 /**
  * You will majorly need:
@@ -66,12 +71,12 @@ export function drawLogicalGraphWith(context: VisualisationContext, logicalGraph
       switch (edge.type.kind) {
         case EdgeKind.has: {
           // converter.put_has(graph, 0, edge.from as ObjectVertex, edge.to as Attribute);
-          converter.put_has(graph, answer_index, constraint_index, from, to);
+          converter.put_has(graph, answer_index, constraint_index, from as ObjectAny, to as Attribute);
           break;
         }
         case EdgeKind.links : {
           // converter.put_links(graph, 0, edge.from as ObjectVertex, edge.to as ObjectVertex, edge.role as TypeAny);
-          converter.put_links(graph, answer_index, constraint_index, from, to, edgeParam as RoleType | VertexUnavailable);
+          converter.put_links(graph, answer_index, constraint_index, from as Relation, to as ObjectAny, edgeParam as RoleType | VertexUnavailable);
           break;
         }
         default : {
@@ -85,6 +90,10 @@ export function drawLogicalGraphWith(context: VisualisationContext, logicalGraph
   return graph;
 };
 
+
+/////////////
+// EXPORTS //
+/////////////
 window.createVisualisationContext = createVisualisationContext;
 window.constructGraphFromRowsResult = constructGraphFromRowsResult;
 
