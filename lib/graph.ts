@@ -2,7 +2,8 @@ import {TypeDBRowData, TypeDBRowsResult} from "./common";
 import {
     Attribute,
     ConceptAny,
-    EdgeKind, ObjectAny,
+    EdgeKind,
+    ObjectAny,
     RoleType,
     ThingKind,
     TypeAny,
@@ -133,13 +134,23 @@ class LogicalGraphBuilder {
 
     extract_edge_type(structure_edge_type: StructureEdgTypeAny, data: TypeDBRowData): LogicalEdgeType {
         switch (structure_edge_type.kind) {
-            case EdgeKind.has: {
-                // assert(structure_edge_type == null);
+            case EdgeKind.isa:
+            case EdgeKind.has:
+            case EdgeKind.sub:
+            case EdgeKind.owns:
+            case EdgeKind.relates:
+            case EdgeKind.plays:
+            case EdgeKind.isaExact:
+            case EdgeKind.subExact:
+            {
                 return { kind: structure_edge_type.kind, param: null };
             }
             case EdgeKind.links: {
                 let role = this.translate_vertex(structure_edge_type.param as StructureVertex, data);
                 return { kind: structure_edge_type.kind, param: role as RoleType | VertexUnavailable };
+            }
+            default: {
+                console.log("Unsupported EdgeKind:"+ structure_edge_type.kind)
             }
         }
     }

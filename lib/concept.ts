@@ -84,6 +84,15 @@ export type ConceptAny = TypeAny | ObjectAny | Attribute | TypeDBValue;
 //////////////
 
 export enum EdgeKind {
+    isa = "isa",
     has = "has",
     links = "links",
+
+    sub = "sub",
+    owns = "owns",
+    relates = "relates",
+    plays = "plays",
+
+    isaExact = "isaExact",
+    subExact = "subExact",
 }

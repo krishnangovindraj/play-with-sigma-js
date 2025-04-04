@@ -27,8 +27,8 @@ export function createVisualisationContext(container_id: string, force_superviso
 
   // Create the sigma
   let settings = {
-      minCameraRatio: 0.5,
-      maxCameraRatio: 2 ,
+      minCameraRatio: 0.1,
+      maxCameraRatio: 10,
       renderEdgeLabels: true,
       nodeProgramClasses: {
           square: NodeSquareProgram,
