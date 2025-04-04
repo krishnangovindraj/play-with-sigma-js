@@ -1,6 +1,6 @@
 import chroma from "chroma-js";
 import Graph from "graphology";
-import {createVisualisationContext, VisualisationContext} from "./visualisation.js";
+import {createVisualisationContext, VisualisationContext} from "./visualisation";
 import {
   Attribute,
   EdgeKind,
@@ -11,9 +11,9 @@ import {
   ThingKind,
   TypeKind,
   UnavailableKind
-} from "./concept.js";
-import {constructGraphFromRowsResult, LogicalGraph, VertexUnavailable} from "./graph.js";
-import {connectToTypeDB} from "../temp_communication.js";
+} from "./concept";
+import {constructGraphFromRowsResult, LogicalGraph, VertexUnavailable} from "./graph";
+import {connectToTypeDB} from "./communication";
 
 /////////////////////////////////
 // Logical Graph -> Graphology //
@@ -116,7 +116,7 @@ export class DefaultConverter implements ITypeDBToGraphology {
 
   put_relation(graph: Graph, answer_index:number, vertex: Relation): void {
     let label = vertex.type.label + ":" + vertex.iid;
-    graph.addNode(vertex.iid, { label: label, color: chroma('yellow').hex(), size: 10, x: Math.random(), y: Math.random() });
+    graph.addNode(vertex.iid, { label: label, color: chroma('yellow').hex(), size: 10, x: Math.random(), y: Math.random(), type: "square" });
   }
 
   // Edges
@@ -128,7 +128,6 @@ export class DefaultConverter implements ITypeDBToGraphology {
   put_links(graph: Graph,  answer_index:number, constraint_index: number, relation: Relation, player: Entity | Relation, role: RoleType | VertexUnavailable): void {
     let edge_key = (answer_index + ":" + constraint_index);
     let label = (role.kind == TypeKind.roleType) ? (role as RoleType).label : null;
-    console.log(label);
     graph.addDirectedEdgeWithKey(edge_key, relation.iid, player.iid, { label: label, type: "arrow", size: 10 });
   }
 }

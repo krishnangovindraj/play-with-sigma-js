@@ -1,4 +1,4 @@
-import {TypeDBQueryResponse} from "./lib/common.js";
+import {TypeDBAnswerAny, TypeDBQueryResponse} from "./common.js";
 
 export type TypeDBResult<OK> = {
     ok: OK | undefined,
@@ -12,12 +12,12 @@ export async function connectToTypeDB(address: string, username: string, passwor
         method: "POST",
         body: JSON.stringify(body),
         headers: headers,
-      });
-      if (response.ok) {
+    });
+    if (response.ok) {
         return { ok: new TypeDBHttpDriver(address, await response.text()) } as TypeDBResult<TypeDBHttpDriver>;
-      } else {
+    } else {
         return { err: await response.text() } as TypeDBResult<TypeDBHttpDriver>;
-      }
+    }
 }
 
 export class TypeDBHttpDriver {
@@ -38,7 +38,7 @@ export class TypeDBHttpDriver {
         }
     }
 
-    async runQuery(database: string, query: string, transactionType: string) : Promise<TypeDBResult<TypeDBQueryResponse>> {
+    async runQuery(database: string, query: string, transactionType: string) : Promise<TypeDBResult<TypeDBAnswerAny>> {
         let response = await this.httpPost("/v1/query", { query: query, databaseName: database, transactionType: transactionType });
         if (response.ok) {
             return { ok: JSON.parse(await response.text()) } as TypeDBResult<any>;
@@ -53,7 +53,7 @@ export class TypeDBHttpDriver {
             method: "POST",
             body: JSON.stringify(body),
             headers: headers,
-          });
+        });
     }
 
     async httpGet(endpoint: string) {
@@ -61,6 +61,6 @@ export class TypeDBHttpDriver {
         return await fetch(this.address + endpoint, {
             method: "GET",
             headers: headers,
-          });
+        });
     }
 }

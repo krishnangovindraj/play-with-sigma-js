@@ -5,10 +5,10 @@ import { TypeDBQueryStructure } from "./querystructure";
 ///////////
 // QUERY //
 ///////////
-export type TypeDBQueryResponse = {
+export type TypeDBQueryResponse<Answer> = {
     queryType: string,
     answerType: TypeDBQueryAnswerType,
-    answers: Array<TypeDBRow | TypeDBDocument>,
+    answers: Array<Answer>,
     queryStructure: TypeDBQueryStructure,
 }
 
@@ -27,5 +27,7 @@ enum TypeDBQueryAnswerType {
 // Answers:
 export type TypeDBRow = { data: TypeDBRowData, provenance: number }
 export type TypeDBRowData = { [id: string] : ConceptAny };
-
 export type TypeDBDocument = any;
+
+export type TypeDBAnswerAny =  TypeDBRow | TypeDBDocument  | null;
+export type TypeDBRowsResult = TypeDBQueryResponse<TypeDBRow>;

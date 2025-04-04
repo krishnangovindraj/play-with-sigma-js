@@ -1,6 +1,7 @@
 import Graph from "graphology";
 import { ForceLayoutSettings } from "graphology-layout-force";
 import ForceSupervisor from "graphology-layout-force/worker";
+import { NodeSquareProgram } from "@sigma/node-square";
 import Sigma from "sigma";
 
 export type VisualisationContext = {
@@ -25,7 +26,18 @@ export function createVisualisationContext(container_id: string, force_superviso
   layout.start();
 
   // Create the sigma
-  let renderer = new Sigma(graph, container, { minCameraRatio: 0.5, maxCameraRatio: 2 });
+  let settings = {
+      minCameraRatio: 0.5,
+      maxCameraRatio: 2 ,
+      nodeProgramClasses: {
+          square: NodeSquareProgram,
+      }
+  };
+  let renderer = new Sigma(
+      graph,
+      container,
+      settings,
+  );
 
   //
   // Drag'n'drop feature
@@ -76,7 +88,7 @@ export function createVisualisationContext(container_id: string, force_superviso
   renderer.on("upStage", handleUp);
 
   return {
-    layout, renderer,  graph, 
+    layout, renderer,  graph,
   };
   // return () => {
   //   renderer.kill();
