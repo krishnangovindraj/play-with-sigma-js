@@ -1,10 +1,10 @@
+import {TypeDBQueryResponse} from "./lib/common.js";
 
 export type TypeDBResult<OK> = {
     ok: OK | undefined,
     err: string | undefined
 }
 
-// let token = await login("http://127.0.0.1:8000", "admin", "password");
 export async function connectToTypeDB(address: string, username: string, password: string) : Promise<TypeDBResult<TypeDBHttpDriver>> {
     let headers = {  "Content-Type": "application/json" };
     let body = { username: username, password: password };
@@ -20,10 +20,6 @@ export async function connectToTypeDB(address: string, username: string, passwor
       }
 }
 
-export type TypeDBQueryResponse = {
-    // todo
-};
-
 export class TypeDBHttpDriver {
     address: string;
     token : string;
@@ -33,7 +29,6 @@ export class TypeDBHttpDriver {
         this.token = token;
     }
 
-
     async createDatabase(database: string) : Promise<TypeDBResult<boolean>> {
         let response = await this.httpPost("/v1/databases/" + database, undefined);
         if (response.ok) {
@@ -41,10 +36,9 @@ export class TypeDBHttpDriver {
         } else {
             return { err: await response.text() } as TypeDBResult<boolean>;;
         }
-        
     }
 
-    async runQuery(database: string, query: string, transactionType: string) : Promise<TypeDBResult<any>> {
+    async runQuery(database: string, query: string, transactionType: string) : Promise<TypeDBResult<TypeDBQueryResponse>> {
         let response = await this.httpPost("/v1/query", { query: query, databaseName: database, transactionType: transactionType });
         if (response.ok) {
             return { ok: JSON.parse(await response.text()) } as TypeDBResult<any>;

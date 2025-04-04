@@ -1,16 +1,31 @@
-import { ConceptAny, TypeAny, RoleType, TypeDBValue, UnavailableKind } from "./concept";
-import { LogicalGraph, LogicalEdge, LogicalVertex, LogicalVertexID, VertexMap, VertexUnavailable, EdgeKind, LogicalEdgeType } from "./graph";
+import { ConceptAny } from "./concept";
 import { TypeDBQueryStructure } from "./querystructure";
-
 // For common data-structures that convert between what the server gives us and what we need
-export type TypeDBRowsResult = {
+
+///////////
+// QUERY //
+///////////
+export type TypeDBQueryResponse = {
     queryType: string,
-    answers: Array<TypeDBRow>,
+    answerType: TypeDBQueryAnswerType,
+    answers: Array<TypeDBRow | TypeDBDocument>,
     queryStructure: TypeDBQueryStructure,
-    answerType: string,
 }
 
+enum TypeDBQueryType {
+    schema = "schema",
+    write = "write",
+    read = "read",
+}
+
+enum TypeDBQueryAnswerType {
+    ok = "ok",
+    conceptRows = "conceptRows",
+    conceptDocuments = "conceptDocuments",
+}
 
 // Answers:
 export type TypeDBRow = { data: TypeDBRowData, provenance: number }
 export type TypeDBRowData = { [id: string] : ConceptAny };
+
+export type TypeDBDocument = any;
