@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "lib.ts",
   "scripts": {
-    "build": "./node_modules/.bin/esbuild typedb-visualisation.ts --bundle --outfile=typedb-visualisation.js"
+    "build": "./node_modules/.bin/esbuild lib/index.ts --bundle --outfile=typedb-visualisation.js"
   },
   "type": "module",
   "author": "",
