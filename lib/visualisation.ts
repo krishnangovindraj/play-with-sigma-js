@@ -29,6 +29,7 @@ export function createVisualisationContext(container_id: string, force_superviso
   let settings = {
       minCameraRatio: 0.5,
       maxCameraRatio: 2 ,
+      renderEdgeLabels: true,
       nodeProgramClasses: {
           square: NodeSquareProgram,
       }

@@ -66,8 +66,10 @@
             } else {
                 let result = await driver.runQuery(form.database.value, form.query.value, form.txType);
                 query_result = updateStatus(result);
-                intermediate_graph = constructGraphFromRowsResult(query_result); // In memory, not visualised
-                drawLogicalGraphWith(visualisationContext, intermediate_graph, converter);
+                if (query_result.answerType == "conceptRows" && query_result.queryStructure != null) {
+                    intermediate_graph = constructGraphFromRowsResult(query_result); // In memory, not visualised
+                    drawLogicalGraphWith(visualisationContext, intermediate_graph, converter);
+                }
             }
         }
 
