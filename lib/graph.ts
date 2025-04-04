@@ -34,7 +34,7 @@ export type LogicalEdgeType = { kind: EdgeKind, param: EdgeParameter };
 export type VertexMap = Map<LogicalVertexID, LogicalVertex>;
 
 export type LogicalGraph = {
-  vertices: Array<VertexMap>;
+  vertices: VertexMap;
   // edges: Array<{ kind: string, edge: { from: ConceptAny, to: ConceptAny, role: TypeAny| null }}>;
   edges: Array<Array<LogicalEdge>>;
 }
