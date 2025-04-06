@@ -6,7 +6,7 @@ import {
 
 import {constructGraphFromRowsResult} from "./graph";
 import {connectToTypeDB} from "./typedb/driver";
-import {DefaultConverter} from "./studio/visualiser";
+import {StudioConverter} from "./studio/visualiser";
 
 
 /////////////
@@ -15,6 +15,6 @@ import {DefaultConverter} from "./studio/visualiser";
 window.createVisualisationContext = createVisualisationContext;
 window.constructGraphFromRowsResult = constructGraphFromRowsResult;
 
-window.DefaultConverter = DefaultConverter;
+window.StudioConverter = StudioConverter;
 window.drawLogicalGraphWith = drawLogicalGraphWith;
 window.connectToTypeDB = connectToTypeDB;

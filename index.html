@@ -17,7 +17,7 @@
         var driver = null;
         var query_result = null;
         var intermediate_graph = null;
-        var converter = new DefaultConverter(DefaultConverter.defaultStyleParameters);
+        var visualisationContext = null;
 
         // Initialisation on load
         window.onload= (()=> { 
@@ -68,6 +68,7 @@
                 query_result = updateStatus(result);
                 if (query_result.answerType == "conceptRows" && query_result.queryStructure != null) {
                     intermediate_graph = constructGraphFromRowsResult(query_result); // In memory, not visualised
+                    let converter = new StudioConverter(query_result.queryStructure, StudioConverter.defaultStructureParameters, StudioConverter.defaultStyleParameters);
                     drawLogicalGraphWith(visualisationContext, intermediate_graph, converter);
                 }
             }

@@ -29,7 +29,8 @@ export type EdgeParameter = RoleType | VertexUnavailable | number | null;
 export type LogicalVertexKind = ThingKind | TypeKind | ValueKind | UnavailableKind;
 export type LogicalVertex = ConceptAny | VertexUnavailable;
 export type LogicalVertexID = string;
-export type LogicalEdge = { type: LogicalEdgeType, from: LogicalVertexID, to: LogicalVertexID };
+export type StructureEdgeCoordinates = { branchIndex: number, constraintIndex: number };
+export type LogicalEdge = { structureEdgeCoordinates: StructureEdgeCoordinates, type: LogicalEdgeType, from: LogicalVertexID, to: LogicalVertexID };
 export type LogicalEdgeType = { kind: EdgeKind, param: EdgeParameter };
 
 export type VertexMap = Map<LogicalVertexID, LogicalVertex>;
@@ -58,22 +59,22 @@ class LogicalGraphBuilder {
 
     build(rows_result: TypeDBRowsResult) : LogicalGraph {
         rows_result.answers.forEach(row => {
-            for (let i = 0; i < rows_result.queryStructure.branches.length; i++) {
-                if ( 0 ==i || 0 != (row.provenance & (1 << i)) ){
-                    let edges = rows_result.queryStructure.branches[i].edges;
-                    this.all_edges.push(this.substitute_variables(edges, row.data))
+            rows_result.queryStructure.branches.forEach((branch, branchIndex) => {
+                if ( 0 == branchIndex || 0 != (row.provenance & (1 << branchIndex)) ){
+                    this.all_edges.push(this.substitute_variables(branchIndex, branch.edges, row.data))
                 }
-            }
+            });
         });
         return { vertices: this.all_vertices, edges: this.all_edges };
     }
 
-    substitute_variables(branch: Array<StructureEdge>, data: TypeDBRowData) : Array<LogicalEdge> {
-        return branch.map(structure_edge => {
+    substitute_variables(branchIndex: number, branch: Array<StructureEdge>, data: TypeDBRowData) : Array<LogicalEdge> {
+        return branch.map((structure_edge, constraintIndex) => {
+            let coordinates = { branchIndex: branchIndex, constraintIndex: constraintIndex } ;
             let edge_type = this.extract_edge_type(structure_edge.type, data);
             let from = this.register_vertex(structure_edge.from, data);
             let to = this.register_vertex(structure_edge.to, data);
-            return { type: edge_type, from: from, to: to }
+            return { structureEdgeCoordinates: coordinates, type: edge_type, from: from, to: to }
         });
     }
 

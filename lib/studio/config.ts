@@ -1,6 +1,6 @@
 import {LogicalVertex, LogicalVertexKind, VertexUnavailable} from "../graph.js";
 import {Color} from "chroma-js";
-import {RoleType} from "../typedb/concept.js";
+import {EdgeKind, RoleType} from "../typedb/concept.js";
 
 export interface StudioConverterStyleParameters {
     vertex_colors: Record<LogicalVertexKind, Color>,
@@ -12,4 +12,8 @@ export interface StudioConverterStyleParameters {
 
     vertex_label: (vertex: LogicalVertex) => string;
     links_edge_label: (role: RoleType | VertexUnavailable) => string;
+}
+
+export interface StudioConverterStructureParameters {
+    ignoreEdgesInvolvingLabels: Array<EdgeKind>,
 }
