@@ -5,7 +5,7 @@ import { NodeSquareProgram } from "@sigma/node-square";
 import Sigma from "sigma";
 import {
   Attribute,
-  AttributeType, EdgeKind,
+  AttributeType, ConceptAny, EdgeKind,
   Entity,
   EntityType, ObjectAny, ObjectType,
   Relation,
@@ -124,19 +124,19 @@ export interface ITypeDBToGraphology {
   // TODO: Functional vertices & edges like expressions, comparisons & function calls
 
   // Vertices
-  put_attribute(graph: Graph, answer_index: number, vertex: Attribute): void;
+  put_attribute(graph: Graph, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: Attribute): void;
 
-  put_entity(graph: Graph, answer_index: number, vertex: Entity): void;
+  put_entity(graph: Graph, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: Entity): void;
 
-  put_relation(graph: Graph, answer_index: number, vertex: Relation): void;
+  put_relation(graph: Graph, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: Relation): void;
 
-  put_attribute_type(graph: Graph, answer_index: number, vertex: AttributeType): void;
+  put_attribute_type(graph: Graph, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: AttributeType): void;
 
-  put_entity_type(graph: Graph, answer_index: number, vertex: EntityType): void;
+  put_entity_type(graph: Graph, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: EntityType): void;
 
-  put_relation_type(graph: Graph, answer_index: number, vertex: RelationType): void;
+  put_relation_type(graph: Graph, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: RelationType): void;
 
-  put_role_type_for_type_constraint(graph: Graph, answer_index: number, vertex: RoleType): void;
+  put_role_type_for_type_constraint(graph: Graph, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: RoleType): void;
 
 
   // Edges
@@ -162,10 +162,7 @@ export interface ITypeDBToGraphology {
 export function drawLogicalGraphWith(context: VisualisationContext, logicalGraph: LogicalGraph, converter: ITypeDBToGraphology): Graph {
   let graph = context.graph;
   graph.clear();
-  logicalGraph.vertices.forEach((vertex, key) => {
-    putVertex(graph, converter, vertex);
-  });
-  logicalGraph.edges.forEach((edgeList, answerIndex) => {
+  logicalGraph.answers.forEach((edgeList, answerIndex) => {
     edgeList.forEach(edge => {
       putEdge(graph, converter, answerIndex, edge.structureEdgeCoordinates, edge, logicalGraph);
     });
@@ -173,34 +170,34 @@ export function drawLogicalGraphWith(context: VisualisationContext, logicalGraph
   return graph;
 }
 
-function putVertex(graph: Graph, converter: ITypeDBToGraphology, vertex: LogicalVertex) {
+function putVertex(graph: Graph, converter: ITypeDBToGraphology, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: LogicalVertex) {
   switch (vertex.kind) {
     case ThingKind.entity: {
-      converter.put_entity(graph, 0, vertex as Entity);
+      converter.put_entity(graph, answer_index, structureEdgeCoordinates, vertex as Entity);
       break;
     }
     case ThingKind.attribute : {
-      converter.put_attribute(graph, 0, vertex as Attribute);
+      converter.put_attribute(graph, answer_index, structureEdgeCoordinates, vertex as Attribute);
       break;
     }
     case ThingKind.relation : {
-      converter.put_relation(graph, 0, vertex as Relation);
+      converter.put_relation(graph, answer_index, structureEdgeCoordinates, vertex as Relation);
       break;
     }
     case TypeKind.attributeType : {
-      converter.put_attribute_type(graph, 0, vertex as AttributeType);
+      converter.put_attribute_type(graph, answer_index, structureEdgeCoordinates, vertex as AttributeType);
       break;
     }
     case  TypeKind.entityType : {
-      converter.put_entity_type(graph, 0, vertex as EntityType);
+      converter.put_entity_type(graph, answer_index, structureEdgeCoordinates, vertex as EntityType);
       break;
     }
     case TypeKind.relationType : {
-      converter.put_relation_type(graph, 0, vertex as RelationType);
+      converter.put_relation_type(graph, answer_index, structureEdgeCoordinates, vertex as RelationType);
       break;
     }
     case TypeKind.roleType : {
-      converter.put_role_type_for_type_constraint(graph, 0, vertex as RoleType);
+      converter.put_role_type_for_type_constraint(graph, answer_index, structureEdgeCoordinates, vertex as RoleType);
       break;
     }
     default : {
@@ -214,6 +211,10 @@ function putEdge(graph: Graph, converter: ITypeDBToGraphology, answer_index: num
   let from = logicalGraph.vertices.get(edge.from);
   let to = logicalGraph.vertices.get(edge.to);
   let edgeParam = edge.type.param;
+  // First put vertices, then the edge
+  putVertex(graph, converter, answer_index, structureEdgeCoordinates, from as ConceptAny);
+  putVertex(graph, converter, answer_index, structureEdgeCoordinates, to as ConceptAny);
+
   switch (edge.type.kind) {
     case EdgeKind.isa:{
       converter.put_isa(graph, answer_index, structureEdgeCoordinates, from as ObjectAny | Attribute, to as ObjectType | AttributeType);

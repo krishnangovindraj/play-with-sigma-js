@@ -16,8 +16,9 @@
         // Set a few globals
         var driver = null;
         var query_result = null;
-        var intermediate_graph = null;
+        var logicalGraph = null;
         var visualisationContext = null;
+        var activeConverter = null;
 
         // Initialisation on load
         window.onload= (()=> { 
@@ -67,9 +68,9 @@
                 let result = await driver.runQuery(form.database.value, form.query.value, form.txType);
                 query_result = updateStatus(result);
                 if (query_result.answerType == "conceptRows" && query_result.queryStructure != null) {
-                    intermediate_graph = constructGraphFromRowsResult(query_result); // In memory, not visualised
-                    let converter = new StudioConverter(query_result.queryStructure, StudioConverter.defaultStructureParameters, StudioConverter.defaultStyleParameters);
-                    drawLogicalGraphWith(visualisationContext, intermediate_graph, converter);
+                    logicalGraph = constructGraphFromRowsResult(query_result); // In memory, not visualised
+                    activeConverter = new StudioConverter(query_result.queryStructure, StudioConverter.defaultStructureParameters, StudioConverter.defaultStyleParameters);
+                    drawLogicalGraphWith(visualisationContext, logicalGraph, activeConverter);
                 }
             }
         }

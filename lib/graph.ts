@@ -38,7 +38,7 @@ export type VertexMap = Map<LogicalVertexID, LogicalVertex>;
 export type LogicalGraph = {
   vertices: VertexMap;
   // edges: Array<{ kind: string, edge: { from: ConceptAny, to: ConceptAny, role: TypeAny| null }}>;
-  edges: Array<Array<LogicalEdge>>;
+  answers: Array<Array<LogicalEdge>>;
 }
 
 ///////////////////////////////////
@@ -50,22 +50,22 @@ export function constructGraphFromRowsResult(rows_result: TypeDBRowsResult) : Lo
 
 var nextUnavailable = 0;
 class LogicalGraphBuilder {
-    all_vertices: VertexMap;
-    all_edges : Array<Array<LogicalEdge>> = [];
+    vertexMap: VertexMap;
+    answers : Array<Array<LogicalEdge>> = [];
     constructor() {
-        this.all_vertices = new Map();
-        this.all_edges = [];
+        this.vertexMap = new Map();
+        this.answers = [];
     }
 
     build(rows_result: TypeDBRowsResult) : LogicalGraph {
         rows_result.answers.forEach(row => {
             rows_result.queryStructure.branches.forEach((branch, branchIndex) => {
                 if ( 0 == branchIndex || 0 != (row.provenance & (1 << branchIndex)) ){
-                    this.all_edges.push(this.substitute_variables(branchIndex, branch.edges, row.data))
+                    this.answers.push(this.substitute_variables(branchIndex, branch.edges, row.data))
                 }
             });
         });
-        return { vertices: this.all_vertices, edges: this.all_edges };
+        return { vertices: this.vertexMap, answers: this.answers };
     }
 
     substitute_variables(branchIndex: number, branch: Array<StructureEdge>, data: TypeDBRowData) : Array<LogicalEdge> {
@@ -111,7 +111,7 @@ class LogicalGraphBuilder {
 
         }
         let vertex_id = key;
-        this.all_vertices.set(vertex_id, vertex);
+        this.vertexMap.set(vertex_id, vertex);
         return vertex_id;
     }
 

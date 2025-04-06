@@ -27,13 +27,13 @@ import {StructureEdge, StructureVertexKind, TypeDBQueryStructure} from "../typed
 export class StudioConverter implements ITypeDBToGraphology {
     styleParameters: StudioConverterStyleParameters;
     structureParameters: StudioConverterStructureParameters;
-    edgeCoordinatesToDraw: Array<StructureEdgeCoordinates>;
+    edgesToDraw: Array<Array<number>>;
 
     static defaultStyleParameters: StudioConverterStyleParameters;
     static defaultStructureParameters: StudioConverterStructureParameters;
 
     constructor(queryStructure: TypeDBQueryStructure, structureParameters: StudioConverterStructureParameters, styleParameters: StudioConverterStyleParameters) {
-        this.edgeCoordinatesToDraw = processQueryStructure(queryStructure, structureParameters);
+        this.edgesToDraw = determineEdgesToDraw(queryStructure, structureParameters);
         this.styleParameters = styleParameters;
         this.structureParameters = structureParameters;
     }
@@ -67,91 +67,106 @@ export class StudioConverter implements ITypeDBToGraphology {
         return from_id + ":" + to_id + ":" + edge_type_id;
     }
 
-    addNode(graph: Graph, key: string, attributes: any) {
-        graph.addNode(key, attributes);
+    mayAddNode(graph: Graph, key: string, attributes: any) {
+        if (!graph.hasNode(key)) {
+            graph.addNode(key, attributes);
+        }
     }
 
-    mayAddEdge(graph:Graph, from: string, to:string, edge_label:string, attributes: any) {
-        let key = this.edgeKey(from, to, edge_label);
-        if (!graph.hasDirectedEdge(key)) {
-            graph.addDirectedEdgeWithKey(key, from, to, attributes)
+    mayAddEdge(graph:Graph, coordinates: StructureEdgeCoordinates, from: string, to:string, edge_label:string, attributes: any) {
+        if (this.shouldDrawEdge(coordinates)) {
+            let key = this.edgeKey(from, to, edge_label);
+            if (!graph.hasDirectedEdge(key)) {
+                graph.addDirectedEdgeWithKey(key, from, to, attributes)
+            }
         }
     }
 
     // ITypeDBToGraphology
     // Vertices
-    put_attribute(graph: Graph, answer_index: number, vertex: Attribute): void {
-        this.addNode(graph, vertex.iid, this.vertexAttributes(vertex))
+    put_attribute(graph: Graph, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: Attribute): void {
+        if (this.shouldDrawEdge(structureEdgeCoordinates)) {
+            this.mayAddNode(graph, vertex.iid, this.vertexAttributes(vertex))
+        }
     }
 
-    put_entity(graph: Graph, answer_index:number, vertex: Entity): void {
-        this.addNode(graph, vertex.iid, this.vertexAttributes(vertex))
+    put_entity(graph: Graph, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: Entity): void {
+        if (this.shouldDrawEdge(structureEdgeCoordinates)) {
+            this.mayAddNode(graph, vertex.iid, this.vertexAttributes(vertex))
+        }
     }
 
-    put_relation(graph: Graph, answer_index:number, vertex: Relation): void {
-        this.addNode(graph, vertex.iid, this.vertexAttributes(vertex))
+    put_relation(graph: Graph, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: Relation): void {
+        if (this.shouldDrawEdge(structureEdgeCoordinates)) {
+            this.mayAddNode(graph, vertex.iid, this.vertexAttributes(vertex))
+        }
     }
-    put_attribute_type(graph: Graph, answer_index: number, vertex: AttributeType): void {
-        this.addNode(graph, vertex.label, this.vertexAttributes(vertex))
+    put_attribute_type(graph: Graph, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: AttributeType): void {
+        if (this.shouldDrawEdge(structureEdgeCoordinates)) {
+            this.mayAddNode(graph, vertex.label, this.vertexAttributes(vertex))
+        }
     }
-    put_entity_type(graph: Graph, answer_index: number, vertex: EntityType): void {
-        this.addNode(graph, vertex.label, this.vertexAttributes(vertex))
+    put_entity_type(graph: Graph, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: EntityType): void {
+        if (this.shouldDrawEdge(structureEdgeCoordinates)) {
+            this.mayAddNode(graph, vertex.label, this.vertexAttributes(vertex))
+        }
     }
-    put_relation_type(graph: Graph, answer_index: number, vertex: RelationType): void {
-        this.addNode(graph, vertex.label, this.vertexAttributes(vertex))
+    put_relation_type(graph: Graph, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: RelationType): void {
+        if (this.shouldDrawEdge(structureEdgeCoordinates)) {
+            this.mayAddNode(graph, vertex.label, this.vertexAttributes(vertex))
+        }
     }
 
-    put_role_type_for_type_constraint(graph: Graph, answer_index: number, vertex: RoleType): void {
+    put_role_type_for_type_constraint(graph: Graph, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: RoleType): void {
         let label = vertex.label;
-        graph.addNode(vertex.label, { label: label, color: chroma('darkorange').alpha(0.5).hex(), size: 5, x: Math.random(), y: Math.random() });
+        if (!graph.hasNode(vertex.label)) {
+            graph.addNode(vertex.label, { label: label, color: chroma('darkorange').alpha(0.5).hex(), size: 5, x: Math.random(), y: Math.random() });
+        }
     }
 
     // Edges
     put_isa(graph: Graph, answer_index: number, coordinates: StructureEdgeCoordinates, thing: Attribute | ObjectAny, type: AttributeType | ObjectType): void {
-        if (this.shouldDrawEdge(coordinates)) {
-            this.mayAddEdge(graph, thing.iid, type.label, EdgeKind.isa, this.edgeAttributes(EdgeKind.isa));
-        }
+        this.mayAddEdge(graph, coordinates, thing.iid, type.label, EdgeKind.isa, this.edgeAttributes(EdgeKind.isa));
     }
 
-    put_has(graph: Graph,  answer_index:number, coordinates: StructureEdgeCoordinates, owner: Entity | Relation, attribute: Attribute): void {
-        if (this.shouldDrawEdge(coordinates)) {
-            this.mayAddEdge(graph, owner.iid, attribute.iid, EdgeKind.has, this.edgeAttributes(EdgeKind.has));
-        }
+    put_has(graph: Graph,  answer_index: number, coordinates: StructureEdgeCoordinates, owner: Entity | Relation, attribute: Attribute): void {
+        this.mayAddEdge(graph, coordinates,owner.iid, attribute.iid, EdgeKind.has, this.edgeAttributes(EdgeKind.has));
+
     }
 
-    put_links(graph: Graph,  answer_index:number, coordinates: StructureEdgeCoordinates, relation: Relation, player: Entity | Relation, role: RoleType | VertexUnavailable): void {
+    put_links(graph: Graph,  answer_index: number, coordinates: StructureEdgeCoordinates, relation: Relation, player: Entity | Relation, role: RoleType | VertexUnavailable): void {
         let role_label = (role.kind == TypeKind.roleType) ?
             (role as RoleType).label :
             ("links_[" + coordinates.branchIndex + "," + coordinates.constraintIndex + "]");
-        this.mayAddEdge(graph, relation.iid, player.iid, role_label, this.edgeAttributes(role_label));
+        this.mayAddEdge(graph, coordinates, relation.iid, player.iid, role_label, this.edgeAttributes(role_label));
     }
 
     put_sub(graph: Graph, answer_index: number, coordinates: StructureEdgeCoordinates, subtype: AttributeType | ObjectType, supertype: AttributeType | ObjectType): void {
-        this.mayAddEdge(graph, subtype.label, supertype.label, EdgeKind.sub, this.edgeAttributes(EdgeKind.sub));
+        this.mayAddEdge(graph, coordinates, subtype.label, supertype.label, EdgeKind.sub, this.edgeAttributes(EdgeKind.sub));
     }
 
     put_owns(graph: Graph, answer_index: number, coordinates: StructureEdgeCoordinates, owner: ObjectType, attribute: AttributeType): void {
-        this.mayAddEdge(graph, owner.label, attribute.label, EdgeKind.sub, this.edgeAttributes(EdgeKind.owns));
+        this.mayAddEdge(graph, coordinates, owner.label, attribute.label, EdgeKind.sub, this.edgeAttributes(EdgeKind.owns));
     }
 
     put_relates(graph: Graph, answer_index: number, coordinates: StructureEdgeCoordinates, relation: RelationType, role: RoleType): void {
-        this.mayAddEdge(graph, relation.label, role.label, EdgeKind.relates, this.edgeAttributes(EdgeKind.relates));
+        this.mayAddEdge(graph, coordinates, relation.label, role.label, EdgeKind.relates, this.edgeAttributes(EdgeKind.relates));
     }
 
     put_plays(graph: Graph, answer_index: number, coordinates: StructureEdgeCoordinates, player: EntityType | RelationType, role: RoleType): void {
-        this.mayAddEdge(graph, player.label, role.label, EdgeKind.plays, this.edgeAttributes(EdgeKind.plays));
+        this.mayAddEdge(graph, coordinates, player.label, role.label, EdgeKind.plays, this.edgeAttributes(EdgeKind.plays));
     }
 
     put_isa_exact(graph: Graph, answer_index: number, coordinates: StructureEdgeCoordinates, thing: Attribute | ObjectAny, type: AttributeType | ObjectType): void {
-        this.mayAddEdge(graph, thing.iid, type.label, EdgeKind.isaExact, this.edgeAttributes(EdgeKind.isaExact));
+        this.mayAddEdge(graph, coordinates, thing.iid, type.label, EdgeKind.isaExact, this.edgeAttributes(EdgeKind.isaExact));
     }
 
     put_sub_exact(graph: Graph, answer_index: number, coordinates: StructureEdgeCoordinates, subtype: AttributeType | ObjectType, supertype: AttributeType | ObjectType): void {
-        this.mayAddEdge(graph, subtype.label, supertype.label, EdgeKind.subExact, this.edgeAttributes(EdgeKind.subExact));
+        this.mayAddEdge(graph, coordinates, subtype.label, supertype.label, EdgeKind.subExact, this.edgeAttributes(EdgeKind.subExact));
     }
 
     private shouldDrawEdge(edgeCoordinates: StructureEdgeCoordinates) {
-        return this.edgeCoordinatesToDraw.includes(edgeCoordinates);
+        return this.edgesToDraw[edgeCoordinates.branchIndex].includes(edgeCoordinates.constraintIndex);
     }
 }
 
@@ -214,24 +229,29 @@ StudioConverter.defaultStyleParameters = {
 };
 
 StudioConverter.defaultStructureParameters = {
-    ignoreEdgesInvolvingLabels: [EdgeKind.isa],
+    ignoreEdgesInvolvingLabels: [EdgeKind.isa, EdgeKind.sub, EdgeKind.relates, EdgeKind.plays],
 };
 
 
-function processQueryStructure(queryStructure: TypeDBQueryStructure, structureParameters: StudioConverterStructureParameters): Array<StructureEdgeCoordinates> {
-    return queryStructure.branches.flatMap((branch, branchIndex) =>
+function determineEdgesToDraw(queryStructure: TypeDBQueryStructure, structureParameters: StudioConverterStructureParameters): Array<Array<number>> {
+    let edgesToDraw: Array<Array<number>> = [];
+    queryStructure.branches.forEach((_) => {
+        edgesToDraw.push([]);
+    });
+    queryStructure.branches.flatMap((branch, branchIndex) =>
         branch.edges.map((edge, constraintIndex) => {
             return {edge: edge, coordinates: {branchIndex: branchIndex, constraintIndex: constraintIndex}};
         })
-    ).filter((element) => {
-        let edge = element.edge;
-        mustDrawEdge(edge, structureParameters)
-    }).map((element) => element.coordinates);
+    ).filter((element) => mustDrawEdge(element.edge, structureParameters))
+    .forEach((element) => {
+        edgesToDraw[element.coordinates.branchIndex].push(element.coordinates.constraintIndex);
+    });
+    return edgesToDraw;
 }
 
 function mustDrawEdge(edge: StructureEdge, structureParameters: StudioConverterStructureParameters) : boolean {
     let isLabelledEdge = (edge.from.kind == StructureVertexKind.label || edge.to.kind == StructureVertexKind.label);
-    if (isLabelledEdge && !(structureParameters.ignoreEdgesInvolvingLabels.includes(edge.type.kind))) {
+    if (isLabelledEdge && structureParameters.ignoreEdgesInvolvingLabels.includes(edge.type.kind)) {
         return false;
     }
     return true;
