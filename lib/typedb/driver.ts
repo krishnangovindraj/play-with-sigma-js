@@ -1,4 +1,4 @@
-import {TypeDBAnswerAny, TypeDBQueryResponse} from "./common.js";
+import {TypeDBAnswerAny} from "./answer";
 
 export type TypeDBResult<OK> = {
     ok: OK | undefined,

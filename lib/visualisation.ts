@@ -13,8 +13,8 @@ import {
   RoleType,
   ThingKind,
   TypeKind
-} from "./concept.js";
-import {LogicalEdge, LogicalGraph, LogicalVertex, VertexUnavailable} from "./graph.js";
+} from "./typedb/concept";
+import {LogicalEdge, LogicalGraph, LogicalVertex, VertexUnavailable} from "./graph";
 
 export type VisualisationContext = {
   graph: Graph;

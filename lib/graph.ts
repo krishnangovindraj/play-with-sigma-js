@@ -1,4 +1,3 @@
-import {TypeDBRowData, TypeDBRowsResult} from "./common";
 import {
     Attribute,
     ConceptAny,
@@ -11,14 +10,15 @@ import {
     TypeKind,
     UnavailableKind,
     ValueKind
-} from "./concept";
+} from "./typedb/concept";
 import {
+    TypeDBRowData, TypeDBRowsResult,
     StructureEdge,
     StructureEdgTypeAny,
     StructureVertex,
     StructureVertexKind, StructureVertexLabel,
     StructureVertexVariable
-} from "./querystructure.js"
+} from "./typedb/answer"
 
 //////////////////////////
 // Logical TypeDB Graph //
