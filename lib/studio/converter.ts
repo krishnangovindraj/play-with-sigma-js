@@ -113,7 +113,7 @@ export class StudioConverter implements ILogicalGraphConverter {
     }
 
     put_vertex_unvailable(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: VertexUnavailable): void {
-        this.mayAddNode(structureEdgeCoordinates, vertex.iid, this.vertexAttributes(vertex));
+        this.mayAddNode(structureEdgeCoordinates, unavailable_key(vertex), this.vertexAttributes(vertex));
     }
 
     // Edges
@@ -199,9 +199,13 @@ function mustDrawEdge(edge: StructureEdge, structureParameters: StudioConverterS
 }
 
 function safe_iid(vertex: ObjectAny | Attribute | VertexUnavailable) {
-    return vertex.iid;
+    return (vertex.kind == "unavailable") ? unavailable_key(vertex) : vertex.iid;
 }
 
 function safe_label(vertex: TypeAny | VertexUnavailable) {
-    return (vertex.kind == "unavailable") ? vertex.iid : vertex.label;
+    return (vertex.kind == "unavailable") ? unavailable_key(vertex) : vertex.label;
+}
+
+export function unavailable_key(vertex: VertexUnavailable) : string {
+    return "unavailable[" + vertex.variable + "][" + vertex.answerIndex + "]";
 }

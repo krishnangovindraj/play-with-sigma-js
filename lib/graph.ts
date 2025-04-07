@@ -23,7 +23,7 @@ import {
 //////////////////////////
 // Logical TypeDB Graph //
 //////////////////////////
-export type VertexUnavailable = { kind: UnavailableKind, iid: string };
+export type VertexUnavailable = { kind: UnavailableKind, variable: String, answerIndex: number, vertex_map_key: string };
 export type EdgeParameter = RoleType | VertexUnavailable | number | null;
 
 export type LogicalVertexKind = ThingKind | TypeKind | ValueKind | UnavailableKind;
@@ -103,7 +103,7 @@ class LogicalGraphBuilder {
                 break;
             }
             case "unavailable": {
-                key = (vertex as VertexUnavailable).iid;
+                key = (vertex as VertexUnavailable).vertex_map_key;
                 break;
             }
 
@@ -128,8 +128,8 @@ class LogicalGraphBuilder {
             }
             case StructureVertexKind.unavailable: {
                 let vertex = structure_vertex.value as StructureVertexUnavailable;
-                let iid = "unavailable[" + vertex.variable + "][" + answerIndex + "]";
-                return { kind: "unavailable", iid: iid } as VertexUnavailable;
+                let key = "unavailable[" + vertex.variable + "][" + answerIndex + "]";
+                return { kind: "unavailable", vertex_map_key: key, answerIndex: answerIndex, variable: vertex.variable } as VertexUnavailable;
             }
         }
     }

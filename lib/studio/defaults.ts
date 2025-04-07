@@ -4,6 +4,7 @@ import {LogicalVertex, VertexUnavailable} from "../graph";
 import {NodeSquareProgram} from "@sigma/node-square";
 import {ForceLayoutSettings} from "graphology-layout-force";
 import {Settings as SigmaSettings} from "sigma/settings";
+import {unavailable_key} from "./converter.js";
 
 export const defaultStyleParameters = {
     vertex_colors: {
@@ -53,7 +54,7 @@ export const defaultStyleParameters = {
                 return vertex.value;
             }
             case "unavailable": {
-                return vertex.iid;
+                return unavailable_key(vertex);
             }
         }
     },
@@ -78,7 +79,7 @@ export const defaultStyleParameters = {
                 return vertex.value_type +":" + vertex.value;
             }
             case "unavailable": {
-                return vertex.iid;
+                return unavailable_key(vertex);
             }
         }
     },
