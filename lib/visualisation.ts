@@ -111,84 +111,81 @@ export function createVisualisationContext(container_id: string, sigma_settings:
  *  graph.addNode(from, to,  attributes)
  * See: https://www.sigmajs.org/docs/advanced/data/ for attributes
  */
-export interface ITypeDBToGraphology {
+export interface ILogicalGraphConverter {
   // TODO: Functional vertices & edges like expressions, comparisons & function calls
 
   // Vertices
-  put_attribute(graph: Graph, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: Attribute): void;
+  put_attribute(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: Attribute): void;
 
-  put_entity(graph: Graph, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: Entity): void;
+  put_entity(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: Entity): void;
 
-  put_relation(graph: Graph, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: Relation): void;
+  put_relation(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: Relation): void;
 
-  put_attribute_type(graph: Graph, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: AttributeType): void;
+  put_attribute_type(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: AttributeType): void;
 
-  put_entity_type(graph: Graph, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: EntityType): void;
+  put_entity_type(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: EntityType): void;
 
-  put_relation_type(graph: Graph, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: RelationType): void;
+  put_relation_type(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: RelationType): void;
 
-  put_role_type_for_type_constraint(graph: Graph, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: RoleType): void;
+  put_role_type_for_type_constraint(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: RoleType): void;
 
 
   // Edges
-  put_isa(graph: Graph, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, thing: Entity | Relation | Attribute, type: EntityType | RelationType | AttributeType): void;
+  put_isa(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, thing: Entity | Relation | Attribute, type: EntityType | RelationType | AttributeType): void;
 
-  put_has(graph: Graph, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, owner: Entity | Relation, attribute: Attribute): void;
+  put_has(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, owner: Entity | Relation, attribute: Attribute): void;
 
-  put_links(graph: Graph, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, relation: Relation, player: Entity | Relation, role: RoleType | VertexUnavailable): void;
+  put_links(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, relation: Relation, player: Entity | Relation, role: RoleType | VertexUnavailable): void;
 
-  put_sub(graph: Graph, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, subtype: EntityType | RelationType | AttributeType, supertype: EntityType | RelationType | AttributeType): void;
+  put_sub(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, subtype: EntityType | RelationType | AttributeType, supertype: EntityType | RelationType | AttributeType): void;
 
-  put_owns(graph: Graph, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, owner: EntityType | RelationType, attribute: AttributeType): void;
+  put_owns(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, owner: EntityType | RelationType, attribute: AttributeType): void;
 
-  put_relates(graph: Graph, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, relation: RelationType, role: RoleType | VertexUnavailable): void;
+  put_relates(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, relation: RelationType, role: RoleType | VertexUnavailable): void;
 
-  put_plays(graph: Graph, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, player: EntityType | RelationType, role: RoleType | VertexUnavailable): void;
+  put_plays(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, player: EntityType | RelationType, role: RoleType | VertexUnavailable): void;
 
-  put_isa_exact(graph: Graph, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, thing: Entity | Relation | Attribute, type: EntityType | RelationType | AttributeType): void;
+  put_isa_exact(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, thing: Entity | Relation | Attribute, type: EntityType | RelationType | AttributeType): void;
 
-  put_sub_exact(graph: Graph, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, subtype: EntityType | RelationType | AttributeType, supertype: EntityType | RelationType | AttributeType): void;
+  put_sub_exact(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, subtype: EntityType | RelationType | AttributeType, supertype: EntityType | RelationType | AttributeType): void;
 }
 
-export function drawLogicalGraphWith(context: VisualisationContext, logicalGraph: LogicalGraph, converter: ITypeDBToGraphology): Graph {
-  let graph = context.graph;
-  graph.clear();
+export function convertLogicalGraphWith(logicalGraph: LogicalGraph, converter: ILogicalGraphConverter) {
   logicalGraph.answers.forEach((edgeList, answerIndex) => {
     edgeList.forEach(edge => {
-      putEdge(graph, converter, answerIndex, edge.structureEdgeCoordinates, edge, logicalGraph);
+      putEdge(converter, answerIndex, edge.structureEdgeCoordinates, edge, logicalGraph);
     });
   });
-  return graph;
 }
 
-function putVertex(graph: Graph, converter: ITypeDBToGraphology, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: LogicalVertex) {
+function putVertex(converter: ILogicalGraphConverter, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: LogicalVertex) {
   switch (vertex.kind) {
     case ThingKind.entity: {
-      converter.put_entity(graph, answer_index, structureEdgeCoordinates, vertex as Entity);
+      converter.put_entity(answer_index, structureEdgeCoordinates, vertex as Entity);
       break;
     }
     case ThingKind.attribute : {
-      converter.put_attribute(graph, answer_index, structureEdgeCoordinates, vertex as Attribute);
+      converter.put_attribute(answer_index, structureEdgeCoordinates, vertex as Attribute);
       break;
     }
     case ThingKind.relation : {
-      converter.put_relation(graph, answer_index, structureEdgeCoordinates, vertex as Relation);
+      converter.put_relation(answer_index, structureEdgeCoordinates, vertex as Relation);
       break;
     }
     case TypeKind.attributeType : {
-      converter.put_attribute_type(graph, answer_index, structureEdgeCoordinates, vertex as AttributeType);
+      converter.put_attribute_type(answer_index, structureEdgeCoordinates, vertex as AttributeType);
       break;
     }
     case  TypeKind.entityType : {
-      converter.put_entity_type(graph, answer_index, structureEdgeCoordinates, vertex as EntityType);
+      converter.put_entity_type(answer_index, structureEdgeCoordinates, vertex as EntityType);
       break;
     }
     case TypeKind.relationType : {
-      converter.put_relation_type(graph, answer_index, structureEdgeCoordinates, vertex as RelationType);
+      converter.put_relation_type(answer_index, structureEdgeCoordinates, vertex as RelationType);
       break;
     }
     case TypeKind.roleType : {
-      converter.put_role_type_for_type_constraint(graph, answer_index, structureEdgeCoordinates, vertex as RoleType);
+      converter.put_role_type_for_type_constraint(answer_index, structureEdgeCoordinates, vertex as RoleType);
       break;
     }
     default : {
@@ -198,50 +195,50 @@ function putVertex(graph: Graph, converter: ITypeDBToGraphology, answer_index: n
   }
 }
 
-function putEdge(graph: Graph, converter: ITypeDBToGraphology, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, edge: LogicalEdge, logicalGraph: LogicalGraph) {
+function putEdge(converter: ILogicalGraphConverter, answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, edge: LogicalEdge, logicalGraph: LogicalGraph) {
   let from = logicalGraph.vertices.get(edge.from);
   let to = logicalGraph.vertices.get(edge.to);
   let edgeParam = edge.type.param;
   // First put vertices, then the edge
-  putVertex(graph, converter, answer_index, structureEdgeCoordinates, from as ConceptAny);
-  putVertex(graph, converter, answer_index, structureEdgeCoordinates, to as ConceptAny);
+  putVertex(converter, answer_index, structureEdgeCoordinates, from as ConceptAny);
+  putVertex(converter, answer_index, structureEdgeCoordinates, to as ConceptAny);
 
   switch (edge.type.kind) {
     case EdgeKind.isa:{
-      converter.put_isa(graph, answer_index, structureEdgeCoordinates, from as ObjectAny | Attribute, to as ObjectType | AttributeType);
+      converter.put_isa(answer_index, structureEdgeCoordinates, from as ObjectAny | Attribute, to as ObjectType | AttributeType);
       break;
     }
     case EdgeKind.has: {
-      converter.put_has(graph, answer_index, structureEdgeCoordinates, from as ObjectAny, to as Attribute);
+      converter.put_has(answer_index, structureEdgeCoordinates, from as ObjectAny, to as Attribute);
       break;
     }
     case EdgeKind.links : {
-      converter.put_links(graph, answer_index, structureEdgeCoordinates, from as Relation, to as ObjectAny, edgeParam as RoleType | VertexUnavailable);
+      converter.put_links(answer_index, structureEdgeCoordinates, from as Relation, to as ObjectAny, edgeParam as RoleType | VertexUnavailable);
       break;
     }
 
     case EdgeKind.sub: {
-      converter.put_sub(graph, answer_index, structureEdgeCoordinates, from as ObjectType | AttributeType, to as ObjectType | AttributeType);
+      converter.put_sub(answer_index, structureEdgeCoordinates, from as ObjectType | AttributeType, to as ObjectType | AttributeType);
       break;
     }
     case EdgeKind.owns: {
-      converter.put_owns(graph, answer_index, structureEdgeCoordinates, from as ObjectType, to as AttributeType);
+      converter.put_owns(answer_index, structureEdgeCoordinates, from as ObjectType, to as AttributeType);
       break;
     }
     case EdgeKind.relates: {
-      converter.put_relates(graph, answer_index, structureEdgeCoordinates, from as RelationType, to as RoleType | VertexUnavailable);
+      converter.put_relates(answer_index, structureEdgeCoordinates, from as RelationType, to as RoleType | VertexUnavailable);
       break;
     }
     case EdgeKind.plays: {
-      converter.put_plays(graph, answer_index, structureEdgeCoordinates, from as EntityType | RelationType, to as RoleType | VertexUnavailable);
+      converter.put_plays(answer_index, structureEdgeCoordinates, from as EntityType | RelationType, to as RoleType | VertexUnavailable);
       break;
     }
     case EdgeKind.isaExact: {
-      converter.put_isa_exact(graph, answer_index, structureEdgeCoordinates, from as ObjectAny | Attribute, to as ObjectType | AttributeType);
+      converter.put_isa_exact(answer_index, structureEdgeCoordinates, from as ObjectAny | Attribute, to as ObjectType | AttributeType);
       break;
     }
     case EdgeKind.subExact: {
-      converter.put_sub_exact(graph, answer_index, structureEdgeCoordinates, from as ObjectType, to as ObjectType);
+      converter.put_sub_exact(answer_index, structureEdgeCoordinates, from as ObjectType, to as ObjectType);
       break;
     }
 

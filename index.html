@@ -69,8 +69,8 @@
                 query_result = updateStatus(result);
                 if (query_result.answerType == "conceptRows" && query_result.queryStructure != null) {
                     logicalGraph = constructGraphFromRowsResult(query_result); // In memory, not visualised
-                    activeConverter = new StudioConverter(query_result.queryStructure, StudioConverter.defaultStructureParameters, StudioConverter.defaultStyleParameters);
-                    drawLogicalGraphWith(visualisationContext, logicalGraph, activeConverter);
+                    activeConverter = new StudioConverter(visualisationContext.graph, query_result.queryStructure, StudioConverter.defaultStructureParameters, StudioConverter.defaultStyleParameters);
+                    drawLogicalGraphWith(logicalGraph, activeConverter);
                 }
             }
         }
