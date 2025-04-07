@@ -10,7 +10,7 @@ import {
   RelationType,
   RoleType,
   ThingKind,
-  TypeKind
+  TypeKind,
 } from "./typedb/concept";
 import {LogicalEdge, LogicalGraph, LogicalVertex, StructureEdgeCoordinates, VertexUnavailable} from "./graph";
 
@@ -108,6 +108,7 @@ export interface ILogicalGraphConverter {
 
   put_role_type_for_type_constraint(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: RoleType): void;
 
+  put_vertex_unvailable(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: VertexUnavailable): void;
 
   // Edges
   put_isa(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, thing: Entity | Relation | Attribute, type: EntityType | RelationType | AttributeType): void;
@@ -167,9 +168,12 @@ function putVertex(converter: ILogicalGraphConverter, answer_index: number, stru
       converter.put_role_type_for_type_constraint(answer_index, structureEdgeCoordinates, vertex as RoleType);
       break;
     }
+    case "unavailable" : {
+      converter.put_vertex_unvailable(answer_index, structureEdgeCoordinates, vertex as VertexUnavailable);
+      break;
+    }
     default : {
-      console.log("VertedKind not yet supported: ");
-      console.log(vertex.kind);
+      console.log("VertedKind not yet supported: " + vertex.kind);
     }
   }
 }

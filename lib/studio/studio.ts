@@ -33,6 +33,7 @@ export class TypeDBStudio {
 
     createConverter(structure: TypeDBQueryStructure) : ILogicalGraphConverter {
         // TODO: parameters
+        this.graph.clear();
         return new StudioConverter(this.graph, structure, studioDefaultSettings.defaultStructureParameters, studioDefaultSettings.defaultStyleParameters);
     }
 }

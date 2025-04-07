@@ -17,7 +17,7 @@ import {
     StructureEdgTypeAny,
     StructureVertex,
     StructureVertexKind, StructureVertexLabel,
-    StructureVertexVariable
+    StructureVertexVariable, StructureVertexUnavailable
 } from "./typedb/answer"
 
 //////////////////////////
@@ -47,7 +47,6 @@ export function constructGraphFromRowsResult(rows_result: TypeDBRowsResult) : Lo
     return new LogicalGraphBuilder().build(rows_result);
 }
 
-var nextUnavailable = 0;
 class LogicalGraphBuilder {
     vertexMap: VertexMap;
     answers : Array<Array<LogicalEdge>> = [];
@@ -57,28 +56,28 @@ class LogicalGraphBuilder {
     }
 
     build(rows_result: TypeDBRowsResult) : LogicalGraph {
-        rows_result.answers.forEach(row => {
+        rows_result.answers.forEach((row, answerIndex) => {
             rows_result.queryStructure.branches.forEach((branch, branchIndex) => {
                 if ( 0 == branchIndex || 0 != (row.provenance & (1 << branchIndex)) ){
-                    this.answers.push(this.substitute_variables(branchIndex, branch.edges, row.data))
+                    this.answers.push(this.substitute_variables(branchIndex, answerIndex, branch.edges, row.data))
                 }
             });
         });
         return { vertices: this.vertexMap, answers: this.answers };
     }
 
-    substitute_variables(branchIndex: number, branch: Array<StructureEdge>, data: TypeDBRowData) : Array<LogicalEdge> {
+    substitute_variables(branchIndex: number, answerIndex: number, branch: Array<StructureEdge>, data: TypeDBRowData) : Array<LogicalEdge> {
         return branch.map((structure_edge, constraintIndex) => {
             let coordinates = { branchIndex: branchIndex, constraintIndex: constraintIndex } ;
-            let edge_type = this.extract_edge_type(structure_edge.type, data);
-            let from = this.register_vertex(structure_edge.from, data);
-            let to = this.register_vertex(structure_edge.to, data);
+            let edge_type = this.extract_edge_type(structure_edge.type, answerIndex, data);
+            let from = this.register_vertex(structure_edge.from, answerIndex, data);
+            let to = this.register_vertex(structure_edge.to, answerIndex, data);
             return { structureEdgeCoordinates: coordinates, type: edge_type, from: from, to: to }
         });
     }
 
-    register_vertex(structure_vertex: StructureVertex, data: TypeDBRowData): LogicalVertexID {
-        let vertex = this.translate_vertex(structure_vertex, data);
+    register_vertex(structure_vertex: StructureVertex, answerIndex: number, data: TypeDBRowData): LogicalVertexID {
+        let vertex = this.translate_vertex(structure_vertex, answerIndex, data);
         let key = null;
         switch (vertex.kind) {
             case ThingKind.attribute:{
@@ -104,7 +103,7 @@ class LogicalGraphBuilder {
                 break;
             }
             case "unavailable": {
-                key = "unavailable#" + (vertex as VertexUnavailable).iid;
+                key = (vertex as VertexUnavailable).iid;
                 break;
             }
 
@@ -114,7 +113,7 @@ class LogicalGraphBuilder {
         return vertex_id;
     }
 
-    translate_vertex(structure_vertex: StructureVertex, data: TypeDBRowData): LogicalVertex {
+    translate_vertex(structure_vertex: StructureVertex, answerIndex: number, data: TypeDBRowData): LogicalVertex {
         switch (structure_vertex.kind) {
             case StructureVertexKind.variable: {
                 return data[(structure_vertex.value as StructureVertexVariable).variable] as ConceptAny;
@@ -128,8 +127,9 @@ class LogicalGraphBuilder {
                 return structure_vertex.value as TypeDBValue;
             }
             case StructureVertexKind.unavailable: {
-                nextUnavailable += 1;
-                return { kind: "unavailable", iid: "unavailable_" + nextUnavailable  } as VertexUnavailable;
+                let vertex = structure_vertex.value as StructureVertexUnavailable;
+                let iid = "unavailable[" + vertex.variable + "][" + answerIndex + "]";
+                return { kind: "unavailable", iid: iid } as VertexUnavailable;
             }
         }
     }
@@ -146,7 +146,7 @@ class LogicalGraphBuilder {
         }
     }
 
-    extract_edge_type(structure_edge_type: StructureEdgTypeAny, data: TypeDBRowData): LogicalEdgeType {
+    extract_edge_type(structure_edge_type: StructureEdgTypeAny, answerIndex: number, data: TypeDBRowData): LogicalEdgeType {
         switch (structure_edge_type.kind) {
             case EdgeKind.isa:
             case EdgeKind.has:
@@ -160,7 +160,7 @@ class LogicalGraphBuilder {
                 return { kind: structure_edge_type.kind, param: null };
             }
             case EdgeKind.links: {
-                let role = this.translate_vertex(structure_edge_type.param as StructureVertex, data);
+                let role = this.translate_vertex(structure_edge_type.param as StructureVertex, answerIndex, data);
                 return { kind: structure_edge_type.kind, param: role as RoleType | VertexUnavailable };
             }
             default: {

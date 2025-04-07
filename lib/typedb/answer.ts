@@ -52,7 +52,7 @@ export type StructureVertex = {
 export type StructureVertexVariable = { variable: string };
 export type StructureVertexLabel = {  kind: ThingKind, label: string }; // Unfortunate that it's ThingKind
 export type StructureVertexValue = TypeDBValue; // { value_type: TypeDBValueType, value: any };
-export type StructureVertexUnavailable = null;
+export type StructureVertexUnavailable = {  variable: string };
 export type StructureVertexAny = StructureVertexVariable | StructureVertexUnavailable | StructureVertexLabel | StructureVertexValue;
 
 export enum StructureVertexKind {

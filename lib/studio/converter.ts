@@ -10,7 +10,7 @@ import {
     ObjectType,
     Relation,
     RelationType,
-    RoleType,
+    RoleType, TypeAny,
     TypeKind
 } from "../typedb/concept";
 import {ILogicalGraphConverter} from "../visualisation";
@@ -112,15 +112,19 @@ export class StudioConverter implements ILogicalGraphConverter {
         }
     }
 
+    put_vertex_unvailable(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: VertexUnavailable): void {
+        this.mayAddNode(structureEdgeCoordinates, vertex.iid, this.vertexAttributes(vertex));
+    }
+
     // Edges
     put_isa(answerIndex: number, coordinates: StructureEdgeCoordinates, thing: Attribute | ObjectAny, type: AttributeType | ObjectType): void {
         let attributes = this.edgeAttributes(EdgeKind.isa, this.edgeMetadata(answerIndex, coordinates));
-        this.mayAddEdge(coordinates, thing.iid, type.label, EdgeKind.isa, attributes);
+        this.mayAddEdge(coordinates, safe_iid(thing), safe_label(type), EdgeKind.isa, attributes);
     }
 
     put_has(answerIndex: number, coordinates: StructureEdgeCoordinates, owner: Entity | Relation, attribute: Attribute): void {
         let attributes = this.edgeAttributes(EdgeKind.has, this.edgeMetadata(answerIndex, coordinates));
-        this.mayAddEdge(coordinates,owner.iid, attribute.iid, EdgeKind.has, attributes);
+        this.mayAddEdge(coordinates,safe_iid(owner), safe_iid(attribute), EdgeKind.has, attributes);
     }
 
     put_links(answerIndex: number, coordinates: StructureEdgeCoordinates, relation: Relation, player: Entity | Relation, role: RoleType | VertexUnavailable): void {
@@ -128,37 +132,37 @@ export class StudioConverter implements ILogicalGraphConverter {
             (role as RoleType).label :
             ("links_[" + coordinates.branchIndex + "," + coordinates.constraintIndex + "]");
         let attributes = this.edgeAttributes(role_label, this.edgeMetadata(answerIndex, coordinates));
-        this.mayAddEdge(coordinates, relation.iid, player.iid, role_label, attributes);
+        this.mayAddEdge(coordinates, safe_iid(relation), safe_iid(player), role_label, attributes);
     }
 
     put_sub(answerIndex: number, coordinates: StructureEdgeCoordinates, subtype: AttributeType | ObjectType, supertype: AttributeType | ObjectType): void {
         let attributes = this.edgeAttributes(EdgeKind.sub, coordinates);
-        this.mayAddEdge(coordinates, subtype.label, supertype.label, EdgeKind.sub, attributes);
+        this.mayAddEdge(coordinates, safe_label(subtype), safe_label(supertype), EdgeKind.sub, attributes);
     }
 
     put_owns(answerIndex: number, coordinates: StructureEdgeCoordinates, owner: ObjectType, attribute: AttributeType): void {
         let attributes = this.edgeAttributes(EdgeKind.owns, this.edgeMetadata(answerIndex, coordinates));
-        this.mayAddEdge(coordinates, owner.label, attribute.label, EdgeKind.owns, attributes);
+        this.mayAddEdge(coordinates, safe_label(owner), safe_label(attribute), EdgeKind.owns, attributes);
     }
 
     put_relates(answerIndex: number, coordinates: StructureEdgeCoordinates, relation: RelationType, role: RoleType): void {
         let attributes = this.edgeAttributes(EdgeKind.relates, this.edgeMetadata(answerIndex, coordinates));
-        this.mayAddEdge(coordinates, relation.label, role.label, EdgeKind.relates, attributes);
+        this.mayAddEdge(coordinates, safe_label(relation), safe_label(role), EdgeKind.relates, attributes);
     }
 
     put_plays(answerIndex: number, coordinates: StructureEdgeCoordinates, player: EntityType | RelationType, role: RoleType): void {
         let attributes = this.edgeAttributes(EdgeKind.plays, this.edgeMetadata(answerIndex, coordinates));
-        this.mayAddEdge(coordinates, player.label, role.label, EdgeKind.plays, attributes);
+        this.mayAddEdge(coordinates, safe_label(player), safe_label(role), EdgeKind.plays, attributes);
     }
 
     put_isa_exact(answerIndex: number, coordinates: StructureEdgeCoordinates, thing: Attribute | ObjectAny, type: AttributeType | ObjectType): void {
         let attributes = this.edgeAttributes(EdgeKind.isaExact, this.edgeMetadata(answerIndex, coordinates));
-        this.mayAddEdge(coordinates, thing.iid, type.label, EdgeKind.isaExact, attributes);
+        this.mayAddEdge(coordinates, safe_iid(thing), safe_label(type), EdgeKind.isaExact, attributes);
     }
 
     put_sub_exact(answerIndex: number, coordinates: StructureEdgeCoordinates, subtype: AttributeType | ObjectType, supertype: AttributeType | ObjectType): void {
         let attributes = this.edgeAttributes(EdgeKind.subExact, this.edgeMetadata(answerIndex, coordinates));
-        this.mayAddEdge(coordinates, subtype.label, supertype.label, EdgeKind.subExact, attributes);
+        this.mayAddEdge(coordinates, safe_label(subtype), safe_label(supertype), EdgeKind.subExact, attributes);
     }
 
     private shouldDrawEdge(edgeCoordinates: StructureEdgeCoordinates) {
@@ -192,4 +196,12 @@ function mustDrawEdge(edge: StructureEdge, structureParameters: StudioConverterS
         return false;
     }
     return true;
+}
+
+function safe_iid(vertex: ObjectAny | Attribute | VertexUnavailable) {
+    return vertex.iid;
+}
+
+function safe_label(vertex: TypeAny | VertexUnavailable) {
+    return (vertex.kind == "unavailable") ? vertex.iid : vertex.label;
 }

@@ -53,7 +53,7 @@ export const defaultStyleParameters = {
                 return vertex.value;
             }
             case "unavailable": {
-                return "?";
+                return vertex.iid;
             }
         }
     },
@@ -78,7 +78,7 @@ export const defaultStyleParameters = {
                 return vertex.value_type +":" + vertex.value;
             }
             case "unavailable": {
-                return "?";
+                return vertex.iid;
             }
         }
     },
