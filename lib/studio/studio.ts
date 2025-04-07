@@ -6,6 +6,7 @@ import {StudioConverter} from "./converter";
 import {TypeDBQueryStructure} from "../typedb/answer";
 
 import * as studioDefaultSettings from "./defaults";
+import {StudioInteractionHandler} from "./interaction.js";
 
 type StudioEventHandler = {};
 
@@ -21,12 +22,13 @@ export class TypeDBStudio {
         this.layout = new ForceSupervisor(graph, { isNodeFixed: (_, attr) => attr.highlighted, settings: studioDefaultSettings.defaultForceSupervisorSettings});
         this.layout.start();
 
-        this.eventHandler = {}; // TODO
+        this.eventHandler = new StudioInteractionHandler(graph, renderer);
     }
 
     unfreeze() {
         this.layout.start();
-    } 
+    }
+
     freeze() {
         this.layout.stop();
     }
