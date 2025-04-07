@@ -10,7 +10,8 @@ export interface StudioConverterStyleParameters {
     edge_color: Color,
     edge_size: number
 
-    vertex_label: (vertex: LogicalVertex) => string;
+    vertex_default_label: (vertex: LogicalVertex) => string;
+    vertex_hover_label: (vertex: LogicalVertex) => string;
     links_edge_label: (role: RoleType | VertexUnavailable) => string;
 }
 
