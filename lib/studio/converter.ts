@@ -31,7 +31,7 @@ export class StudioConverter implements ILogicalGraphConverter {
         this.structureParameters = structureParameters;
     }
 
-    vertexAttributes(vertex: LogicalVertex): any {
+    private vertexAttributes(vertex: LogicalVertex): any {
         // Extend as you please: https://www.sigmajs.org/docs/advanced/data/
         let color = this.styleParameters.vertex_colors[vertex.kind];
         let shape = this.styleParameters.vertex_shapes[vertex.kind];
@@ -43,13 +43,17 @@ export class StudioConverter implements ILogicalGraphConverter {
             x: Math.random(),
             y: Math.random(),
             metadata: {
-                default_label: this.styleParameters.vertex_default_label(vertex),
-                hover_label: this.styleParameters.vertex_hover_label(vertex),
+                defaultLabel: this.styleParameters.vertex_default_label(vertex),
+                hoverLabel: this.styleParameters.vertex_hover_label(vertex),
             },
         }
     }
 
-    edgeAttributes(label: string, metadata: any | undefined): any {
+    private edgeMetadata(answerIndex: number, coordinates: StructureEdgeCoordinates) {
+        return { answerIndex: answerIndex, structureEdgeCoordinates: coordinates };
+    }
+
+    private edgeAttributes(label: string, metadata: any | undefined): any {
         // Extend as you please: https://www.sigmajs.org/docs/advanced/data/
         let color = this.styleParameters.edge_color;
         return {
@@ -61,11 +65,11 @@ export class StudioConverter implements ILogicalGraphConverter {
         }
     }
 
-    edgeKey(from_id: string, to_id: string, edge_type_id: string) : string {
+    private edgeKey(from_id: string, to_id: string, edge_type_id: string) : string {
         return from_id + ":" + to_id + ":" + edge_type_id;
     }
 
-    mayAddNode(structureEdgeCoordinates: StructureEdgeCoordinates, key: string, attributes: any) {
+    private  mayAddNode(structureEdgeCoordinates: StructureEdgeCoordinates, key: string, attributes: any) {
         if (this.shouldDrawEdge(structureEdgeCoordinates)) {
             if (!this.graph.hasNode(key)) {
                 this.graph.addNode(key, attributes);
@@ -73,7 +77,7 @@ export class StudioConverter implements ILogicalGraphConverter {
         }
     }
 
-    mayAddEdge(coordinates: StructureEdgeCoordinates, from: string, to:string, edge_label:string, attributes: any) {
+    private mayAddEdge(coordinates: StructureEdgeCoordinates, from: string, to:string, edge_label:string, attributes: any) {
         if (this.shouldDrawEdge(coordinates)) {
             let key = this.edgeKey(from, to, edge_label);
             if (!this.graph.hasDirectedEdge(key)) {
@@ -167,10 +171,6 @@ export class StudioConverter implements ILogicalGraphConverter {
 
     private shouldDrawEdge(edgeCoordinates: StructureEdgeCoordinates) {
         return this.edgesToDraw[edgeCoordinates.branchIndex].includes(edgeCoordinates.constraintIndex);
-    }
-
-    private edgeMetadata(answerIndex: number, coordinates: StructureEdgeCoordinates) {
-        return { answerIndex: answerIndex, structureEdgeCoordinates: coordinates };
     }
 }
 

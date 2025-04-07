@@ -8,6 +8,7 @@ export interface StudioConverterStyleParameters {
     vertex_size: number,
 
     edge_color: Color,
+    edge_highlight_color: Color;
     edge_size: number
 
     vertex_default_label: (vertex: LogicalVertex) => string;

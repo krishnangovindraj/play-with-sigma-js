@@ -5,8 +5,9 @@ import {NodeSquareProgram} from "@sigma/node-square";
 import {ForceLayoutSettings} from "graphology-layout-force";
 import {Settings as SigmaSettings} from "sigma/settings";
 import {unavailable_key} from "./converter.js";
+import {StudioConverterStructureParameters, StudioConverterStyleParameters} from "./config.js";
 
-export const defaultStyleParameters = {
+export const defaultStyleParameters: StudioConverterStyleParameters = {
     vertex_colors: {
         [ThingKind.entity]: chroma("pink"),
         [ThingKind.relation]: chroma("yellow"),
@@ -32,6 +33,7 @@ export const defaultStyleParameters = {
     vertex_size: 10,
 
     edge_color: chroma("grey"),
+    edge_highlight_color: chroma("cyan"),
     edge_size: 4,
 
     vertex_default_label(vertex: LogicalVertex): string {
@@ -54,7 +56,7 @@ export const defaultStyleParameters = {
                 return vertex.value;
             }
             case "unavailable": {
-                return unavailable_key(vertex);
+                return "?" + vertex.variable + "?";
             }
         }
     },
@@ -89,7 +91,7 @@ export const defaultStyleParameters = {
     }
 };
 
-export const defaultStructureParameters = {
+export const defaultStructureParameters: StudioConverterStructureParameters = {
     ignoreEdgesInvolvingLabels: [EdgeKind.isa, EdgeKind.sub, EdgeKind.relates, EdgeKind.plays],
 };
 

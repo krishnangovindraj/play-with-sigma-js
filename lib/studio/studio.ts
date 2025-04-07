@@ -22,7 +22,7 @@ export class TypeDBStudio {
         this.layout = new ForceSupervisor(graph, { isNodeFixed: (_, attr) => attr.highlighted, settings: studioDefaultSettings.defaultForceSupervisorSettings});
         this.layout.start();
 
-        this.eventHandler = new StudioInteractionHandler(graph, renderer);
+        this.eventHandler = new StudioInteractionHandler(graph, renderer, studioDefaultSettings.defaultStyleParameters);
     }
 
     unfreeze() {

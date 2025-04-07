@@ -1,34 +1,58 @@
 import Sigma from "sigma";
 import Graph from "graphology";
 import {SigmaEventPayload, SigmaNodeEventPayload, SigmaStageEventPayload} from "sigma/types";
+import {LogicalVertex, VertexUnavailable} from "../graph.js";
+import {RoleType} from "../typedb/concept.js";
+import {StudioConverterStyleParameters} from "./config.js";
 
 // Ref: https://www.sigmajs.org/docs/advanced/events/
 // and: https://www.sigmajs.org/storybook/?path=/story/mouse-manipulations--story
 
 interface InteractionState {
     draggedNode: string | null;
+    highlightedAnswer: number | null; // demonstrative
 }
 
 export class StudioInteractionHandler {
     graph: Graph;
     renderer: Sigma;
     state: InteractionState;
-    constructor(graph: Graph, renderer: Sigma) {
+    styleParameters: StudioConverterStyleParameters;
+
+    constructor(graph: Graph, renderer: Sigma, styleParameters: StudioConverterStyleParameters) {
         this.graph = graph;
         this.renderer = renderer;
         this.state = {
             draggedNode : null,
+            highlightedAnswer: null,
         };
+        this.styleParameters = styleParameters;
         this.registerAll(renderer);
     }
 
     registerAll(renderer: Sigma) {
+        renderer.on(StudioSigmaEventType.enterNode, (e) => this.onEnterNode(e));
+        renderer.on(StudioSigmaEventType.leaveNode, (e) => this.onLeaveNode(e));
+
         renderer.on(StudioSigmaEventType.moveBody, (e) => this.onMoveBody(e));
         renderer.on(StudioSigmaEventType.downNode, (e) => this.onDownNode(e));
 
         renderer.on(StudioSigmaEventType.upStage, (e) => this.onUpStage(e));
         renderer.on(StudioSigmaEventType.upNode, (e) => this.onUpNode(e));
     }
+
+    onEnterNode(event: SigmaNodeEventPayload) {
+        let node = event.node;
+        this.graph.setNodeAttribute(node, "highlighted", true);
+        this.graph.setNodeAttribute(node, "label", this.graph.getNodeAttributes(node).metadata.hoverLabel)
+    }
+
+    onLeaveNode(event: SigmaNodeEventPayload) {
+        let node = event.node;
+        this.graph.setNodeAttribute(node, "highlighted", false);
+        this.graph.setNodeAttribute(node, "label", this.graph.getNodeAttributes(node).metadata.defaultLabel);
+    }
+
 
     onDownNode(event: SigmaNodeEventPayload) {
         let node = event.node;
@@ -69,7 +93,28 @@ export class StudioInteractionHandler {
         }
     }
 
+    highlightAnswer(answerIndex: number) {
+        // TODO: Maybe add indexing so I don't have to iterate
+        if (this.state.highlightedAnswer != null) {
+            this.removeHighlightFromAnswer(this.state.highlightedAnswer);
+            this.state.highlightedAnswer = null;
+        }
+        this.graph.edges().forEach(edge => {
+            if (answerIndex == this.graph.getEdgeAttributes(edge).metadata.answerIndex) {
+                this.graph.setEdgeAttribute(edge, "color", this.styleParameters.edge_highlight_color.hex());
+            }
+        })
+        this.state.highlightedAnswer = answerIndex;
+    }
 
+    removeHighlightFromAnswer(answerIndex: number) {
+        // TODO: Maybe add indexing so I don't have to iterate
+        this.graph.edges().forEach(edge => {
+            if (answerIndex == this.graph.getEdgeAttributes(edge).metadata.answerIndex) {
+                this.graph.setEdgeAttribute(edge, "color", this.styleParameters.edge_color.hex());
+            }
+        })
+    }
 }
 
 enum StudioSigmaEventType {
