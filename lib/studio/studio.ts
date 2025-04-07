@@ -1,9 +1,9 @@
 import Sigma from "sigma";
 import Graph from "graphology";
-import ForceSupervisor from "graphology-layout-force/worker.js";
-import {ILogicalGraphConverter} from "../visualisation.js";
-import {StudioConverter} from "./converter.js";
-import {TypeDBQueryStructure} from "../typedb/answer.js";
+import ForceSupervisor from "graphology-layout-force/worker";
+import {ILogicalGraphConverter} from "../visualisation";
+import {StudioConverter} from "./converter";
+import {TypeDBQueryStructure} from "../typedb/answer";
 
 import * as studioDefaultSettings from "./defaults";
 

@@ -1,6 +1,6 @@
-import {LogicalVertex, LogicalVertexKind, VertexUnavailable} from "../graph.js";
+import {LogicalVertex, LogicalVertexKind, VertexUnavailable} from "../graph";
 import {Color} from "chroma-js";
-import {EdgeKind, RoleType} from "../typedb/concept.js";
+import {EdgeKind, RoleType} from "../typedb/concept";
 
 export interface StudioConverterStyleParameters {
     vertex_colors: Record<LogicalVertexKind, Color>,

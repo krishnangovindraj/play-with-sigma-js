@@ -5,7 +5,7 @@ import {
 
 import {constructGraphFromRowsResult} from "./graph";
 import {connectToTypeDB} from "./typedb/driver";
-import {TypeDBStudio} from "./studio/studio.js";
+import {TypeDBStudio} from "./studio/studio";
 import * as graphology from "graphology";
 import * as studioDefaults from "./studio/defaults";
 

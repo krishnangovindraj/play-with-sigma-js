@@ -16,7 +16,7 @@ import {
 import {ILogicalGraphConverter} from "../visualisation";
 import Graph from "graphology";
 import {StudioConverterStructureParameters, StudioConverterStyleParameters} from "./config";
-import {StructureEdge, StructureVertexKind, TypeDBQueryStructure} from "../typedb/answer.js";
+import {StructureEdge, StructureVertexKind, TypeDBQueryStructure} from "../typedb/answer";
 
 export class StudioConverter implements ILogicalGraphConverter {
     graph: Graph;

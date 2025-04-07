@@ -1,6 +1,6 @@
-import {EdgeKind, RoleType, ThingKind, TypeKind} from "../typedb/concept.js";
+import {EdgeKind, RoleType, ThingKind, TypeKind} from "../typedb/concept";
 import chroma from "chroma-js";
-import {LogicalVertex, VertexUnavailable} from "../graph.js";
+import {LogicalVertex, VertexUnavailable} from "../graph";
 import {NodeSquareProgram} from "@sigma/node-square";
 import {ForceLayoutSettings} from "graphology-layout-force";
 import {Settings as SigmaSettings} from "sigma/settings";
