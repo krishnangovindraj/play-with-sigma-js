@@ -2,9 +2,10 @@ import {EdgeKind, RoleType, ThingKind, TypeKind} from "../typedb/concept.js";
 import chroma from "chroma-js";
 import {LogicalVertex, VertexUnavailable} from "../graph.js";
 import {NodeSquareProgram} from "@sigma/node-square";
-import {NodeDisplayData} from "sigma/types";
+import {ForceLayoutSettings} from "graphology-layout-force";
+import {Settings as SigmaSettings} from "sigma/settings";
 
-export let defaultStyleParameters = {
+export const defaultStyleParameters = {
     vertex_colors: {
         [ThingKind.entity]: chroma("pink"),
         [ThingKind.relation]: chroma("yellow"),
@@ -87,15 +88,23 @@ export let defaultStyleParameters = {
     }
 };
 
-export let defaultStructureParameters = {
+export const defaultStructureParameters = {
     ignoreEdgesInvolvingLabels: [EdgeKind.isa, EdgeKind.sub, EdgeKind.relates, EdgeKind.plays],
 };
 
-export let defaultSigmaSettings = {
+export const defaultSigmaSettings: Partial<SigmaSettings> = {
     minCameraRatio: 0.1,
     maxCameraRatio: 10,
     renderEdgeLabels: true,
     nodeProgramClasses: {
         square: NodeSquareProgram,
     },
+};
+
+export const defaultForceSupervisorSettings: ForceLayoutSettings = {
+    attraction: 0.0002,
+    repulsion: 0.1,
+    gravity: 0.0001,
+    inertia: 0.6,
+    maxMove: 10,
 };

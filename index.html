@@ -5,24 +5,17 @@
     <title>Play with sigma js</title>
     <script src="typedb-visualisation.js" type="text/javascript"></script>
     <script>
-        const custom_force_supervisor_settings = {
-            attraction: 0.0002,
-            repulsion: 0.1,
-            gravity: 0.0001,
-            inertia: 0.6,
-            maxMove: 10,
-        };
-
         // Set a few globals
         var driver = null;
         var query_result = null;
         var logicalGraph = null;
-        var visualisationContext = null;
-        var activeConverter = null;
+        var studio = null;
 
         // Initialisation on load
-        window.onload= (()=> { 
-            visualisationContext = createVisualisationContext('sigma-container', StudioConverter.defaultSigmaSettings, custom_force_supervisor_settings);
+        window.onload= (()=> {
+            let graph = new graphology.Graph();
+            let renderer = createSigmaRenderer('sigma-container', studioDefaults.defaultSigmaSettings, graph);
+            studio = new TypeDBStudio(graph, renderer);
             updateStatusImpl("ready", "white");
          });
 
@@ -69,8 +62,8 @@
                 query_result = updateStatus(result);
                 if (query_result.answerType == "conceptRows" && query_result.queryStructure != null) {
                     logicalGraph = constructGraphFromRowsResult(query_result); // In memory, not visualised
-                    activeConverter = new StudioConverter(visualisationContext.graph, query_result.queryStructure, StudioConverter.defaultStructureParameters, StudioConverter.defaultStyleParameters);
-                    drawLogicalGraphWith(logicalGraph, activeConverter);
+                    let converter = studio.createConverter(query_result.queryStructure);
+                    drawLogicalGraphWith(logicalGraph, converter);
                 }
             }
         }
@@ -117,7 +110,7 @@
         </td>
         </tr>
     </table>
-    </div>
+
     <div id="input">
         <form id="query-or-graph-form" onsubmit="doRunQuery(this); return false">
             <div id="buttons">
@@ -130,8 +123,8 @@
                 </span>
                 <span id="input-buttons-right" style="float: right;">
                     GraphControls:
-                    <button onclick="visualisationContext.layout.stop(); return false">freeze</button>
-                    <button onclick="visualisationContext.layout.start(); return false">unfreeze</button>
+                    <button onclick="studio.freeze(); return false">freeze</button>
+                    <button onclick="studio.unfreeze(); return false">unfreeze</button>
                 </span>
             </div>
             <textarea name="query" id='query-or-graph-input' style="width:100%;height: 400px" placeholder='Query or Graph (See source for format)'></textarea>

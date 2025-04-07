@@ -17,17 +17,12 @@ import {ILogicalGraphConverter} from "../visualisation";
 import Graph from "graphology";
 import {StudioConverterStructureParameters, StudioConverterStyleParameters} from "./config";
 import {StructureEdge, StructureVertexKind, TypeDBQueryStructure} from "../typedb/answer.js";
-import * as defaultSettings from "./defaults";
 
 export class StudioConverter implements ILogicalGraphConverter {
     graph: Graph;
     styleParameters: StudioConverterStyleParameters;
     structureParameters: StudioConverterStructureParameters;
     edgesToDraw: Array<Array<number>>;
-
-    static defaultSigmaSettings: any;
-    static defaultStyleParameters: StudioConverterStyleParameters;
-    static defaultStructureParameters: StudioConverterStructureParameters;
 
     constructor(graph: Graph, queryStructure: TypeDBQueryStructure, structureParameters: StudioConverterStructureParameters, styleParameters: StudioConverterStyleParameters) {
         this.graph = graph;
@@ -198,7 +193,3 @@ function mustDrawEdge(edge: StructureEdge, structureParameters: StudioConverterS
     }
     return true;
 }
-
-StudioConverter.defaultStyleParameters = defaultSettings.defaultStyleParameters;
-StudioConverter.defaultStructureParameters = defaultSettings.defaultStructureParameters;
-StudioConverter.defaultSigmaSettings = defaultSettings.defaultSigmaSettings;

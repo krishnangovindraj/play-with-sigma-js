@@ -1,19 +1,21 @@
 import {
-  createVisualisationContext,
-  convertLogicalGraphWith,
+  convertLogicalGraphWith, createSigmaRenderer,
 
 } from "./visualisation";
 
 import {constructGraphFromRowsResult} from "./graph";
 import {connectToTypeDB} from "./typedb/driver";
-import {StudioConverter} from "./studio/converter";
+import {TypeDBStudio} from "./studio/studio.js";
+import * as graphology from "graphology";
+import * as studioDefaults from "./studio/defaults";
 
 /////////////
 // EXPORTS //
 /////////////
-window.createVisualisationContext = createVisualisationContext;
+window.graphology = graphology;
+window.studioDefaults = studioDefaults;
+window.createSigmaRenderer = createSigmaRenderer;
 window.constructGraphFromRowsResult = constructGraphFromRowsResult;
-
-window.StudioConverter = StudioConverter;
+window.TypeDBStudio = TypeDBStudio;
 window.drawLogicalGraphWith = convertLogicalGraphWith;
 window.connectToTypeDB = connectToTypeDB;

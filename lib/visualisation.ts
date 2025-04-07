@@ -1,7 +1,4 @@
 import Graph from "graphology";
-import { ForceLayoutSettings } from "graphology-layout-force";
-import ForceSupervisor from "graphology-layout-force/worker";
-import { NodeSquareProgram } from "@sigma/node-square";
 import Sigma from "sigma";
 import {Settings as SigmaSettings} from "sigma/settings";
 import {
@@ -17,26 +14,9 @@ import {
 } from "./typedb/concept";
 import {LogicalEdge, LogicalGraph, LogicalVertex, StructureEdgeCoordinates, VertexUnavailable} from "./graph";
 
-export type VisualisationContext = {
-  graph: Graph;
-  layout: ForceSupervisor,
-  renderer: Sigma,
-};
-
-// For ForceLayoutSettings, see: https://graphology.github.io/standard-library/layout-force.html
-//   attraction ?number 0.0005: importance of the attraction force, that attracts each pair of connected nodes like elastics.
-//   repulsion ?number 0.1: importance of the repulsion force, that attracts each pair of nodes like magnets.
-//   gravity ?number 0.0001: importance of the gravity force, that attracts all nodes to the center.
-//   inertia ?number 0.6: percentage of a node vector displacement that is preserved at each step. 0 means no inertia, 1 means no friction.
-//   maxMove ?number 200: Maximum length a node can travel at each step, in pixel.
-export function createVisualisationContext(container_id: string, sigma_settings: SigmaSettings, force_supervisor_settings: ForceLayoutSettings | undefined) : VisualisationContext {
+export function createSigmaRenderer(containerId: string, sigma_settings: SigmaSettings, graph: Graph) : Sigma {
   // Retrieve the html document for sigma container
-  let graph = new Graph();
-  let container = document.getElementById(container_id) as HTMLElement;
-
-  // Create the spring layout and start it
-  let layout = new ForceSupervisor(graph, { isNodeFixed: (_, attr) => attr.highlighted, settings: force_supervisor_settings });
-  layout.start();
+  let container = document.getElementById(containerId) as HTMLElement;
 
   // Create the sigma
   let renderer = new Sigma(
@@ -45,6 +25,7 @@ export function createVisualisationContext(container_id: string, sigma_settings:
       sigma_settings,
   );
 
+  // TODO: Move these out to an eventHandler interface of sorts
   //
   // Drag'n'drop feature
   // ~~~~~~~~~~~~~~~~~~~
@@ -93,13 +74,11 @@ export function createVisualisationContext(container_id: string, sigma_settings:
   renderer.on("upNode", handleUp);
   renderer.on("upStage", handleUp);
 
-  return {
-    layout, renderer,  graph,
-  };
+  return renderer;
   // return () => {
   //   renderer.kill();
   // };
-};
+}
 
 /////////////////////////////////
 // Logical Graph -> Graphology //

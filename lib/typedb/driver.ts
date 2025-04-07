@@ -1,4 +1,4 @@
-import {TypeDBAnswerAny} from "./answer";
+import {TypeDBAnswerAny, TypeDBQueryType} from "./answer";
 
 export type TypeDBResult<OK> = {
     ok: OK | undefined,
@@ -34,11 +34,11 @@ export class TypeDBHttpDriver {
         if (response.ok) {
             return {ok : true} as TypeDBResult<boolean>;
         } else {
-            return { err: await response.text() } as TypeDBResult<boolean>;;
+            return { err: await response.text() } as TypeDBResult<boolean>;
         }
     }
 
-    async runQuery(database: string, query: string, transactionType: string) : Promise<TypeDBResult<TypeDBAnswerAny>> {
+    async runQuery(database: string, query: string, transactionType: TypeDBQueryType) : Promise<TypeDBResult<TypeDBAnswerAny>> {
         let response = await this.httpPost("/v1/query", { query: query, databaseName: database, transactionType: transactionType });
         if (response.ok) {
             return { ok: JSON.parse(await response.text()) } as TypeDBResult<any>;

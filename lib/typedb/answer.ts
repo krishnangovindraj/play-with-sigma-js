@@ -11,7 +11,7 @@ export type TypeDBQueryResponse<Answer> = {
     queryStructure: TypeDBQueryStructure,
 }
 
-enum TypeDBQueryType {
+export enum TypeDBQueryType {
     schema = "schema",
     write = "write",
     read = "read",
