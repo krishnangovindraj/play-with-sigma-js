@@ -1,6 +1,7 @@
 import {LogicalVertex, LogicalVertexKind, VertexUnavailable} from "../graph.js";
 import {Color} from "chroma-js";
 import {EdgeKind, RoleType} from "../typedb/concept.js";
+import {NodeSquareProgram} from "@sigma/node-square";
 
 export interface StudioConverterStyleParameters {
     vertex_colors: Record<LogicalVertexKind, Color>,

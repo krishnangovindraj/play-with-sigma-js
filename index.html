@@ -22,7 +22,7 @@
 
         // Initialisation on load
         window.onload= (()=> { 
-            visualisationContext = createVisualisationContext('sigma-container', custom_force_supervisor_settings);
+            visualisationContext = createVisualisationContext('sigma-container', StudioConverter.defaultSigmaSettings, custom_force_supervisor_settings);
             updateStatusImpl("ready", "white");
          });
 
@@ -137,9 +137,5 @@
             <textarea name="query" id='query-or-graph-input' style="width:100%;height: 400px" placeholder='Query or Graph (See source for format)'></textarea>
         </form>
     </div>
-
-    <!-- Sample graph format:
-        (Sorry, I updated it and it broke :( )
-    -->
 </body>
 </html>

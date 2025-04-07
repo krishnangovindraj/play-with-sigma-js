@@ -3,6 +3,7 @@ import { ForceLayoutSettings } from "graphology-layout-force";
 import ForceSupervisor from "graphology-layout-force/worker";
 import { NodeSquareProgram } from "@sigma/node-square";
 import Sigma from "sigma";
+import {Settings as SigmaSettings} from "sigma/settings";
 import {
   Attribute,
   AttributeType, ConceptAny, EdgeKind,
@@ -28,7 +29,7 @@ export type VisualisationContext = {
 //   gravity ?number 0.0001: importance of the gravity force, that attracts all nodes to the center.
 //   inertia ?number 0.6: percentage of a node vector displacement that is preserved at each step. 0 means no inertia, 1 means no friction.
 //   maxMove ?number 200: Maximum length a node can travel at each step, in pixel.
-export function createVisualisationContext(container_id: string, force_supervisor_settings: ForceLayoutSettings | undefined) : VisualisationContext {
+export function createVisualisationContext(container_id: string, sigma_settings: SigmaSettings, force_supervisor_settings: ForceLayoutSettings | undefined) : VisualisationContext {
   // Retrieve the html document for sigma container
   let graph = new Graph();
   let container = document.getElementById(container_id) as HTMLElement;
@@ -38,18 +39,10 @@ export function createVisualisationContext(container_id: string, force_superviso
   layout.start();
 
   // Create the sigma
-  let settings = {
-      minCameraRatio: 0.1,
-      maxCameraRatio: 10,
-      renderEdgeLabels: true,
-      nodeProgramClasses: {
-          square: NodeSquareProgram,
-      }
-  };
   let renderer = new Sigma(
       graph,
       container,
-      settings,
+      sigma_settings,
   );
 
   //
@@ -107,8 +100,6 @@ export function createVisualisationContext(container_id: string, force_superviso
   //   renderer.kill();
   // };
 };
-
-
 
 /////////////////////////////////
 // Logical Graph -> Graphology //
