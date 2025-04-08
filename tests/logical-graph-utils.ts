@@ -7,7 +7,7 @@ import {
     LogicalVertexID, StructureEdgeCoordinates,
     VertexMap,
     VertexUnavailable
-} from "../lib/graph.js";
+} from "../lib/graph";
 import {
     Attribute,
     EdgeKind,
@@ -17,14 +17,14 @@ import {
     TypeAny,
     TypeDBValue,
     TypeKind
-} from "../lib/typedb/concept.js";
+} from "../lib/typedb/concept";
 
 export class GraphHelper {
-    static has(branchIndex: number, constraintIndex: number, from: LogicalVertexID, to: LogicalVertexID): LogicalEdge {
+    static simpleEdge(kind: EdgeKind, branchIndex: number, constraintIndex: number, from: LogicalVertexID, to: LogicalVertexID): LogicalEdge {
         return {
             from: from,
             to: to,
-            type: { kind: EdgeKind.has, param: null },
+            type: { kind: kind, param: null },
             structureEdgeCoordinates: { branchIndex: branchIndex,  constraintIndex: constraintIndex},
         };
     }

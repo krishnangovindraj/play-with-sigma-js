@@ -4,8 +4,8 @@ import {LogicalVertex, VertexUnavailable} from "../graph";
 import {NodeSquareProgram} from "@sigma/node-square";
 import {ForceLayoutSettings} from "graphology-layout-force";
 import {Settings as SigmaSettings} from "sigma/settings";
-import {unavailable_key} from "./converter.js";
-import {StudioConverterStructureParameters, StudioConverterStyleParameters} from "./config.js";
+import {unavailable_key} from "./converter";
+import {StudioConverterStructureParameters, StudioConverterStyleParameters} from "./config";
 
 export const defaultStyleParameters: StudioConverterStyleParameters = {
     vertex_colors: {

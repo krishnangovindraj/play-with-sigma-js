@@ -6,7 +6,7 @@ import {StudioConverter} from "./converter";
 import {TypeDBQueryStructure} from "../typedb/answer";
 
 import * as studioDefaultSettings from "./defaults";
-import {StudioInteractionHandler} from "./interaction.js";
+import {StudioInteractionHandler} from "./interaction";
 
 type StudioEventHandler = {};
 

@@ -1,4 +1,4 @@
-import {Attribute, Entity, ThingKind, TypeDBValue, TypeKind, ValueType} from "../lib/typedb/concept.js";
+import {Attribute, Entity, ThingKind, TypeDBValue, TypeKind, ValueType} from "../lib/typedb/concept";
 
 export class ConceptHelper {
     static valueString(value: string): TypeDBValue {

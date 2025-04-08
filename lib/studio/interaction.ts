@@ -1,7 +1,7 @@
 import Sigma from "sigma";
 import Graph from "graphology";
 import {SigmaEventPayload, SigmaNodeEventPayload, SigmaStageEventPayload} from "sigma/types";
-import {StudioConverterStyleParameters} from "./config.js";
+import {StudioConverterStyleParameters} from "./config";
 
 // Ref: https://www.sigmajs.org/docs/advanced/events/
 // and: https://www.sigmajs.org/storybook/?path=/story/mouse-manipulations--story

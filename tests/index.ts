@@ -1,3 +1,3 @@
-import * as answer2graph from "./answer-to-logical-graph.js"
+import * as answer2graph from "./test-answer-to-graph"
 
 answer2graph.runAllTests()

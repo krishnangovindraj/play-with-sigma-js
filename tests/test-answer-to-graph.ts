@@ -1,8 +1,8 @@
-import {constructGraphFromRowsResult, LogicalEdge, LogicalGraph, LogicalVertex, LogicalVertexID} from "../lib/graph.js";
-import {StructureVertexKind, TypeDBQueryAnswerType, TypeDBQueryType, TypeDBRowsResult} from "../lib/typedb/answer.js";
-import {EdgeKind} from "../lib/typedb/concept.js";
-import {answerSetsAreEqual, GraphHelper, vertexMapsAreEqual} from "./logical-graph-utils.js";
-import {ConceptHelper} from "./concept-utils.js";
+import {constructGraphFromRowsResult, LogicalGraph, LogicalVertex, LogicalVertexID} from "../lib/graph";
+import {StructureVertexKind, TypeDBQueryAnswerType, TypeDBQueryType, TypeDBRowsResult} from "../lib/typedb/answer";
+import {EdgeKind} from "../lib/typedb/concept";
+import {answerSetsAreEqual, GraphHelper, vertexMapsAreEqual} from "./logical-graph-utils";
+import {ConceptHelper} from "./concept-utils";
 
 function checkTranslation(name: string, rows_result: TypeDBRowsResult, expectedLogicalGraph: LogicalGraph) {
     let actualLogicalGraph = constructGraphFromRowsResult(rows_result)
@@ -18,6 +18,7 @@ function graphsAreEqual(first: LogicalGraph, second: LogicalGraph ) : boolean {
 }
 
 interface AnswerToLogicalGraphTestCase {
+    name: string,
     answer: TypeDBRowsResult,
     expectedGraph: LogicalGraph,
 }
@@ -25,6 +26,7 @@ interface AnswerToLogicalGraphTestCase {
 
 // Test 1:
 const TEST_HAS: AnswerToLogicalGraphTestCase = {
+    name: "TestHas",
     answer: {
         queryType: TypeDBQueryType.read,
         answerType: TypeDBQueryAnswerType.conceptRows,
@@ -56,13 +58,21 @@ const TEST_HAS: AnswerToLogicalGraphTestCase = {
             ["attr-type:attr-value", ConceptHelper.attribute("attr-type:attr-value", "attr-type", ConceptHelper.valueString("attr-value"))]
         ]),
         answers: [
-            [ GraphHelper.has(0, 0, "owner#1", "attr-type:attr-value") ]
+            [ GraphHelper.simpleEdge(EdgeKind.has, 0, 0, "owner#1", "attr-type:attr-value") ]
         ]
     }
 }
 
+// TESTS:
+const ALL_TESTS: Array<AnswerToLogicalGraphTestCase> = [
+    TEST_HAS
+];
+
 export function runAllTests() {
     console.log("START: AnswerToLogicalGraph tests")
-    checkTranslation("TEST_HAS", TEST_HAS.answer, TEST_HAS.expectedGraph);
+    for (let test of ALL_TESTS ) {
+        checkTranslation(test.name, TEST_HAS.answer, TEST_HAS.expectedGraph);
+        console.log("\t-pass: " + test.name)
+    }
     console.log("SUCCESS: AnswerToLogicalGraph tests")
 }
