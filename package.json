@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "lib.ts",
   "scripts": {
-    "build": "./node_modules/.bin/esbuild lib/index.ts --bundle --outfile=typedb-visualisation.js"
+    "build": "./node_modules/.bin/esbuild lib/index.ts --bundle --outfile=typedb-visualisation.js",
+    "tests": "./node_modules/.bin/esbuild tests/index.ts --bundle --outfile=tests.js && node tests.js"
   },
   "type": "module",
   "author": "",

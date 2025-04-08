@@ -61,7 +61,7 @@ export class StudioConverter implements ILogicalGraphConverter {
             color: color.hex(),
             size: this.styleParameters.edge_size,
             type: "arrow",
-            metadata: metadata
+            metadata: metadata,
         }
     }
 

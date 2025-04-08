@@ -17,7 +17,7 @@ export enum TypeDBQueryType {
     read = "read",
 }
 
-enum TypeDBQueryAnswerType {
+export enum TypeDBQueryAnswerType {
     ok = "ok",
     conceptRows = "conceptRows",
     conceptDocuments = "conceptDocuments",

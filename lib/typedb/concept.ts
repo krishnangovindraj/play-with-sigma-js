@@ -67,14 +67,15 @@ export type Entity = ObjectAny;
 export type Attribute = {
     kind: ThingKind.attribute,
     iid: string,
-    type: AttributeType,
     value: any,
+    valueType: ValueType,
+    type: AttributeType,
 }
 
 export type TypeDBValue = {
     kind: ValueKind,
     value: any,
-    value_type: string,
+    valueType: ValueType,
 }
 
 export type ConceptAny = TypeAny | ObjectAny | Attribute | TypeDBValue;

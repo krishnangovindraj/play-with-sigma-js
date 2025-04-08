@@ -1,8 +1,6 @@
 import Sigma from "sigma";
 import Graph from "graphology";
 import {SigmaEventPayload, SigmaNodeEventPayload, SigmaStageEventPayload} from "sigma/types";
-import {LogicalVertex, VertexUnavailable} from "../graph.js";
-import {RoleType} from "../typedb/concept.js";
 import {StudioConverterStyleParameters} from "./config.js";
 
 // Ref: https://www.sigmajs.org/docs/advanced/events/

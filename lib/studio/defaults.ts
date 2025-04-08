@@ -78,7 +78,7 @@ export const defaultStyleParameters: StudioConverterStyleParameters = {
                 return vertex.type.label + ":" + vertex.value;
             }
             case "value": {
-                return vertex.value_type +":" + vertex.value;
+                return vertex.valueType +":" + vertex.value;
             }
             case "unavailable": {
                 return unavailable_key(vertex);

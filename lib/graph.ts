@@ -99,7 +99,7 @@ class LogicalGraphBuilder {
             }
             case "value": {
                 let value = vertex as TypeDBValue;
-                key = (value.value_type + ":" + value.value);
+                key = (value.valueType + ":" + value.value);
                 break;
             }
             case "unavailable": {
