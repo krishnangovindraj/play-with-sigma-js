@@ -2,7 +2,7 @@
 // Vertex
 import {
     LogicalEdge,
-    LogicalEdgeType,
+    LogicalEdgeType, LogicalGraph,
     LogicalVertex,
     LogicalVertexID, StructureEdgeCoordinates,
     VertexMap,
@@ -28,8 +28,12 @@ export class GraphHelper {
             structureEdgeCoordinates: { branchIndex: branchIndex,  constraintIndex: constraintIndex},
         };
     }
-}
 
+    static graphsAreEqual(first: LogicalGraph, second: LogicalGraph): boolean {
+        return vertexMapsAreEqual(first.vertices, second.vertices)
+            && answerSetsAreEqual(first.answers, second.answers);
+    }
+}
 
 export function vertexMapsAreEqual(first: VertexMap, second: VertexMap) {
     return first.size == second.size &&

@@ -19,12 +19,7 @@ export function createSigmaRenderer(containerId: string, sigma_settings: SigmaSe
   let container = document.getElementById(containerId) as HTMLElement;
 
   // Create the sigma
-  let renderer = new Sigma(
-      graph,
-      container,
-      sigma_settings,
-  );
-  return renderer;
+  return new Sigma(graph, container, sigma_settings);
   // return () => {
   //   renderer.kill();
   // };
@@ -58,7 +53,7 @@ export interface ILogicalGraphConverter {
 
   put_role_type_for_type_constraint(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: RoleType): void;
 
-  put_vertex_unvailable(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: VertexUnavailable): void;
+  put_vertex_unavailable(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: VertexUnavailable): void;
 
   // Edges
   put_isa(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, thing: Entity | Relation | Attribute, type: EntityType | RelationType | AttributeType): void;
@@ -119,11 +114,11 @@ function putVertex(converter: ILogicalGraphConverter, answer_index: number, stru
       break;
     }
     case "unavailable" : {
-      converter.put_vertex_unvailable(answer_index, structureEdgeCoordinates, vertex as VertexUnavailable);
+      converter.put_vertex_unavailable(answer_index, structureEdgeCoordinates, vertex as VertexUnavailable);
       break;
     }
     default : {
-      console.log("VertedKind not yet supported: " + vertex.kind);
+      console.log("VertexKind not yet supported: " + vertex.kind);
     }
   }
 }

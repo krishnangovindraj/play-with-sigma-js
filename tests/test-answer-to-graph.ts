@@ -1,42 +1,17 @@
 import {constructGraphFromRowsResult, LogicalGraph, LogicalVertex, LogicalVertexID} from "../lib/graph";
-import {StructureVertexKind, TypeDBQueryAnswerType, TypeDBQueryType, TypeDBRowsResult} from "../lib/typedb/answer";
-import {ConceptAny, EdgeKind, ThingKind, TypeKind} from "../lib/typedb/concept";
-import {answerSetsAreEqual, GraphHelper, vertexMapsAreEqual} from "./logical-graph-utils";
+import {TypeDBQueryAnswerType, TypeDBQueryType, TypeDBRowsResult} from "../lib/typedb/answer";
+import {EdgeKind} from "../lib/typedb/concept";
+import {GraphHelper} from "./logical-graph-utils";
 import {ConceptHelper} from "./concept-utils";
 import {StructureHelper} from "./other-utils.js";
-import {StudioConverter, unavailable_key} from "../lib/studio/converter.js";
+import {StudioConverter} from "../lib/studio/converter.js";
 import Graph from "graphology";
 import * as studioDefaults from "../lib/studio/defaults";
 import {convertLogicalGraphWith} from "../lib/visualisation.js";
 
-function getVertexKey(vertex: LogicalVertex) : string {
-    switch (vertex.kind) {
-        case TypeKind.entityType:
-        case TypeKind.relationType:
-        case TypeKind.roleType:
-        case TypeKind.attributeType: {
-            return vertex.label;
-        }
-        case ThingKind.entity:
-        case ThingKind.relation: {
-            return vertex.iid;
-        }
-        case ThingKind.attribute: {
-            return vertex.iid;
-        }
-        case "unavailable": {
-            return unavailable_key(vertex);
-        }
-        case "value":
-        default: {
-            throw new Error("test verification function getVertexKey not implemented for :" + vertex.kind)
-        }
-    }
-}
-
 function checkTranslation(name: string, rows_result: TypeDBRowsResult, expectedLogicalGraph: LogicalGraph) {
     let actualLogicalGraph = constructGraphFromRowsResult(rows_result)
-    if (!graphsAreEqual(expectedLogicalGraph, actualLogicalGraph)) {
+    if (!GraphHelper.graphsAreEqual(expectedLogicalGraph, actualLogicalGraph)) {
         throw new Error("Graphs are unequal: " + name);
     }
     let graphology = new Graph();
@@ -46,9 +21,9 @@ function checkTranslation(name: string, rows_result: TypeDBRowsResult, expectedL
         return answer.filter(edge => {
             let from = expectedLogicalGraph.vertices.get(edge.from)!;
             let to = expectedLogicalGraph.vertices.get(edge.to)!;
-            let foundEdge = converter.graph.directedEdge(getVertexKey(from), getVertexKey(to));
+            let foundEdge = converter.graph.directedEdge(ConceptHelper.getVertexKey(from), ConceptHelper.getVertexKey(to));
             return foundEdge == undefined;
-7        })
+        })
     });
     if (absentEdges.length > 0) {
         console.log(absentEdges);
@@ -56,20 +31,14 @@ function checkTranslation(name: string, rows_result: TypeDBRowsResult, expectedL
     }
 }
 
-function graphsAreEqual(first: LogicalGraph, second: LogicalGraph): boolean {
-    return vertexMapsAreEqual(first.vertices, second.vertices)
-        && answerSetsAreEqual(first.answers, second.answers);
-}
-
-interface AnswerToLogicalGraphTestCase {
+interface E2ETestCase {
     name: string,
     answer: TypeDBRowsResult,
     expectedGraph: LogicalGraph,
 }
 
-
 // Tests:
-const TEST_HAS: AnswerToLogicalGraphTestCase = {
+const TEST_HAS: E2ETestCase = {
     name: "TestHas",
     answer: {
         queryType: TypeDBQueryType.read,
@@ -105,15 +74,15 @@ const TEST_HAS: AnswerToLogicalGraphTestCase = {
     }
 }
 
-const ALL_TESTS: Array<AnswerToLogicalGraphTestCase> = [
+const ALL_TESTS: Array<E2ETestCase> = [
     TEST_HAS
 ];
 
 export function runAllTests() {
-    console.log("START: AnswerToLogicalGraph tests")
+    console.log("START: E2E tests")
     for (let test of ALL_TESTS) {
         checkTranslation(test.name, test.answer, test.expectedGraph);
         console.log("\t-pass: " + test.name)
     }
-    console.log("SUCCESS: AnswerToLogicalGraph tests")
+    console.log("SUCCESS: E2E tests")
 }
