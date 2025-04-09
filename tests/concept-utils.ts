@@ -1,4 +1,4 @@
-import {Attribute, Entity, ThingKind, TypeDBValue, TypeKind, ValueType} from "../lib/typedb/concept";
+import {Attribute, Entity, RoleType, ThingKind, TypeDBValue, TypeKind, ValueType} from "../lib/typedb/concept";
 import {LogicalVertex} from "../lib/graph.js";
 import {unavailable_key} from "../lib/studio/converter.js";
 
@@ -20,6 +20,20 @@ export class ConceptHelper {
             kind: ThingKind.entity, iid: iid, type: {
                 kind: TypeKind.entityType, label: label,
             }
+        };
+    }
+
+    static relation(iid: string, label: string): Entity {
+        return {
+            kind: ThingKind.relation, iid: iid, type: {
+                kind: TypeKind.relationType, label: label,
+            }
+        };
+    }
+
+    static role(label: string): RoleType {
+        return {
+            kind: TypeKind.roleType, label: label,
         };
     }
 

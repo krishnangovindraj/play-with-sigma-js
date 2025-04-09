@@ -1,6 +1,6 @@
 import {constructGraphFromRowsResult, LogicalGraph, LogicalVertex, LogicalVertexID} from "../lib/graph";
 import {TypeDBQueryAnswerType, TypeDBQueryType, TypeDBRowsResult} from "../lib/typedb/answer";
-import {EdgeKind} from "../lib/typedb/concept";
+import {EdgeKind, RoleType, TypeKind} from "../lib/typedb/concept";
 import {GraphHelper} from "./logical-graph-utils";
 import {ConceptHelper} from "./concept-utils";
 import {StructureHelper} from "./other-utils.js";
@@ -38,8 +38,8 @@ interface E2ETestCase {
 }
 
 // Tests:
-const TEST_HAS: E2ETestCase = {
-    name: "TestHas",
+const TEST_HAS_SINGLE: E2ETestCase = {
+    name: "TestHasSingle",
     answer: {
         queryType: TypeDBQueryType.read,
         answerType: TypeDBQueryAnswerType.conceptRows,
@@ -62,7 +62,6 @@ const TEST_HAS: E2ETestCase = {
             }
         ],
     },
-
     expectedGraph: {
         vertices: new Map<LogicalVertexID, LogicalVertex>([
             ["owner#1", ConceptHelper.entity("owner#1", "owner-type")],
@@ -74,8 +73,112 @@ const TEST_HAS: E2ETestCase = {
     }
 }
 
+const TEST_HAS_MULTIPLE: E2ETestCase = {
+    name: "TestHasMultiple",
+    answer: {
+        queryType: TypeDBQueryType.read,
+        answerType: TypeDBQueryAnswerType.conceptRows,
+        queryStructure: {
+            branches: [
+                {
+                    edges: [
+                        StructureHelper.edge(EdgeKind.has, StructureHelper.var("owner"), StructureHelper.var("attr1"), null),
+                        StructureHelper.edge(EdgeKind.has, StructureHelper.var("owner"), StructureHelper.var("attr2"), null),
+                    ]
+                }
+            ]
+        },
+        answers: [
+            {
+                provenance: 0,
+                data: {
+                    "owner": ConceptHelper.entity("owner#1", "owner-type"),
+                    "attr1": ConceptHelper.attribute("attr-type:attr-value1", "attr-type", ConceptHelper.valueString("attr-value1")),
+                    "attr2": ConceptHelper.attribute("attr-type:attr-value2", "attr-type", ConceptHelper.valueString("attr-value2")),
+                }
+            },
+            {
+                provenance: 0,
+                data: {
+                    "owner": ConceptHelper.entity("owner#2", "owner-type"),
+                    "attr1": ConceptHelper.attribute("attr-type:attr-value1", "attr-type", ConceptHelper.valueString("attr-value1")),
+                    "attr2": ConceptHelper.attribute("attr-type:attr-value2", "attr-type", ConceptHelper.valueString("attr-value2")),
+                }
+            }
+        ],
+    },
+    expectedGraph: {
+        vertices: new Map<LogicalVertexID, LogicalVertex>([
+            ["owner#1", ConceptHelper.entity("owner#1", "owner-type")],
+            ["owner#2", ConceptHelper.entity("owner#2", "owner-type")],
+            ["attr-type:attr-value1", ConceptHelper.attribute("attr-type:attr-value1", "attr-type", ConceptHelper.valueString("attr-value1"))],
+            ["attr-type:attr-value2", ConceptHelper.attribute("attr-type:attr-value2", "attr-type", ConceptHelper.valueString("attr-value2"))],
+        ]),
+        answers: [
+            [GraphHelper.simpleEdge(EdgeKind.has, 0, 0, "owner#1", "attr-type:attr-value1"),
+                GraphHelper.simpleEdge(EdgeKind.has, 0, 1, "owner#1", "attr-type:attr-value2")
+            ],[GraphHelper.simpleEdge(EdgeKind.has, 0, 0, "owner#2", "attr-type:attr-value1"),
+                GraphHelper.simpleEdge(EdgeKind.has, 0, 1, "owner#2", "attr-type:attr-value2")
+            ]
+        ]
+    }
+}
+
+const TEST_LINKS_DISJUNCTION: E2ETestCase = {
+    name: "TestLinksDisjunction",
+    answer: {
+        queryType: TypeDBQueryType.read,
+        answerType: TypeDBQueryAnswerType.conceptRows,
+        queryStructure: {
+            branches: [
+                { edges: [] },
+                {
+                    edges: [
+                        StructureHelper.edge(EdgeKind.links, StructureHelper.var("relation"), StructureHelper.var("player"), StructureHelper.label("relation:role", "role1")),
+                    ]
+                },
+                {
+                    edges: [
+                        StructureHelper.edge(EdgeKind.links, StructureHelper.var("relation"), StructureHelper.var("player"), StructureHelper.label("relation:role", "role2")),
+                    ]
+                }
+            ]
+        },
+        answers: [
+            {
+                provenance: 2,
+                data: {
+                    "relation": ConceptHelper.relation("rel#1", "rel-type"),
+                    "player": ConceptHelper.entity("player#1", "player-type"),
+                }
+            },
+            {
+                provenance: 4,
+                data: {
+                    "relation": ConceptHelper.relation("rel#2", "rel-type"),
+                    "player": ConceptHelper.entity("player#2", "player-type"),
+                }
+            }
+        ],
+    },
+    expectedGraph: {
+        vertices: new Map<LogicalVertexID, LogicalVertex>([
+            ["rel#1", ConceptHelper.relation("rel#1", "rel-type")],
+            ["player#1", ConceptHelper.entity("player#1", "player-type")],
+            ["rel#2", ConceptHelper.relation("rel#2", "rel-type")],
+            ["player#2", ConceptHelper.entity("player#2", "player-type")],
+        ]),
+        answers: [
+            [GraphHelper.links(ConceptHelper.role("role1"), 1, 0, "rel#1", "player#1")],
+            [GraphHelper.links(ConceptHelper.role("role2"), 2, 0, "rel#2", "player#2")]
+        ]
+    }
+}
+
 const ALL_TESTS: Array<E2ETestCase> = [
-    TEST_HAS
+    TEST_HAS_SINGLE,
+    TEST_HAS_MULTIPLE,
+    TEST_LINKS_DISJUNCTION
 ];
 
 export function runAllTests() {

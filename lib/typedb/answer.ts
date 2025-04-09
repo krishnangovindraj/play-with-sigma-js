@@ -50,7 +50,7 @@ export type StructureVertex = {
     value: StructureVertexAny,
 }
 export type StructureVertexVariable = { variable: string };
-export type StructureVertexLabel = {  kind: ThingKind, label: string }; // Unfortunate that it's ThingKind
+export type StructureVertexLabel = {  kind: ThingKind | "relation:role", label: string }; // Unfortunate that it's ThingKind
 export type StructureVertexValue = TypeDBValue; // { value_type: TypeDBValueType, value: any };
 export type StructureVertexUnavailable = {  variable: string };
 export type StructureVertexAny = StructureVertexVariable | StructureVertexUnavailable | StructureVertexLabel | StructureVertexValue;

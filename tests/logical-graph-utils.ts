@@ -1,10 +1,11 @@
-
 // Vertex
 import {
     LogicalEdge,
-    LogicalEdgeType, LogicalGraph,
+    LogicalEdgeType,
+    LogicalGraph,
     LogicalVertex,
-    LogicalVertexID, StructureEdgeCoordinates,
+    LogicalVertexID,
+    StructureEdgeCoordinates,
     VertexMap,
     VertexUnavailable
 } from "../lib/graph";
@@ -29,6 +30,15 @@ export class GraphHelper {
         };
     }
 
+    static links(roleType: RoleType | null, branchIndex: number, constraintIndex: number, from: LogicalVertexID, to: LogicalVertexID): LogicalEdge {
+        return {
+            from: from,
+            to: to,
+            type: { kind: EdgeKind.links, param: roleType },
+            structureEdgeCoordinates: { branchIndex: branchIndex,  constraintIndex: constraintIndex},
+        };
+    }
+
     static graphsAreEqual(first: LogicalGraph, second: LogicalGraph): boolean {
         return vertexMapsAreEqual(first.vertices, second.vertices)
             && answerSetsAreEqual(first.answers, second.answers);
@@ -36,10 +46,18 @@ export class GraphHelper {
 }
 
 export function vertexMapsAreEqual(first: VertexMap, second: VertexMap) {
-    return first.size == second.size &&
-        Array.from(first.keys())
-            .map(next => verticesAreEqual(first.get(next)!, second.get(next)!))
-            .reduce((a,b) => a && b, true);
+    if (first.size != second.size) {
+        logCompared("VertexMap sizes are unequal", first, second);
+        return false;
+    }
+    let mismatched_vertices = Array.from(first.keys())
+        .filter(next => !verticesAreEqual(first.get(next)!, second.get(next)!));
+    if (mismatched_vertices.length != 0) {
+        console.log("Mismatched vertices: ");
+        console.log(mismatched_vertices);
+        return false;
+    }
+    return true;
 }
 
 export function verticesAreEqual(first: LogicalVertex, second: LogicalVertex): boolean {
@@ -82,10 +100,19 @@ export function verticesAreEqual(first: LogicalVertex, second: LogicalVertex): b
 
 // Edges
 export function answerSetsAreEqual(first: Array<Array<LogicalEdge>>, second: Array<Array<LogicalEdge>>) : boolean {
-    return first.length == second.length &&
-        first
-            .map(answer => answerSetContainsAnswer(second, answer))
-            .reduce((prev, current) => prev && current, true)
+    if (first.length != second.length) {
+        logCompared("Answer sets are unequal", first, second);
+        return false;
+    }
+    let missingAnswers = first
+        .filter(answer => !answerSetContainsAnswer(second, answer));
+    if (missingAnswers.length != 0) {
+        logCompared("Answer sets are unequal", first, second)
+        console.log("Missing answers: ")
+        console.log(missingAnswers);
+        return false;
+    }
+    return true;
 }
 
 export function answerSetContainsAnswer(answerSet: Array<Array<LogicalEdge>>, answer: Array<LogicalEdge>): boolean {
@@ -133,4 +160,13 @@ export function edgeTypesAreEqual(first: LogicalEdgeType, second: LogicalEdgeTyp
 
 export function structureEdgeCoordinatesAreEqual(first: StructureEdgeCoordinates, second: StructureEdgeCoordinates) {
     return first.constraintIndex == second.constraintIndex && first.branchIndex == second.branchIndex;
+}
+
+function logCompared(message: string, first: any, second: any) {
+    console.log(message);
+    console.log("===");
+    console.log(JSON.stringify(first, null, 2));
+    console.log("---");
+    console.log(JSON.stringify(second, null, 2));
+    console.log("===");
 }

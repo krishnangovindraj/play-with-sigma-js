@@ -57,11 +57,13 @@ class LogicalGraphBuilder {
 
     build(rows_result: TypeDBRowsResult) : LogicalGraph {
         rows_result.answers.forEach((row, answerIndex) => {
+            let current_answer_edges: Array<LogicalEdge> = [];
             rows_result.queryStructure.branches.forEach((branch, branchIndex) => {
                 if ( 0 == branchIndex || 0 != (row.provenance & (1 << branchIndex)) ){
-                    this.answers.push(this.substitute_variables(branchIndex, answerIndex, branch.edges, row.data))
+                    current_answer_edges.push(...this.substitute_variables(branchIndex, answerIndex, branch.edges, row.data))
                 }
             });
+            this.answers.push(current_answer_edges);
         });
         return { vertices: this.vertexMap, answers: this.answers };
     }
