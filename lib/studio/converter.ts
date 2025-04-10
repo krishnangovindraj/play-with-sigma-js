@@ -89,7 +89,7 @@ export class StudioConverter implements ILogicalGraphConverter {
     // ILogicalGraphConverter
     // Vertices
     put_attribute(answerIndex: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: Attribute): void {
-        this.mayAddNode(structureEdgeCoordinates, vertex.iid, this.vertexAttributes(vertex));
+        this.mayAddNode(structureEdgeCoordinates, safe_attribute(vertex), this.vertexAttributes(vertex));
     }
 
     put_entity(answerIndex: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: Entity): void {
@@ -140,7 +140,7 @@ export class StudioConverter implements ILogicalGraphConverter {
 
     put_has(answerIndex: number, coordinates: StructureEdgeCoordinates, owner: Entity | Relation, attribute: Attribute): void {
         let attributes = this.edgeAttributes(EdgeKind.has, this.edgeMetadata(answerIndex, coordinates));
-        this.mayAddEdge(coordinates,safe_iid(owner), safe_iid(attribute), EdgeKind.has, attributes);
+        this.mayAddEdge(coordinates,safe_iid(owner), safe_attribute(attribute), EdgeKind.has, attributes);
     }
 
     put_links(answerIndex: number, coordinates: StructureEdgeCoordinates, relation: Relation, player: Entity | Relation, role: RoleType | VertexUnavailable): void {
@@ -243,6 +243,10 @@ function safe_label(vertex: TypeAny | VertexUnavailable) {
 
 function safe_value(vertex: TypeDBValue | VertexUnavailable) {
     return (vertex.kind == "unavailable") ? unavailable_key(vertex) : (vertex.valueType + ":" + vertex.value);
+}
+
+function safe_attribute(vertex: Attribute | VertexUnavailable) {
+    return (vertex.kind == "unavailable")? unavailable_key(vertex) : (vertex.type.label + ":" + vertex.value);
 }
 
 export function unavailable_key(vertex: VertexUnavailable) : string {
