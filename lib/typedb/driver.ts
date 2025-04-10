@@ -14,7 +14,7 @@ export async function connectToTypeDB(address: string, username: string, passwor
         headers: headers,
     });
     if (response.ok) {
-        return { ok: new TypeDBHttpDriver(address, await response.text()) } as TypeDBResult<TypeDBHttpDriver>;
+        return { ok: new TypeDBHttpDriver(address, (await response.json()).token ) } as TypeDBResult<TypeDBHttpDriver>;
     } else {
         return { err: await response.text() } as TypeDBResult<TypeDBHttpDriver>;
     }
