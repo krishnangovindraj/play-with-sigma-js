@@ -180,13 +180,16 @@ export class StudioConverter implements ILogicalGraphConverter {
         let attributes = this.edgeAttributes(EdgeKind.subExact, this.edgeMetadata(answerIndex, coordinates));
         this.mayAddEdge(coordinates, safe_label(subtype), safe_label(supertype), EdgeKind.subExact, attributes);
     }
-    put_assigned(answerIndex: number, coordinates: StructureEdgeCoordinates, expr_or_func: VertexExpression | VertexFunction, assigned: TypeDBValue): void {
-        let attributes = this.edgeAttributes(EdgeKind.assigned, this.edgeMetadata(answerIndex, coordinates));
+
+    put_assigned(answerIndex: number, coordinates: StructureEdgeCoordinates, expr_or_func: VertexExpression | VertexFunction, assigned: TypeDBValue, var_name: string): void {
+        let label = "assign[" + var_name + "]";
+        let attributes = this.edgeAttributes(label, this.edgeMetadata(answerIndex, coordinates));
         this.mayAddEdge(coordinates, expr_or_func.vertex_map_key, safe_value(assigned), EdgeKind.assigned, attributes);
     }
 
-    put_argument(answerIndex: number, coordinates: StructureEdgeCoordinates, argument: TypeDBValue | Attribute, expr_or_func: VertexExpression | VertexFunction): void {
-        let attributes = this.edgeAttributes(EdgeKind.argument, this.edgeMetadata(answerIndex, coordinates));
+    put_argument(answerIndex: number, coordinates: StructureEdgeCoordinates, argument: TypeDBValue | Attribute, expr_or_func: VertexExpression | VertexFunction, var_name: string): void {
+        let label = "arg[" + var_name + "]";
+        let attributes = this.edgeAttributes(label, this.edgeMetadata(answerIndex, coordinates));
         let from_vertex_key = null;
         switch (argument.kind) {
             case "value": {

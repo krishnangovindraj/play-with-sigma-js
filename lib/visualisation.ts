@@ -94,9 +94,9 @@ export interface ILogicalGraphConverter {
 
   put_sub_exact(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, subtype: EntityType | RelationType | AttributeType, supertype: EntityType | RelationType | AttributeType): void;
 
-  put_assigned(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, expr_or_func: VertexExpression | VertexFunction, assigned: TypeDBValue): void;
+  put_assigned(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, expr_or_func: VertexExpression | VertexFunction, assigned: TypeDBValue, var_name: string): void;
 
-  put_argument(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, argument: TypeDBValue | Attribute, expr_or_func: VertexExpression | VertexFunction): void;
+  put_argument(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, argument: TypeDBValue | Attribute, expr_or_func: VertexExpression | VertexFunction, var_name: string): void;
 }
 
 export function convertLogicalGraphWith(logicalGraph: LogicalGraph, converter: ILogicalGraphConverter) {
@@ -207,11 +207,11 @@ function putEdge(converter: ILogicalGraphConverter, answer_index: number, struct
       break;
     }
     case EdgeKind.assigned: {
-      converter.put_assigned(answer_index, structureEdgeCoordinates, from as VertexExpression|VertexFunction, to as TypeDBValue);
+      converter.put_assigned(answer_index, structureEdgeCoordinates, from as VertexExpression|VertexFunction, to as TypeDBValue, edge.type.param as string);
       break;
     }
     case EdgeKind.argument: {
-      converter.put_argument(answer_index, structureEdgeCoordinates, from as TypeDBValue | Attribute, to as VertexExpression|VertexFunction);
+      converter.put_argument(answer_index, structureEdgeCoordinates, from as TypeDBValue | Attribute, to as VertexExpression|VertexFunction, edge.type.param as string);
       break;
     }
 
