@@ -3,16 +3,30 @@ import Sigma from "sigma";
 import {Settings as SigmaSettings} from "sigma/settings";
 import {
   Attribute,
-  AttributeType, ConceptAny, EdgeKind,
+  AttributeType,
+  ConceptAny,
+  EdgeKind,
   Entity,
-  EntityType, ObjectAny, ObjectType,
+  EntityType,
+  ObjectAny,
+  ObjectType,
   Relation,
   RelationType,
   RoleType,
   ThingKind,
+  TypeDBValue,
   TypeKind,
 } from "./typedb/concept";
-import {LogicalEdge, LogicalGraph, LogicalVertex, StructureEdgeCoordinates, VertexUnavailable} from "./graph";
+import {
+  LogicalEdge,
+  LogicalGraph,
+  LogicalVertex,
+  SpecialVertexKind,
+  StructureEdgeCoordinates,
+  VertexExpression,
+  VertexFunction,
+  VertexUnavailable
+} from "./graph";
 
 export function createSigmaRenderer(containerId: string, sigma_settings: SigmaSettings, graph: Graph) : Sigma {
   // Retrieve the html document for sigma container
@@ -53,6 +67,12 @@ export interface ILogicalGraphConverter {
 
   put_role_type_for_type_constraint(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: RoleType): void;
 
+  put_vertex_value(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: TypeDBValue): void;
+
+  put_vertex_expression(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: VertexExpression): void;
+
+  put_vertex_function(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: VertexFunction): void;
+
   put_vertex_unavailable(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: VertexUnavailable): void;
 
   // Edges
@@ -73,6 +93,10 @@ export interface ILogicalGraphConverter {
   put_isa_exact(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, thing: Entity | Relation | Attribute, type: EntityType | RelationType | AttributeType): void;
 
   put_sub_exact(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, subtype: EntityType | RelationType | AttributeType, supertype: EntityType | RelationType | AttributeType): void;
+
+  put_assigned(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, expr_or_func: VertexExpression | VertexFunction, assigned: TypeDBValue): void;
+
+  put_argument(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, argument: TypeDBValue | Attribute, expr_or_func: VertexExpression | VertexFunction): void;
 }
 
 export function convertLogicalGraphWith(logicalGraph: LogicalGraph, converter: ILogicalGraphConverter) {
@@ -113,10 +137,23 @@ function putVertex(converter: ILogicalGraphConverter, answer_index: number, stru
       converter.put_role_type_for_type_constraint(answer_index, structureEdgeCoordinates, vertex as RoleType);
       break;
     }
-    case "unavailable" : {
+    case "value": {
+      converter.put_vertex_value(answer_index, structureEdgeCoordinates, vertex as TypeDBValue);
+      break;
+    }
+    case SpecialVertexKind.unavailable : {
       converter.put_vertex_unavailable(answer_index, structureEdgeCoordinates, vertex as VertexUnavailable);
       break;
     }
+    case SpecialVertexKind.func: {
+      converter.put_vertex_function(answer_index, structureEdgeCoordinates, vertex as VertexFunction);
+      break;
+    }
+    case SpecialVertexKind.expr: {
+      converter.put_vertex_expression(answer_index, structureEdgeCoordinates, vertex as VertexExpression);
+      break;
+    }
+
     default : {
       console.log("VertexKind not yet supported: " + vertex.kind);
     }
@@ -167,6 +204,14 @@ function putEdge(converter: ILogicalGraphConverter, answer_index: number, struct
     }
     case EdgeKind.subExact: {
       converter.put_sub_exact(answer_index, structureEdgeCoordinates, from as ObjectType, to as ObjectType);
+      break;
+    }
+    case EdgeKind.assigned: {
+      converter.put_assigned(answer_index, structureEdgeCoordinates, from as VertexExpression|VertexFunction, to as TypeDBValue);
+      break;
+    }
+    case EdgeKind.argument: {
+      converter.put_argument(answer_index, structureEdgeCoordinates, from as TypeDBValue | Attribute, to as VertexExpression|VertexFunction);
       break;
     }
 

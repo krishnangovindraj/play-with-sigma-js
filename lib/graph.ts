@@ -8,7 +8,6 @@ import {
     TypeAny,
     TypeDBValue,
     TypeKind,
-    UnavailableKind,
     ValueKind
 } from "./typedb/concept";
 import {
@@ -17,18 +16,29 @@ import {
     StructureEdgTypeAny,
     StructureVertex,
     StructureVertexKind, StructureVertexLabel,
-    StructureVertexVariable, StructureVertexUnavailable
+    StructureVertexVariable, StructureVertexUnavailable, StructureVertexFunction, StructureVertexExpression
 } from "./typedb/answer"
 
 //////////////////////////
 // Logical TypeDB Graph //
 //////////////////////////
-export type VertexUnavailable = { kind: UnavailableKind, variable: String, answerIndex: number, vertex_map_key: string };
-export type EdgeParameter = RoleType | VertexUnavailable | number | null;
 
-export type LogicalVertexKind = ThingKind | TypeKind | ValueKind | UnavailableKind;
-export type LogicalVertex = ConceptAny | VertexUnavailable;
+export enum SpecialVertexKind {
+    unavailable = "unavailable",
+    expr = "expression",
+    func = "function",
+}
+
+export type VertexUnavailable = { kind: SpecialVertexKind.unavailable, variable: string, answerIndex: number, vertex_map_key: string };
+export type VertexExpression = { kind: SpecialVertexKind.expr, repr: string, answerIndex: number, vertex_map_key: string };
+export type VertexFunction = { kind: SpecialVertexKind.func, repr: string, answerIndex: number, vertex_map_key: string };
+export type LogicalVertexSpecial = VertexUnavailable | VertexFunction | VertexExpression;
+export type EdgeParameter = RoleType | VertexUnavailable | string | null;
+
+export type LogicalVertexKind = ThingKind | TypeKind | ValueKind | SpecialVertexKind;
+export type LogicalVertex = ConceptAny | LogicalVertexSpecial;
 export type LogicalVertexID = string;
+
 export type StructureEdgeCoordinates = { branchIndex: number, constraintIndex: number };
 export type LogicalEdge = { structureEdgeCoordinates: StructureEdgeCoordinates, type: LogicalEdgeType, from: LogicalVertexID, to: LogicalVertexID };
 export type LogicalEdgeType = { kind: EdgeKind, param: EdgeParameter };
@@ -104,11 +114,18 @@ class LogicalGraphBuilder {
                 key = (value.valueType + ":" + value.value);
                 break;
             }
-            case "unavailable": {
+            case SpecialVertexKind.unavailable: {
                 key = (vertex as VertexUnavailable).vertex_map_key;
                 break;
             }
-
+            case SpecialVertexKind.func: {
+                key = (vertex as VertexFunction).vertex_map_key;
+                break;
+            }
+            case SpecialVertexKind.expr:{
+                key = (vertex as VertexExpression).vertex_map_key;
+                break;
+            }
         }
         let vertex_id = key;
         this.vertexMap.set(vertex_id, vertex);
@@ -133,6 +150,20 @@ class LogicalGraphBuilder {
                 let key = "unavailable[" + vertex.variable + "][" + answerIndex + "]";
                 return { kind: "unavailable", vertex_map_key: key, answerIndex: answerIndex, variable: vertex.variable } as VertexUnavailable;
             }
+            case StructureVertexKind.expr: {
+                let vertex = structure_vertex.value as StructureVertexExpression;
+                let key = vertex.repr + "[" + answerIndex + "]";
+                return { kind: SpecialVertexKind.expr , vertex_map_key: key, answerIndex: answerIndex, repr: vertex.repr } as VertexExpression;
+            }
+            case StructureVertexKind.func:{
+                let vertex = structure_vertex.value as StructureVertexFunction;
+                let key = vertex.repr + "[" + answerIndex + "]";
+                return { kind: SpecialVertexKind.func, vertex_map_key: key, answerIndex: answerIndex, repr: vertex.repr } as VertexFunction;
+            }
+            default: {
+                console.log("Unsupported vertex type: " + structure_vertex.kind)
+            }
+
         }
     }
 
@@ -164,6 +195,10 @@ class LogicalGraphBuilder {
             case EdgeKind.links: {
                 let role = this.translate_vertex(structure_edge_type.param as StructureVertex, answerIndex, data);
                 return { kind: structure_edge_type.kind, param: role as RoleType | VertexUnavailable };
+            }
+            case EdgeKind.assigned:
+            case EdgeKind.argument:{
+                return { kind: structure_edge_type.kind, param: structure_edge_type.param as string };
             }
             default: {
                 console.log("Unsupported EdgeKind:"+ structure_edge_type)

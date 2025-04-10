@@ -42,7 +42,7 @@ export type StructureEdge = {
     to: StructureVertex,
     from: StructureVertex,
 };
-export type StructureEdgTypeAny = { kind: EdgeKind, param: StructureVertex | null };
+export type StructureEdgTypeAny = { kind: EdgeKind, param: StructureVertex | null | string };
 
 // Vertex
 export type StructureVertex = {
@@ -52,12 +52,18 @@ export type StructureVertex = {
 export type StructureVertexVariable = { variable: string };
 export type StructureVertexLabel = {  kind: ThingKind | "relation:role", label: string }; // Unfortunate that it's ThingKind
 export type StructureVertexValue = TypeDBValue; // { value_type: TypeDBValueType, value: any };
+export type StructureVertexExpression = { repr: string };
+export type StructureVertexFunction = { repr: string };
 export type StructureVertexUnavailable = {  variable: string };
-export type StructureVertexAny = StructureVertexVariable | StructureVertexUnavailable | StructureVertexLabel | StructureVertexValue;
+export type StructureVertexAny = StructureVertexVariable | StructureVertexLabel | StructureVertexValue | StructureVertexExpression | StructureVertexFunction | StructureVertexUnavailable;
+// TODO:
+// export enum VertexKindOther = { }
 
 export enum StructureVertexKind {
     variable = "variable",
     label = "label",
     value = "value",
     unavailable = "unavailableVariable",
+    expr = "expression",
+    func = "function",
 }

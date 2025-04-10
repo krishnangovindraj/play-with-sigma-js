@@ -15,7 +15,6 @@ export enum ThingKind {
 }
 
 export type ValueKind = "value";
-export type UnavailableKind = "unavailable";
 
 export enum ValueType {
     boolean = "boolean",
@@ -96,4 +95,8 @@ export enum EdgeKind {
 
     isaExact = "isaExact",
     subExact = "subExact",
+
+    // Functional
+    assigned = "assigned",
+    argument = "argument",
 }

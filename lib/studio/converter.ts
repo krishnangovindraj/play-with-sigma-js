@@ -1,4 +1,4 @@
-import {LogicalVertex, StructureEdgeCoordinates, VertexUnavailable} from "../graph";
+import {LogicalVertex, StructureEdgeCoordinates, VertexExpression, VertexFunction, VertexUnavailable} from "../graph";
 import chroma from "chroma-js";
 import {
     Attribute,
@@ -10,7 +10,7 @@ import {
     ObjectType,
     Relation,
     RelationType,
-    RoleType, TypeAny,
+    RoleType, ThingKind, TypeAny, TypeDBValue,
     TypeKind
 } from "../typedb/concept";
 import {ILogicalGraphConverter} from "../visualisation";
@@ -116,6 +116,18 @@ export class StudioConverter implements ILogicalGraphConverter {
         }
     }
 
+    put_vertex_value(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: TypeDBValue): void {
+        this.mayAddNode(structureEdgeCoordinates, safe_value(vertex), this.vertexAttributes(vertex));
+    }
+
+    put_vertex_expression(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: VertexExpression): void {
+        this.mayAddNode(structureEdgeCoordinates, vertex.vertex_map_key, this.vertexAttributes(vertex));
+    }
+
+    put_vertex_function(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: VertexFunction): void {
+        this.mayAddNode(structureEdgeCoordinates, vertex.vertex_map_key, this.vertexAttributes(vertex));
+    }
+
     put_vertex_unavailable(answer_index: number, structureEdgeCoordinates: StructureEdgeCoordinates, vertex: VertexUnavailable): void {
         this.mayAddNode(structureEdgeCoordinates, unavailable_key(vertex), this.vertexAttributes(vertex));
     }
@@ -168,6 +180,26 @@ export class StudioConverter implements ILogicalGraphConverter {
         let attributes = this.edgeAttributes(EdgeKind.subExact, this.edgeMetadata(answerIndex, coordinates));
         this.mayAddEdge(coordinates, safe_label(subtype), safe_label(supertype), EdgeKind.subExact, attributes);
     }
+    put_assigned(answerIndex: number, coordinates: StructureEdgeCoordinates, expr_or_func: VertexExpression | VertexFunction, assigned: TypeDBValue): void {
+        let attributes = this.edgeAttributes(EdgeKind.assigned, this.edgeMetadata(answerIndex, coordinates));
+        this.mayAddEdge(coordinates, expr_or_func.vertex_map_key, safe_value(assigned), EdgeKind.assigned, attributes);
+    }
+
+    put_argument(answerIndex: number, coordinates: StructureEdgeCoordinates, argument: TypeDBValue | Attribute, expr_or_func: VertexExpression | VertexFunction): void {
+        let attributes = this.edgeAttributes(EdgeKind.argument, this.edgeMetadata(answerIndex, coordinates));
+        let from_vertex_key = null;
+        switch (argument.kind) {
+            case "value": {
+                from_vertex_key = safe_value(argument);
+                break;
+            }
+            case ThingKind.attribute: {
+                from_vertex_key = safe_iid(argument);
+                break;
+            }
+        }
+        this.mayAddEdge(coordinates, from_vertex_key, expr_or_func.vertex_map_key, EdgeKind.argument, attributes);
+    }
 
     private shouldDrawEdge(edgeCoordinates: StructureEdgeCoordinates) {
         return this.edgesToDraw[edgeCoordinates.branchIndex].includes(edgeCoordinates.constraintIndex);
@@ -204,6 +236,10 @@ function safe_iid(vertex: ObjectAny | Attribute | VertexUnavailable) {
 
 function safe_label(vertex: TypeAny | VertexUnavailable) {
     return (vertex.kind == "unavailable") ? unavailable_key(vertex) : vertex.label;
+}
+
+function safe_value(vertex: TypeDBValue | VertexUnavailable) {
+    return (vertex.kind == "unavailable") ? unavailable_key(vertex) : (vertex.valueType + ":" + vertex.value);
 }
 
 export function unavailable_key(vertex: VertexUnavailable) : string {

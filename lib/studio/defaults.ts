@@ -1,6 +1,6 @@
 import {EdgeKind, RoleType, ThingKind, TypeKind} from "../typedb/concept";
 import chroma from "chroma-js";
-import {LogicalVertex, VertexUnavailable} from "../graph";
+import {LogicalVertex, SpecialVertexKind, VertexUnavailable} from "../graph";
 import {NodeSquareProgram} from "@sigma/node-square";
 import {ForceLayoutSettings} from "graphology-layout-force";
 import {Settings as SigmaSettings} from "sigma/settings";
@@ -17,7 +17,9 @@ export const defaultStyleParameters: StudioConverterStyleParameters = {
         [TypeKind.attributeType]: chroma("darkgreen"),
         [TypeKind.roleType]: chroma("darkorange"),
         value: chroma("grey"),
-        unavailable: chroma("darkgrey"),
+        [SpecialVertexKind.unavailable]: chroma("darkgrey"),
+        [SpecialVertexKind.expr]: chroma("black"),
+        [SpecialVertexKind.func]: chroma("black")
     },
     vertex_shapes: {
         [ThingKind.entity]: "circle",
@@ -28,7 +30,9 @@ export const defaultStyleParameters: StudioConverterStyleParameters = {
         [TypeKind.attributeType]: "circle",
         [TypeKind.roleType]: "circle",
         value: "circle",
-        unavailable: "circle",
+        [SpecialVertexKind.unavailable]: "circle",
+        [SpecialVertexKind.expr]: "circle",
+        [SpecialVertexKind.func]: "circle",
     },
     vertex_size: 10,
 
@@ -55,8 +59,12 @@ export const defaultStyleParameters: StudioConverterStyleParameters = {
             case "value": {
                 return vertex.value;
             }
-            case "unavailable": {
+            case SpecialVertexKind.unavailable: {
                 return "?" + vertex.variable + "?";
+            }
+            case SpecialVertexKind.func:
+            case SpecialVertexKind.expr: {
+                return vertex.repr;
             }
         }
     },
@@ -80,8 +88,12 @@ export const defaultStyleParameters: StudioConverterStyleParameters = {
             case "value": {
                 return vertex.valueType +":" + vertex.value;
             }
-            case "unavailable": {
+            case SpecialVertexKind.unavailable: {
                 return unavailable_key(vertex);
+            }
+            case SpecialVertexKind.func:
+            case SpecialVertexKind.expr: {
+                return vertex.repr;
             }
         }
     },
