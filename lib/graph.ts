@@ -161,9 +161,8 @@ class LogicalGraphBuilder {
                 return { kind: SpecialVertexKind.func, vertex_map_key: key, answerIndex: answerIndex, repr: vertex.repr } as VertexFunction;
             }
             default: {
-                console.log("Unsupported vertex type: " + structure_vertex.kind)
+                throw new Error("Unsupported vertex type: " + structure_vertex.kind);
             }
-
         }
     }
 

@@ -1,10 +1,13 @@
 import {Attribute, Entity, RoleType, ThingKind, TypeDBValue, TypeKind, ValueType} from "../lib/typedb/concept";
-import {LogicalVertex} from "../lib/graph.js";
+import {LogicalVertex, SpecialVertexKind} from "../lib/graph.js";
 import {unavailable_key} from "../lib/studio/converter.js";
 
 export class ConceptHelper {
     static valueString(value: string): TypeDBValue {
         return { kind: "value", value: value, valueType: ValueType.string};
+    }
+    static valueInteger(value: number): TypeDBValue {
+        return { kind: "value", value: value, valueType: ValueType.integer};
     }
 
     static attribute(iid: string, label: string, value: TypeDBValue): Attribute {
@@ -37,7 +40,7 @@ export class ConceptHelper {
         };
     }
 
-    static getVertexKey(vertex: LogicalVertex) : string {
+    static getVertexKey(vertex: LogicalVertex, answerIndex: number) : string {
         // Warning: Depends on the converter implementation
         switch (vertex.kind) {
             case TypeKind.entityType:
@@ -53,12 +56,20 @@ export class ConceptHelper {
             case ThingKind.attribute: {
                 return vertex.iid;
             }
-            case "unavailable": {
+            case SpecialVertexKind.unavailable: {
                 return unavailable_key(vertex);
             }
-            case "value":
+            case SpecialVertexKind.func: {
+                return vertex.repr + "["+ answerIndex + "]";
+            }
+            case SpecialVertexKind.expr: {
+                return vertex.repr + "["+ answerIndex + "]";
+            }
+            case "value": {
+                return vertex.valueType + ":" + vertex.value;
+            }
             default: {
-                throw new Error("test verification function getVertexKey not implemented for :" + vertex.kind)
+                throw new Error("test verification function getVertexKey not implemented for :" + vertex)
             }
         }
     }

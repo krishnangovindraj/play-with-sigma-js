@@ -1,13 +1,13 @@
 import {constructGraphFromRowsResult, LogicalGraph, LogicalVertex, LogicalVertexID} from "../lib/graph";
-import {TypeDBQueryAnswerType, TypeDBQueryType, TypeDBRowsResult} from "../lib/typedb/answer";
-import {EdgeKind, RoleType, TypeKind} from "../lib/typedb/concept";
+import {StructureVertexKind, TypeDBQueryAnswerType, TypeDBQueryType, TypeDBRowsResult} from "../lib/typedb/answer";
+import {EdgeKind, ValueType} from "../lib/typedb/concept";
 import {GraphHelper} from "./logical-graph-utils";
 import {ConceptHelper} from "./concept-utils";
-import {StructureHelper} from "./other-utils.js";
-import {StudioConverter} from "../lib/studio/converter.js";
+import {StructureHelper} from "./other-utils";
+import {StudioConverter} from "../lib/studio/converter";
 import Graph from "graphology";
 import * as studioDefaults from "../lib/studio/defaults";
-import {convertLogicalGraphWith} from "../lib/visualisation.js";
+import {convertLogicalGraphWith} from "../lib/visualisation";
 
 function checkTranslation(name: string, rows_result: TypeDBRowsResult, expectedLogicalGraph: LogicalGraph) {
     let actualLogicalGraph = constructGraphFromRowsResult(rows_result)
@@ -17,11 +17,11 @@ function checkTranslation(name: string, rows_result: TypeDBRowsResult, expectedL
     let graphology = new Graph();
     let converter = new StudioConverter(graphology, rows_result.queryStructure, studioDefaults.defaultStructureParameters, studioDefaults.defaultStyleParameters);
     convertLogicalGraphWith(actualLogicalGraph, converter);
-    let absentEdges = expectedLogicalGraph.answers.flatMap(answer => {
+    let absentEdges = expectedLogicalGraph.answers.flatMap((answer, answerIndex) => {
         return answer.filter(edge => {
             let from = expectedLogicalGraph.vertices.get(edge.from)!;
             let to = expectedLogicalGraph.vertices.get(edge.to)!;
-            let foundEdge = converter.graph.directedEdge(ConceptHelper.getVertexKey(from), ConceptHelper.getVertexKey(to));
+            let foundEdge = converter.graph.directedEdge(ConceptHelper.getVertexKey(from, answerIndex), ConceptHelper.getVertexKey(to, answerIndex));
             return foundEdge == undefined;
         })
     });
@@ -175,17 +175,62 @@ const TEST_LINKS_DISJUNCTION: E2ETestCase = {
     }
 }
 
+const TEST_EXPRESSION: E2ETestCase = {
+    name: "TestExpression",
+    answer: {
+        queryType: "read",
+        answerType: TypeDBQueryAnswerType.conceptRows,
+        answers: [
+            {
+                data: {
+                    "x": ConceptHelper.valueInteger(3),
+                    "y": ConceptHelper.valueInteger(8)
+                },
+                provenance: 0
+            }
+        ],
+        queryStructure: {
+            branches: [
+                {
+                    edges: [
+                        StructureHelper.assigned(StructureHelper.expr("[Expression#1]"), StructureHelper.var("x"), "x"),
+                        StructureHelper.assigned(StructureHelper.expr("[Expression#2]"), StructureHelper.var("y"), "y"),
+                        StructureHelper.argument(StructureHelper.var("x"), StructureHelper.expr("[Expression#2]"), "x"),
+                    ]
+                }
+            ]
+        }
+    },
+    expectedGraph: {
+        vertices: new Map<LogicalVertexID, LogicalVertex>([
+            ["[Expression#1][0]", GraphHelper.vertexExpr("[Expression#1]", 0)],
+            ["[Expression#2][0]", GraphHelper.vertexExpr("[Expression#2]", 0)],
+            ["integer:3", ConceptHelper.valueInteger(3)],
+            ["integer:8", ConceptHelper.valueInteger(8)],
+        ]),
+        answers: [
+            [
+                GraphHelper.assigned("x", 0, 0, "[Expression#1][0]", "integer:3"),
+                GraphHelper.assigned("y", 0, 1, "[Expression#2][0]", "integer:8"),
+                GraphHelper.argument("x", 0, 2, "integer:3", "[Expression#2][0]"),
+            ]
+        ]
+    },
+}
+
 const ALL_TESTS: Array<E2ETestCase> = [
     TEST_HAS_SINGLE,
     TEST_HAS_MULTIPLE,
-    TEST_LINKS_DISJUNCTION
+    TEST_LINKS_DISJUNCTION,
+    TEST_EXPRESSION,
 ];
 
 export function runAllTests() {
     console.log("START: E2E tests")
     for (let test of ALL_TESTS) {
+        console.log("-" + test.name)
         checkTranslation(test.name, test.answer, test.expectedGraph);
-        console.log("\t-pass: " + test.name)
+        console.log("\tpassed!");
     }
     console.log("SUCCESS: E2E tests")
 }

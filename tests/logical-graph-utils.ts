@@ -5,7 +5,10 @@ import {
     LogicalGraph,
     LogicalVertex,
     LogicalVertexID,
+    SpecialVertexKind,
     StructureEdgeCoordinates,
+    VertexExpression,
+    VertexFunction,
     VertexMap,
     VertexUnavailable
 } from "../lib/graph";
@@ -39,9 +42,35 @@ export class GraphHelper {
         };
     }
 
+    static argument(variableName: string, branchIndex: number, constraintIndex: number, from: LogicalVertexID, to: LogicalVertexID): LogicalEdge {
+        return {
+            from: from,
+            to: to,
+            type: { kind: EdgeKind.argument, param: variableName },
+            structureEdgeCoordinates: { branchIndex: branchIndex,  constraintIndex: constraintIndex},
+        };
+    }
+
+    static assigned(variableName: string, branchIndex: number, constraintIndex: number, from: LogicalVertexID, to: LogicalVertexID): LogicalEdge {
+        return {
+            from: from,
+            to: to,
+            type: { kind: EdgeKind.assigned, param: variableName },
+            structureEdgeCoordinates: { branchIndex: branchIndex,  constraintIndex: constraintIndex},
+        };
+    }
+
     static graphsAreEqual(first: LogicalGraph, second: LogicalGraph): boolean {
         return vertexMapsAreEqual(first.vertices, second.vertices)
             && answerSetsAreEqual(first.answers, second.answers);
+    }
+
+    static vertexExpr(repr: string, answerIndex:number): VertexExpression {
+        return { kind: SpecialVertexKind.expr, answerIndex: answerIndex, repr: repr, vertex_map_key: repr + "[" + answerIndex + "]" };
+    }
+
+    static vertexFunc(repr: string, answerIndex:number): VertexFunction {
+        return { kind: SpecialVertexKind.func, answerIndex: answerIndex, repr: repr, vertex_map_key: repr + "[" + answerIndex + "]" };
     }
 }
 
@@ -87,10 +116,20 @@ export function verticesAreEqual(first: LogicalVertex, second: LogicalVertex): b
             let s = second as TypeDBValue;
             return f.value == s.value && f.valueType == s.valueType;
         }
-        case "unavailable": {
+        case SpecialVertexKind.unavailable: {
             let f = first as VertexUnavailable;
             let s = second as VertexUnavailable;
             return f.variable == s.variable && f.answerIndex == s.answerIndex;
+        }
+        case SpecialVertexKind.expr: {
+            let f = first as VertexExpression;
+            let s = second as VertexExpression;
+            return f.repr == s.repr && f.answerIndex == s.answerIndex;
+        }
+        case SpecialVertexKind.func: {
+            let f = first as VertexFunction;
+            let s = second as VertexFunction;
+            return f.repr == s.repr && f.answerIndex == s.answerIndex;
         }
         default: {
             throw new Error("Unsupported vertex type");
@@ -154,6 +193,12 @@ export function edgeTypesAreEqual(first: LogicalEdgeType, second: LogicalEdgeTyp
         case EdgeKind.isaExact:
         case EdgeKind.subExact: {
             return true;
+        }
+        case EdgeKind.assigned: {
+            return first.param == second.param;
+        }
+        case EdgeKind.argument: {
+            return first.param == second.param;
         }
     }
 }

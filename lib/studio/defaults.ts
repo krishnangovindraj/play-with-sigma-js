@@ -16,7 +16,7 @@ export const defaultStyleParameters: StudioConverterStyleParameters = {
         [TypeKind.relationType]: chroma("orange"),
         [TypeKind.attributeType]: chroma("darkgreen"),
         [TypeKind.roleType]: chroma("darkorange"),
-        value: chroma("grey"),
+        value: chroma("white"),
         [SpecialVertexKind.unavailable]: chroma("darkgrey"),
         [SpecialVertexKind.expr]: chroma("black"),
         [SpecialVertexKind.func]: chroma("black")
