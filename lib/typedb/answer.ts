@@ -65,5 +65,5 @@ export enum StructureVertexKind {
     value = "value",
     unavailable = "unavailableVariable",
     expr = "expression",
-    func = "function",
+    func = "functionCall",
 }

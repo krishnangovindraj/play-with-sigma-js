@@ -26,7 +26,7 @@ import {
 export enum SpecialVertexKind {
     unavailable = "unavailable",
     expr = "expression",
-    func = "function",
+    func = "functionCall",
 }
 
 export type VertexUnavailable = { kind: SpecialVertexKind.unavailable, variable: string, answerIndex: number, vertex_map_key: string };
