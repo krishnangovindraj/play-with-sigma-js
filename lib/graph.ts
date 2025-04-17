@@ -139,8 +139,7 @@ class LogicalGraphBuilder {
             } 
             case StructureVertexKind.label:{
                 let vertex= structure_vertex.value as StructureVertexLabel;
-                let type_kind = this.translate_thing_kind_to_type_kind(vertex.kind);
-                return { kind: type_kind, label: vertex.label } as TypeAny;
+                return { kind: vertex.kind, label: vertex.label } as TypeAny;
             }
             case StructureVertexKind.value:{
                 return structure_vertex.value as TypeDBValue;
@@ -162,18 +161,6 @@ class LogicalGraphBuilder {
             }
             default: {
                 throw new Error("Unsupported vertex type: " + structure_vertex.kind);
-            }
-        }
-    }
-
-    translate_thing_kind_to_type_kind(thing_kind: ThingKind | "relation:role"): TypeKind {
-        switch (thing_kind) {
-            case ThingKind.relation: return TypeKind.relationType;
-            case ThingKind.entity: return TypeKind.entityType;
-            case ThingKind.attribute: return TypeKind.attributeType;
-            case "relation:role": return TypeKind.roleType;
-            default: {
-                throw new Error("Unrecognised: " + thing_kind);
             }
         }
     }

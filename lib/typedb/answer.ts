@@ -1,4 +1,4 @@
-import {ConceptAny, TypeDBValue, EdgeKind, ThingKind} from "./concept"
+import {ConceptAny, TypeDBValue, EdgeKind, ThingKind, TypeKind} from "./concept"
 // For common data-structures that convert between what the server gives us and what we need
 
 ///////////
@@ -50,8 +50,8 @@ export type StructureVertex = {
     value: StructureVertexAny,
 }
 export type StructureVertexVariable = { variable: string };
-export type StructureVertexLabel = {  kind: ThingKind | "relation:role", label: string }; // Unfortunate that it's ThingKind
-export type StructureVertexValue = TypeDBValue; // { value_type: TypeDBValueType, value: any };
+export type StructureVertexLabel = {  kind: TypeKind, label: string };
+export type StructureVertexValue = TypeDBValue;
 export type StructureVertexExpression = { repr: string };
 export type StructureVertexFunction = { repr: string };
 export type StructureVertexUnavailable = {  variable: string };

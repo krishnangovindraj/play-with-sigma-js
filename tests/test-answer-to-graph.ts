@@ -1,6 +1,6 @@
 import {constructGraphFromRowsResult, LogicalGraph, LogicalVertex, LogicalVertexID} from "../lib/graph";
 import {StructureVertexKind, TypeDBQueryAnswerType, TypeDBQueryType, TypeDBRowsResult} from "../lib/typedb/answer";
-import {EdgeKind, ValueType} from "../lib/typedb/concept";
+import {EdgeKind, TypeKind, ValueType} from "../lib/typedb/concept";
 import {GraphHelper} from "./logical-graph-utils";
 import {ConceptHelper} from "./concept-utils";
 import {StructureHelper} from "./other-utils";
@@ -134,12 +134,12 @@ const TEST_LINKS_DISJUNCTION: E2ETestCase = {
                 { edges: [] },
                 {
                     edges: [
-                        StructureHelper.edge(EdgeKind.links, StructureHelper.var("relation"), StructureHelper.var("player"), StructureHelper.label("relation:role", "role1")),
+                        StructureHelper.edge(EdgeKind.links, StructureHelper.var("relation"), StructureHelper.var("player"), StructureHelper.label(TypeKind.roleType, "role1")),
                     ]
                 },
                 {
                     edges: [
-                        StructureHelper.edge(EdgeKind.links, StructureHelper.var("relation"), StructureHelper.var("player"), StructureHelper.label("relation:role", "role2")),
+                        StructureHelper.edge(EdgeKind.links, StructureHelper.var("relation"), StructureHelper.var("player"), StructureHelper.label(TypeKind.roleType, "role2")),
                     ]
                 }
             ]
