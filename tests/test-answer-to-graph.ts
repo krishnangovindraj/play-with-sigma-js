@@ -15,7 +15,7 @@ function checkTranslation(name: string, rows_result: TypeDBRowsResult, expectedL
         throw new Error("Graphs are unequal: " + name);
     }
     let graphology = new Graph();
-    let converter = new StudioConverter(graphology, rows_result.queryStructure, studioDefaults.defaultStructureParameters, studioDefaults.defaultStyleParameters);
+    let converter = new StudioConverter(graphology, rows_result.queryStructure, studioDefaults.defaultStructureParameters, studioDefaults.defaultQueryStyleParameters);
     convertLogicalGraphWith(actualLogicalGraph, converter);
     let absentEdges = expectedLogicalGraph.answers.flatMap((answer, answerIndex) => {
         return answer.filter(edge => {

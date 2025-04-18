@@ -23,10 +23,12 @@ export class StudioConverter implements ILogicalGraphConverter {
     styleParameters: StudioConverterStyleParameters;
     structureParameters: StudioConverterStructureParameters;
     edgesToDraw: Array<Array<number>>;
+    isFollowupQuery: boolean;
 
-    constructor(graph: Graph, queryStructure: TypeDBQueryStructure, structureParameters: StudioConverterStructureParameters, styleParameters: StudioConverterStyleParameters) {
+    constructor(graph: Graph, queryStructure: TypeDBQueryStructure, isFollowupQuery: boolean, structureParameters: StudioConverterStructureParameters, styleParameters: StudioConverterStyleParameters) {
         this.graph = graph;
         this.edgesToDraw = determineEdgesToDraw(queryStructure, structureParameters);
+        this.isFollowupQuery = isFollowupQuery;
         this.styleParameters = styleParameters;
         this.structureParameters = structureParameters;
     }
@@ -45,12 +47,17 @@ export class StudioConverter implements ILogicalGraphConverter {
             metadata: {
                 defaultLabel: this.styleParameters.vertex_default_label(vertex),
                 hoverLabel: this.styleParameters.vertex_hover_label(vertex),
+                concept: vertex,
             },
         }
     }
 
     private edgeMetadata(answerIndex: number, coordinates: StructureEdgeCoordinates) {
-        return { answerIndex: answerIndex, structureEdgeCoordinates: coordinates };
+        if (this.isFollowupQuery) {
+            return { answerIndex: -1, structureEdgeCoordinates: coordinates };
+        } else {
+            return { answerIndex: answerIndex, structureEdgeCoordinates: coordinates };
+        }
     }
 
     private edgeAttributes(label: string, metadata: any | undefined): any {

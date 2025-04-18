@@ -7,7 +7,7 @@ import {Settings as SigmaSettings} from "sigma/settings";
 import {unavailable_key} from "./converter";
 import {StudioConverterStructureParameters, StudioConverterStyleParameters} from "./config";
 
-export const defaultStyleParameters: StudioConverterStyleParameters = {
+export const defaultQueryStyleParameters: StudioConverterStyleParameters = {
     vertex_colors: {
         [ThingKind.entity]: chroma("pink"),
         [ThingKind.relation]: chroma("yellow"),
@@ -106,6 +106,24 @@ export const defaultStyleParameters: StudioConverterStyleParameters = {
         return this.vertex_default_label(role);
     }
 };
+
+export const defaultExplorationQueryStyleParameters: StudioConverterStyleParameters = {
+    vertex_colors: defaultQueryStyleParameters.vertex_colors,
+    vertex_shapes: defaultQueryStyleParameters.vertex_shapes,
+    vertex_size: defaultQueryStyleParameters.vertex_size,
+
+    // We only change this one:
+    edge_color: chroma("darkblue"),
+    //^We only change this one:
+
+    edge_highlight_color: defaultQueryStyleParameters.edge_highlight_color,
+    edge_size: defaultQueryStyleParameters.edge_size,
+
+    vertex_default_label: defaultQueryStyleParameters.vertex_default_label,
+    vertex_hover_label: defaultQueryStyleParameters.vertex_hover_label,
+    links_edge_label: defaultQueryStyleParameters.links_edge_label,
+};
+
 
 export const defaultStructureParameters: StudioConverterStructureParameters = {
     ignoreEdgesInvolvingLabels: [EdgeKind.isa, EdgeKind.sub, EdgeKind.relates, EdgeKind.plays],

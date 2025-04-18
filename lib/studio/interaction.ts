@@ -2,6 +2,11 @@ import Sigma from "sigma";
 import Graph from "graphology";
 import {SigmaEventPayload, SigmaNodeEventPayload, SigmaStageEventPayload} from "sigma/types";
 import {StudioConverterStyleParameters} from "./config";
+import {StudioDriverWrapper} from "./driverwrapper";
+import {ThingKind, TypeKind} from "../typedb/concept";
+import {StudioState} from "./studio";
+import {TypeDBAnswerAny, TypeDBQueryType} from "../typedb/answer.js";
+import {TypeDBResult} from "../typedb/driver.js";
 
 // Ref: https://www.sigmajs.org/docs/advanced/events/
 // and: https://www.sigmajs.org/storybook/?path=/story/mouse-manipulations--story
@@ -16,15 +21,19 @@ export class StudioInteractionHandler {
     renderer: Sigma;
     state: InteractionState;
     styleParameters: StudioConverterStyleParameters;
+    driver: StudioDriverWrapper;
+    private studioState: StudioState;
 
-    constructor(graph: Graph, renderer: Sigma, styleParameters: StudioConverterStyleParameters) {
+    constructor(graph: Graph, renderer: Sigma, driver: StudioDriverWrapper, studioState: StudioState, styleParameters: StudioConverterStyleParameters) {
         this.graph = graph;
         this.renderer = renderer;
         this.state = {
             draggedNode : null,
             highlightedAnswer: null,
         };
+        this.studioState = studioState;
         this.styleParameters = styleParameters;
+        this.driver = driver;
         this.registerAll(renderer);
     }
 
@@ -95,7 +104,47 @@ export class StudioInteractionHandler {
 
     onDoubleClickNode(event: SigmaNodeEventPayload) {
         let node = event.node;
-        alert("TODO: exploreNodeNeighbourhood(node)");
+        let attributes = this.graph.getNodeAttributes(node);
+        if (this.studioState.activeQueryDatabase == null) {
+            console.log("Could not dispatch explore query: Unknown active database") // unreachable
+            return;
+        }
+        let query = null;
+        switch(attributes.metadata.concept.kind) {
+            case TypeKind.entityType: {
+                query = QUERY_EXPLORE_ENTITYTYPE.replace("<<label>>", attributes.metadata.concept.label);
+                break;
+            }
+            case TypeKind.relationType: {
+                query = QUERY_EXPLORE_RELATIONTYPE.replace("<<label>>", attributes.metadata.concept.label);
+                break;
+            }
+            case TypeKind.attributeType:{
+                query = QUERY_EXPLORE_ATTRIBUTETYPE.replace("<<label>>", attributes.metadata.concept.label);
+                break;
+            }
+            case TypeKind.roleType: {
+                query = QUERY_EXPLORE_ROLETYPE.replace("<<label>>", attributes.metadata.concept.label);
+                break;
+            }
+            case ThingKind.entity: {
+                query = QUERY_EXPLORE_ENTITY.replace("<<iid>>", attributes.metadata.concept.label);
+                break;
+            }
+            case ThingKind.relation: {
+                query = QUERY_EXPLORE_RELATION.replace("<<iid>>", attributes.metadata.concept.label);
+                break;
+            }
+            case ThingKind.attribute: {
+                query = QUERY_EXPLORE_ATTRIBUTE.replace("<<iid>>", attributes.metadata.concept.label);
+                break;
+            }
+            default: {
+                console.log("Unexplorable kind: " + attributes.metadata.concept.kind);
+                return;
+            }
+        }
+        let result = this.driver.runExplorationQuery(this.studioState.activeQueryDatabase, query, TypeDBQueryType.read);
     }
 
     highlightAnswer(answerIndex: number) {
@@ -146,3 +195,14 @@ enum StudioSigmaEventType {
     // Remaining: downStage, clickStage, rightClickStage, doubleClickStage, wheelStage
     // Remaining: beforeRender, afterRender, resize, kill
 }
+
+const QUERY_EXPLORE_ENTITY = "";
+const QUERY_EXPLORE_RELATION = "";
+const QUERY_EXPLORE_ATTRIBUTE = "";
+
+
+const QUERY_EXPLORE_ENTITYTYPE = "";
+const QUERY_EXPLORE_RELATIONTYPE = "";
+const QUERY_EXPLORE_ATTRIBUTETYPE = "";
+
+const QUERY_EXPLORE_ROLETYPE = "";

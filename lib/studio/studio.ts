@@ -6,6 +6,12 @@ import * as studioDefaultSettings from "./defaults";
 import {StudioInteractionHandler} from "./interaction";
 import {StudioDriverWrapper} from "./driverwrapper.js";
 import {StudioVisualiser} from "./visualiser.js";
+import {TypeDBAnswerAny, TypeDBQueryType} from "../typedb/answer.js";
+import {TypeDBResult} from "../typedb/driver.js";
+
+export interface StudioState {
+    activeQueryDatabase: string | null;
+}
 
 export class TypeDBStudio {
     graph: Graph;
@@ -14,6 +20,7 @@ export class TypeDBStudio {
     interactionHandler: StudioInteractionHandler;
     visualiser: StudioVisualiser;
     driver: StudioDriverWrapper;
+    state: StudioState;
 
     constructor(graph: Graph, renderer: Sigma) {
         this.graph = graph;
@@ -21,9 +28,11 @@ export class TypeDBStudio {
         this.layout = new ForceSupervisor(graph, { isNodeFixed: (_, attr) => attr.highlighted, settings: studioDefaultSettings.defaultForceSupervisorSettings});
         this.layout.start();
 
+        this.state = { activeQueryDatabase: null };
+
         this.visualiser = new StudioVisualiser(graph);
         this.driver = new StudioDriverWrapper(this.visualiser);
-        this.interactionHandler = new StudioInteractionHandler(graph, renderer, studioDefaultSettings.defaultStyleParameters);
+        this.interactionHandler = new StudioInteractionHandler(graph, renderer, this.driver, this.state, studioDefaultSettings.defaultQueryStyleParameters);
     }
 
     unfreeze() {
@@ -32,5 +41,14 @@ export class TypeDBStudio {
 
     freeze() {
         this.layout.stop();
+    }
+
+    runQuery(database: string, query: string, transactionType: TypeDBQueryType) : Promise<TypeDBResult<TypeDBAnswerAny>> {
+        return this.driver.runQuery(database, query, transactionType).then(result => {
+           if (result.ok) {
+               this.state.activeQueryDatabase = database;
+           }
+           return result;
+        });
     }
 }

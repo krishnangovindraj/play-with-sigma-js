@@ -13,9 +13,17 @@ export class StudioVisualiser {
 
     handleQueryResult(query_result: TypeDBRowsResult) {
         if (query_result.answerType == "conceptRows" && query_result.queryStructure != null) {
-            let converter = new StudioConverter(this.graph, query_result.queryStructure, studioDefaultSettings.defaultStructureParameters, studioDefaultSettings.defaultStyleParameters);
+            let converter = new StudioConverter(this.graph, query_result.queryStructure, false, studioDefaultSettings.defaultStructureParameters, studioDefaultSettings.defaultQueryStyleParameters);
             let logicalGraph = constructGraphFromRowsResult(query_result); // In memory, not visualised
             this.graph.clear();
+            convertLogicalGraphWith(logicalGraph, converter);
+        }
+    }
+
+    handleExplorationQueryResult(query_result: TypeDBRowsResult) {
+        if (query_result.answerType == "conceptRows" && query_result.queryStructure != null) {
+            let converter = new StudioConverter(this.graph, query_result.queryStructure, true, studioDefaultSettings.defaultStructureParameters, studioDefaultSettings.defaultExplorationQueryStyleParameters);
+            let logicalGraph = constructGraphFromRowsResult(query_result); // In memory, not visualised
             convertLogicalGraphWith(logicalGraph, converter);
         }
     }

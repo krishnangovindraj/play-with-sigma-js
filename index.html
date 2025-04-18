@@ -27,24 +27,20 @@
         async function doCreateDatabase(form) {
             resetStatus();
             let dbName = document.getElementById("input-database-name").value;
-            let result = await studio.driver.driver.createDatabase(dbName);
+            let result = await studio.driver.createDatabase(dbName);
             updateStatus(result);
         }
 
         async function doDeleteDatabase(form) {
             resetStatus();
-            if (studio.driver.driver == null) {
-                updateStatus({err: "Not logged in!"});
-            } else {
-                let dbName = document.getElementById("input-database-name").value;
-                let result = await studio.driver.deleteDatabase(dbName);
-                updateStatus(result);
-            }
+            let dbName = document.getElementById("input-database-name").value;
+            let result = await studio.driver.deleteDatabase(dbName);
+            updateStatus(result);
         }
 
         async function doRunQuery(form) {
             resetStatus();
-            let result = await studio.driver.runQuery(form.database.value, form.query.value, form.txType);
+            let result = await studio.runQuery(form.database.value, form.query.value, form.txType);
             query_result = updateStatus(result);
         }
 

@@ -22,7 +22,7 @@ export class StudioDriverWrapper {
 
     createDatabase(database: string) : Promise<TypeDBResult<boolean>> {
         if (this.driver == null) {
-            return {err: "Not logged in!"};
+            return this.errNotLoggedIn();
         } else {
             return this.driver.createDatabase(database);
         }
@@ -30,7 +30,7 @@ export class StudioDriverWrapper {
 
     deleteDatabase(database: string) : Promise<TypeDBResult<boolean>> {
         if (this.driver == null) {
-            return {err: "Not logged in!"};
+            return this.errNotLoggedIn();
         } else {
             return this.driver.deleteDatabase(database);
         }
@@ -38,7 +38,7 @@ export class StudioDriverWrapper {
 
     runQuery(database: string, query: string, transactionType: TypeDBQueryType) : Promise<TypeDBResult<TypeDBAnswerAny>> {
         if (this.driver == null) {
-            return {err: "Not logged in!"};
+            return this.errNotLoggedIn();
         } else {
             return this.driver.runQuery(database, query, transactionType).then(result => {
                 if (result.ok != undefined) {
@@ -50,5 +50,27 @@ export class StudioDriverWrapper {
                 return result;
             });
         }
+    }
+
+    runExplorationQuery(database: string, query: string, transactionType: TypeDBQueryType) : Promise<TypeDBResult<TypeDBAnswerAny>>  {
+        if (this.driver == null) {
+            return this.errNotLoggedIn();
+        } else {
+            return this.driver.runQuery(database, query, transactionType).then(result => {
+                if (result.ok != undefined) {
+                    let query_result = result.ok;
+                    if (query_result.answerType == "conceptRows" && query_result.queryStructure != null) {
+                        this.visualiser.handleExplorationQueryResult(query_result);
+                    }
+                }
+                return result;
+            });
+        }
+    }
+
+    private errNotLoggedIn(): Promise<TypeDBResult<any>> {
+        return new Promise((resolve, _reject) => {
+            resolve({err: "Not logged in!"})
+        });
     }
 }
