@@ -57,10 +57,10 @@ export function constructGraphFromRowsResult(rows_result: TypeDBRowsResult) : Lo
     return new LogicalGraphBuilder().build(rows_result);
 }
 
-function is_branch_involved(provenance: Array<number>, branchIndex: number) {
+function is_branch_involved(provenanceBitArray: Array<number>, branchIndex: number) {
     let provenanceByteIndex = branchIndex >> 3; // divide by 8
     let provenanceBitWithinByte = (1 << (branchIndex % 8));
-    return 0 == branchIndex || 0 != (provenance[provenanceByteIndex] & provenanceBitWithinByte)
+    return 0 == branchIndex || 0 != (provenanceBitArray[provenanceByteIndex] & provenanceBitWithinByte)
 }
 
 class LogicalGraphBuilder {
@@ -75,7 +75,7 @@ class LogicalGraphBuilder {
         rows_result.answers.forEach((row, answerIndex) => {
             let current_answer_edges: Array<LogicalEdge> = [];
             rows_result.queryStructure.branches.forEach((branch, branchIndex) => {
-                if ( is_branch_involved(row.provenance, branchIndex) ){
+                if ( is_branch_involved(row.provenanceBitArray, branchIndex) ){
                     current_answer_edges.push(...this.substitute_variables(branchIndex, answerIndex, branch.edges, row.data))
                 }
             });

@@ -24,7 +24,7 @@ export enum TypeDBQueryAnswerType {
 }
 
 // Answers:
-export type TypeDBRow = { data: TypeDBRowData, provenance: Array<number> }
+export type TypeDBRow = { data: TypeDBRowData, provenanceBitArray: Array<number> }
 export type TypeDBRowData = { [id: string] : ConceptAny };
 export type TypeDBDocument = any;
 
