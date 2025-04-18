@@ -26,13 +26,9 @@
 
         async function doCreateDatabase(form) {
             resetStatus();
-            if (studio.driver.driver == null) {
-                updateStatus({err: "Not logged in!"});
-            } else {
-                let dbName = document.getElementById("input-database-name").value;
-                let result = await studio.driver.driver.createDatabase(dbName);
-                updateStatus(result);
-            }
+            let dbName = document.getElementById("input-database-name").value;
+            let result = await studio.driver.driver.createDatabase(dbName);
+            updateStatus(result);
         }
 
         async function doDeleteDatabase(form) {
@@ -40,10 +36,8 @@
             if (studio.driver.driver == null) {
                 updateStatus({err: "Not logged in!"});
             } else {
-                alert("Not implemented");
-                return false;
                 let dbName = document.getElementById("input-database-name").value;
-                let result = await studio.driver.driver.deleteDatabase(dbName);
+                let result = await studio.driver.deleteDatabase(dbName);
                 updateStatus(result);
             }
         }

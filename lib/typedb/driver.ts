@@ -38,6 +38,15 @@ export class TypeDBHttpDriver {
         }
     }
 
+    async deleteDatabase(database: string) : Promise<TypeDBResult<boolean>> {
+        let response = await this.httpDelete("/v1/databases/" + database, undefined);
+        if (response.ok) {
+            return {ok : true} as TypeDBResult<boolean>;
+        } else {
+            return { err: await response.text() } as TypeDBResult<boolean>;
+        }
+    }
+
     async runQuery(database: string, query: string, transactionType: TypeDBQueryType) : Promise<TypeDBResult<TypeDBAnswerAny>> {
         let response = await this.httpPost("/v1/query", { query: query, databaseName: database, transactionType: transactionType });
         if (response.ok) {
@@ -60,6 +69,14 @@ export class TypeDBHttpDriver {
         let headers = { "Authorization": "Bearer " + this.token,  "Content-Type": "application/json" };
         return await fetch(this.address + endpoint, {
             method: "GET",
+            headers: headers,
+        });
+    }
+
+    async httpDelete(endpoint: string) {
+        let headers = {"Authorization": "Bearer " + this.token, "Content-Type": "application/json"};
+        return await fetch(this.address + endpoint, {
+            method: "DELETE",
             headers: headers,
         });
     }

@@ -20,6 +20,22 @@ export class StudioDriverWrapper {
         });
     }
 
+    createDatabase(database: string) : Promise<TypeDBResult<boolean>> {
+        if (this.driver == null) {
+            return {err: "Not logged in!"};
+        } else {
+            return this.driver.createDatabase(database);
+        }
+    }
+
+    deleteDatabase(database: string) : Promise<TypeDBResult<boolean>> {
+        if (this.driver == null) {
+            return {err: "Not logged in!"};
+        } else {
+            return this.driver.deleteDatabase(database);
+        }
+    }
+
     runQuery(database: string, query: string, transactionType: TypeDBQueryType) : Promise<TypeDBResult<TypeDBAnswerAny>> {
         if (this.driver == null) {
             return {err: "Not logged in!"};
