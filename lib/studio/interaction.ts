@@ -37,6 +37,8 @@ export class StudioInteractionHandler {
 
         renderer.on(StudioSigmaEventType.upStage, (e) => this.onUpStage(e));
         renderer.on(StudioSigmaEventType.upNode, (e) => this.onUpNode(e));
+
+        renderer.on(StudioSigmaEventType.doubleClickNode, (e) => this.onDoubleClickNode(e));
     }
 
     onEnterNode(event: SigmaNodeEventPayload) {
@@ -89,6 +91,11 @@ export class StudioInteractionHandler {
             this.graph.removeNodeAttribute(this.state.draggedNode, "highlighted");
             this.state.draggedNode = null;
         }
+    }
+
+    onDoubleClickNode(event: SigmaNodeEventPayload) {
+        let node = event.node;
+        alert("TODO: exploreNodeNeighbourhood(node)");
     }
 
     highlightAnswer(answerIndex: number) {

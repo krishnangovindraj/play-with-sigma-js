@@ -62,9 +62,13 @@ export const defaultStyleParameters: StudioConverterStyleParameters = {
             case SpecialVertexKind.unavailable: {
                 return "?" + vertex.variable + "?";
             }
-            case SpecialVertexKind.func:
+            case SpecialVertexKind.func: {
+                let argStart = vertex.repr.indexOf("(");
+                return vertex.repr.substring(0, argStart) + "(...)";
+            }
             case SpecialVertexKind.expr: {
-                return vertex.repr;
+                let parts = vertex.repr.split("=");
+                return parts[0] + "=" + "(...)"
             }
         }
     },
@@ -117,9 +121,9 @@ export const defaultSigmaSettings: Partial<SigmaSettings> = {
 };
 
 export const defaultForceSupervisorSettings: ForceLayoutSettings = {
-    attraction: 0.0005,
-    repulsion: 0.1,
-    gravity: 0.0001,
-    inertia: 0.6,
+    attraction: 0.00005,
+    repulsion: 0.5,
+    gravity: 0.00000005,
+    inertia: 0.2,
     maxMove: 200,
 };

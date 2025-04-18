@@ -6,7 +6,6 @@
     <script src="typedb-visualisation.js" type="text/javascript"></script>
     <script>
         // Set a few globals
-        var driver = null;
         var query_result = null;
         var logicalGraph = null;
         var studio = null;
@@ -21,51 +20,38 @@
 
         // TypeDB requests run by UI
         async function doSignin(form) {
-            driver = null;
-            let address = form.address.value;
-            let username =  form.username.value;
-            let password =  form.password.value;
-            let result = await connectToTypeDB(address, username, password);
-            driver = updateStatus(result);
+            let result = await studio.driver.tryConnect(form.address.value, form.username.value, form.password.value);
+            updateStatus(result);
         }
 
         async function doCreateDatabase(form) {
             resetStatus();
-            if (driver == null) {
-                updateStatus({err: "Not logged in!"});  
+            if (studio.driver.driver == null) {
+                updateStatus({err: "Not logged in!"});
             } else {
                 let dbName = document.getElementById("input-database-name").value;
-                let result = await driver.createDatabase(dbName);
+                let result = await studio.driver.driver.createDatabase(dbName);
                 updateStatus(result);
             }
         }
 
         async function doDeleteDatabase(form) {
             resetStatus();
-            if (driver == null) {
-                updateStatus({err: "Not logged in!"});  
+            if (studio.driver.driver == null) {
+                updateStatus({err: "Not logged in!"});
             } else {
                 alert("Not implemented");
                 return false;
                 let dbName = document.getElementById("input-database-name").value;
-                let result = await driver.deleteDatabase(dbName);
+                let result = await studio.driver.driver.deleteDatabase(dbName);
                 updateStatus(result);
             }
         }
 
         async function doRunQuery(form) {
             resetStatus();
-            if (driver == null) {
-                updateStatus({err: "Not logged in!"});  
-            } else {
-                let result = await driver.runQuery(form.database.value, form.query.value, form.txType);
-                query_result = updateStatus(result);
-                if (query_result.answerType == "conceptRows" && query_result.queryStructure != null) {
-                    logicalGraph = constructGraphFromRowsResult(query_result); // In memory, not visualised
-                    let converter = studio.createConverter(query_result.queryStructure);
-                    drawLogicalGraphWith(logicalGraph, converter);
-                }
-            }
+            let result = await studio.driver.runQuery(form.database.value, form.query.value, form.txType);
+            query_result = updateStatus(result);
         }
 
         // Status bar control
