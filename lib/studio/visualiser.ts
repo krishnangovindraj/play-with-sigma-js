@@ -1,4 +1,4 @@
-import Graph from "graphology";
+import MultiGraph from "graphology";
 import {TypeDBRowsResult} from "../typedb/answer.js";
 import {constructGraphFromRowsResult} from "../graph.js";
 import {convertLogicalGraphWith} from "../visualisation.js";
@@ -6,8 +6,8 @@ import {StudioConverter} from "./converter.js";
 import * as studioDefaultSettings from "./defaults.js";
 
 export class StudioVisualiser {
-    private graph: Graph;
-    constructor(graph: Graph) {
+    private graph: MultiGraph;
+    constructor(graph: MultiGraph) {
         this.graph = graph;
     }
 

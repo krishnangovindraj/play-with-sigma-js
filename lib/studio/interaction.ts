@@ -1,12 +1,12 @@
 import Sigma from "sigma";
-import Graph from "graphology";
+import MultiGraph from "graphology";
 import {SigmaEventPayload, SigmaNodeEventPayload, SigmaStageEventPayload} from "sigma/types";
 import {StudioConverterStyleParameters} from "./config";
 import {StudioDriverWrapper} from "./driverwrapper";
 import {ThingKind, TypeKind} from "../typedb/concept";
 import {StudioState} from "./studio";
-import {TypeDBAnswerAny, TypeDBQueryType} from "../typedb/answer.js";
-import {TypeDBResult} from "../typedb/driver.js";
+import {TypeDBQueryType} from "../typedb/answer.js";
+import {SpecialVertexKind} from "../graph.js";
 
 // Ref: https://www.sigmajs.org/docs/advanced/events/
 // and: https://www.sigmajs.org/storybook/?path=/story/mouse-manipulations--story
@@ -17,14 +17,14 @@ interface InteractionState {
 }
 
 export class StudioInteractionHandler {
-    graph: Graph;
+    graph: MultiGraph;
     renderer: Sigma;
     state: InteractionState;
     styleParameters: StudioConverterStyleParameters;
     driver: StudioDriverWrapper;
     private studioState: StudioState;
 
-    constructor(graph: Graph, renderer: Sigma, driver: StudioDriverWrapper, studioState: StudioState, styleParameters: StudioConverterStyleParameters) {
+    constructor(graph: MultiGraph, renderer: Sigma, driver: StudioDriverWrapper, studioState: StudioState, styleParameters: StudioConverterStyleParameters) {
         this.graph = graph;
         this.renderer = renderer;
         this.state = {
@@ -49,6 +49,7 @@ export class StudioInteractionHandler {
 
         renderer.on(StudioSigmaEventType.doubleClickNode, (e) => this.onDoubleClickNode(e));
     }
+
 
     onEnterNode(event: SigmaNodeEventPayload) {
         let node = event.node;
@@ -109,42 +110,73 @@ export class StudioInteractionHandler {
             console.log("Could not dispatch explore query: Unknown active database") // unreachable
             return;
         }
-        let query = null;
+        let queries = null;
         switch(attributes.metadata.concept.kind) {
             case TypeKind.entityType: {
-                query = QUERY_EXPLORE_ENTITYTYPE.replace("<<label>>", attributes.metadata.concept.label);
+                queries = [
+                    QUERY_EXPLORE_SUBTYPES.replace("<<label>>", attributes.metadata.concept.label),
+                    QUERY_EXPLORE_SUPERTYPE.replace("<<label>>", attributes.metadata.concept.label),
+                    QUERY_EXPLORE_OWNED.replace("<<label>>", attributes.metadata.concept.label),
+                    QUERY_EXPLORE_PLAYS.replace("<<label>>", attributes.metadata.concept.label),
+                ];
                 break;
             }
             case TypeKind.relationType: {
-                query = QUERY_EXPLORE_RELATIONTYPE.replace("<<label>>", attributes.metadata.concept.label);
+                queries = [
+                    QUERY_EXPLORE_SUBTYPES.replace("<<label>>", attributes.metadata.concept.label),
+                    QUERY_EXPLORE_SUPERTYPE.replace("<<label>>", attributes.metadata.concept.label),
+                    QUERY_EXPLORE_RELATES.replace("<<label>>", attributes.metadata.concept.label),
+                    QUERY_EXPLORE_OWNED.replace("<<label>>", attributes.metadata.concept.label),
+                    QUERY_EXPLORE_PLAYS.replace("<<label>>", attributes.metadata.concept.label),
+                ];
                 break;
             }
             case TypeKind.attributeType:{
-                query = QUERY_EXPLORE_ATTRIBUTETYPE.replace("<<label>>", attributes.metadata.concept.label);
+                queries = [
+                    QUERY_EXPLORE_SUBTYPES.replace("<<label>>", attributes.metadata.concept.label),
+                    QUERY_EXPLORE_SUPERTYPE.replace("<<label>>", attributes.metadata.concept.label),
+                    QUERY_EXPLORE_OWNERS.replace("<<label>>", attributes.metadata.concept.label),
+                ];
                 break;
             }
-            case TypeKind.roleType: {
-                query = QUERY_EXPLORE_ROLETYPE.replace("<<label>>", attributes.metadata.concept.label);
-                break;
-            }
+
             case ThingKind.entity: {
-                query = QUERY_EXPLORE_ENTITY.replace("<<iid>>", attributes.metadata.concept.label);
+                queries = [
+                    QUERY_EXPLORE_ATTRIBUTES.replace("<<iid>>", attributes.metadata.concept.iid),
+                    QUERY_EXPLORE_RELATIONS.replace("<<iid>>", attributes.metadata.concept.iid),
+                ];
                 break;
             }
             case ThingKind.relation: {
-                query = QUERY_EXPLORE_RELATION.replace("<<iid>>", attributes.metadata.concept.label);
+                queries = [
+                    QUERY_EXPLORE_ATTRIBUTES.replace("<<iid>>", attributes.metadata.concept.iid),
+                    QUERY_EXPLORE_RELATIONS.replace("<<iid>>", attributes.metadata.concept.iid),
+                    QUERY_EXPLORE_PLAYERS.replace("<<iid>>", attributes.metadata.concept.iid),
+                ];
                 break;
             }
-            case ThingKind.attribute: {
-                query = QUERY_EXPLORE_ATTRIBUTE.replace("<<iid>>", attributes.metadata.concept.label);
-                break;
-            }
-            default: {
+            case TypeKind.roleType:
+            case ThingKind.attribute:
+            case "value":
+            case SpecialVertexKind.unavailable:
+            case SpecialVertexKind.func:
+            case SpecialVertexKind.expr:
+            {
                 console.log("Unexplorable kind: " + attributes.metadata.concept.kind);
                 return;
             }
         }
-        let result = this.driver.runExplorationQuery(this.studioState.activeQueryDatabase, query, TypeDBQueryType.read);
+        if (queries == null) {
+            throw new Error("unreachable: Expected queries to be non-null");
+        }
+        queries.forEach(query => {
+            this.driver.runExplorationQuery(this.studioState.activeQueryDatabase, query, TypeDBQueryType.read)
+                .then(result => {
+                    if (result.ok == undefined) {
+                        console.log("Error encountered in exploration query: " + JSON.stringify(result.err));
+                    }
+                });
+        });
     }
 
     highlightAnswer(answerIndex: number) {
@@ -196,13 +228,16 @@ enum StudioSigmaEventType {
     // Remaining: beforeRender, afterRender, resize, kill
 }
 
-const QUERY_EXPLORE_ENTITY = "";
-const QUERY_EXPLORE_RELATION = "";
-const QUERY_EXPLORE_ATTRIBUTE = "";
 
+const QUERY_EXPLORE_ATTRIBUTES = "match $x iid <<iid>>; $x has $other;";
+const QUERY_EXPLORE_RELATIONS = "match $x iid <<iid>>; $other links ($t: $x);";
+const QUERY_EXPLORE_PLAYERS = "match $x iid <<iid>>; $x links ($t: $other);";
+// const QUERY_EXPLORE_OWNERS = "match $x iid <<iid>>; $x links ($t: $other)";
 
-const QUERY_EXPLORE_ENTITYTYPE = "";
-const QUERY_EXPLORE_RELATIONTYPE = "";
-const QUERY_EXPLORE_ATTRIBUTETYPE = "";
+const QUERY_EXPLORE_OWNED = "match $x label <<label>>; $x owns $other;";
+const QUERY_EXPLORE_OWNERS = "match $x label <<label>>; $other owns $x;";
+const QUERY_EXPLORE_RELATES  = "match $x label <<label>>; $x relates $t; $other plays $t;";
+const QUERY_EXPLORE_PLAYS= "match $x label <<label>>; $x plays $t; $other relates $t;";
 
-const QUERY_EXPLORE_ROLETYPE = "";
+const QUERY_EXPLORE_SUPERTYPE = "match $x label <<label>>; $x sub! $other;";
+const QUERY_EXPLORE_SUBTYPES = "match $x label <<label>>; $other sub! $x;";

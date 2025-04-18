@@ -1,5 +1,5 @@
 import Sigma from "sigma";
-import Graph from "graphology";
+import MultiGraph from "graphology";
 import ForceSupervisor from "graphology-layout-force/worker";
 
 import * as studioDefaultSettings from "./defaults";
@@ -14,7 +14,7 @@ export interface StudioState {
 }
 
 export class TypeDBStudio {
-    graph: Graph;
+    graph: MultiGraph;
     renderer: Sigma;
     layout:  ForceSupervisor;
     interactionHandler: StudioInteractionHandler;
@@ -22,7 +22,7 @@ export class TypeDBStudio {
     driver: StudioDriverWrapper;
     state: StudioState;
 
-    constructor(graph: Graph, renderer: Sigma) {
+    constructor(graph: MultiGraph, renderer: Sigma) {
         this.graph = graph;
         this.renderer = renderer;
         this.layout = new ForceSupervisor(graph, { isNodeFixed: (_, attr) => attr.highlighted, settings: studioDefaultSettings.defaultForceSupervisorSettings});

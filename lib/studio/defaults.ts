@@ -2,6 +2,7 @@ import {EdgeKind, RoleType, ThingKind, TypeKind} from "../typedb/concept";
 import chroma from "chroma-js";
 import {LogicalVertex, SpecialVertexKind, VertexUnavailable} from "../graph";
 import {NodeSquareProgram} from "@sigma/node-square";
+import EdgeCurveProgram from "@sigma/edge-curve";
 import {ForceLayoutSettings} from "graphology-layout-force";
 import {Settings as SigmaSettings} from "sigma/settings";
 import {unavailable_key} from "./converter";
@@ -136,6 +137,9 @@ export const defaultSigmaSettings: Partial<SigmaSettings> = {
     nodeProgramClasses: {
         square: NodeSquareProgram,
     },
+    edgeProgramClasses: {
+        curved: EdgeCurveProgram,
+    }
 };
 
 export const defaultForceSupervisorSettings: ForceLayoutSettings = {

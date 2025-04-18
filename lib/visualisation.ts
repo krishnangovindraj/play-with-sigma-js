@@ -1,4 +1,4 @@
-import Graph from "graphology";
+import MultiGraph from "graphology";
 import Sigma from "sigma";
 import {Settings as SigmaSettings} from "sigma/settings";
 import {
@@ -28,7 +28,7 @@ import {
   VertexUnavailable
 } from "./graph";
 
-export function createSigmaRenderer(containerId: string, sigma_settings: SigmaSettings, graph: Graph) : Sigma {
+export function createSigmaRenderer(containerId: string, sigma_settings: SigmaSettings, graph: MultiGraph) : Sigma {
   // Retrieve the html document for sigma container
   let container = document.getElementById(containerId) as HTMLElement;
 

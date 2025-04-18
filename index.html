@@ -12,7 +12,7 @@
 
         // Initialisation on load
         window.onload= (()=> {
-            let graph = new graphology.Graph();
+            let graph = new graphology.MultiGraph();
             let renderer = createSigmaRenderer('sigma-container', studioDefaults.defaultSigmaSettings, graph);
             studio = new TypeDBStudio(graph, renderer);
             updateStatusImpl("ready", "white");

@@ -39,7 +39,7 @@ export class TypeDBHttpDriver {
     }
 
     async deleteDatabase(database: string) : Promise<TypeDBResult<boolean>> {
-        let response = await this.httpDelete("/v1/databases/" + database, undefined);
+        let response = await this.httpDelete("/v1/databases/" + database);
         if (response.ok) {
             return {ok : true} as TypeDBResult<boolean>;
         } else {

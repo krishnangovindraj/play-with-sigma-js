@@ -14,18 +14,18 @@ import {
     TypeKind
 } from "../typedb/concept";
 import {ILogicalGraphConverter} from "../visualisation";
-import Graph from "graphology";
+import MultiGraph from "graphology";
 import {StudioConverterStructureParameters, StudioConverterStyleParameters} from "./config";
 import {StructureEdge, StructureVertexKind, TypeDBQueryStructure} from "../typedb/answer";
 
 export class StudioConverter implements ILogicalGraphConverter {
-    graph: Graph;
+    graph: MultiGraph;
     styleParameters: StudioConverterStyleParameters;
     structureParameters: StudioConverterStructureParameters;
     edgesToDraw: Array<Array<number>>;
     isFollowupQuery: boolean;
 
-    constructor(graph: Graph, queryStructure: TypeDBQueryStructure, isFollowupQuery: boolean, structureParameters: StudioConverterStructureParameters, styleParameters: StudioConverterStyleParameters) {
+    constructor(graph: MultiGraph, queryStructure: TypeDBQueryStructure, isFollowupQuery: boolean, structureParameters: StudioConverterStructureParameters, styleParameters: StudioConverterStyleParameters) {
         this.graph = graph;
         this.edgesToDraw = determineEdgesToDraw(queryStructure, structureParameters);
         this.isFollowupQuery = isFollowupQuery;
@@ -88,6 +88,10 @@ export class StudioConverter implements ILogicalGraphConverter {
         if (this.shouldDrawEdge(coordinates)) {
             let key = this.edgeKey(from, to, edge_label);
             if (!this.graph.hasDirectedEdge(key)) {
+                // TODO: If there is an edge between the two vertices, make it curved
+                if (this.graph.hasDirectedEdge(from, to)) {
+                    attributes.type = "curved"
+                }
                 this.graph.addDirectedEdgeWithKey(key, from, to, attributes)
             }
         }
@@ -152,7 +156,7 @@ export class StudioConverter implements ILogicalGraphConverter {
 
     put_links(answerIndex: number, coordinates: StructureEdgeCoordinates, relation: Relation, player: Entity | Relation, role: RoleType | VertexUnavailable): void {
         let role_label = (role.kind == TypeKind.roleType) ?
-            (role as RoleType).label :
+            safe_role_name(role as RoleType) :
             ("links_[" + coordinates.branchIndex + "," + coordinates.constraintIndex + "]");
         let attributes = this.edgeAttributes(role_label, this.edgeMetadata(answerIndex, coordinates));
         this.mayAddEdge(coordinates, safe_iid(relation), safe_iid(player), role_label, attributes);
@@ -254,6 +258,15 @@ function safe_value(vertex: TypeDBValue | VertexUnavailable) {
 
 function safe_attribute(vertex: Attribute | VertexUnavailable) {
     return (vertex.kind == "unavailable")? unavailable_key(vertex) : (vertex.type.label + ":" + vertex.value);
+}
+
+function safe_role_name(vertex: RoleType | VertexUnavailable) {
+    if (vertex.kind == "unavailable") {
+        return unavailable_key(vertex);
+    } else {
+        let parts = (vertex as RoleType).label.split(":");
+        return parts[parts.length - 1];
+    }
 }
 
 export function unavailable_key(vertex: VertexUnavailable) : string {

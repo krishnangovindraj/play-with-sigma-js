@@ -15,7 +15,7 @@ function checkTranslation(name: string, rows_result: TypeDBRowsResult, expectedL
         throw new Error("Graphs are unequal: " + name);
     }
     let graphology = new Graph();
-    let converter = new StudioConverter(graphology, rows_result.queryStructure, studioDefaults.defaultStructureParameters, studioDefaults.defaultQueryStyleParameters);
+    let converter = new StudioConverter(graphology, rows_result.queryStructure, false, studioDefaults.defaultStructureParameters, studioDefaults.defaultQueryStyleParameters);
     convertLogicalGraphWith(actualLogicalGraph, converter);
     let absentEdges = expectedLogicalGraph.answers.flatMap((answer, answerIndex) => {
         return answer.filter(edge => {
@@ -54,7 +54,7 @@ const TEST_HAS_SINGLE: E2ETestCase = {
         },
         answers: [
             {
-                provenance: 0,
+                provenance: [0],
                 data: {
                     "owner": ConceptHelper.entity("owner#1", "owner-type"),
                     "attr": ConceptHelper.attribute("attr-type:attr-value", "attr-type", ConceptHelper.valueString("attr-value"))
@@ -90,7 +90,7 @@ const TEST_HAS_MULTIPLE: E2ETestCase = {
         },
         answers: [
             {
-                provenance: 0,
+                provenance: [0],
                 data: {
                     "owner": ConceptHelper.entity("owner#1", "owner-type"),
                     "attr1": ConceptHelper.attribute("attr-type:attr-value1", "attr-type", ConceptHelper.valueString("attr-value1")),
@@ -98,7 +98,7 @@ const TEST_HAS_MULTIPLE: E2ETestCase = {
                 }
             },
             {
-                provenance: 0,
+                provenance: [0],
                 data: {
                     "owner": ConceptHelper.entity("owner#2", "owner-type"),
                     "attr1": ConceptHelper.attribute("attr-type:attr-value1", "attr-type", ConceptHelper.valueString("attr-value1")),
@@ -146,14 +146,14 @@ const TEST_LINKS_DISJUNCTION: E2ETestCase = {
         },
         answers: [
             {
-                provenance: 2,
+                provenance: [2],
                 data: {
                     "relation": ConceptHelper.relation("rel#1", "rel-type"),
                     "player": ConceptHelper.entity("player#1", "player-type"),
                 }
             },
             {
-                provenance: 4,
+                provenance: [4],
                 data: {
                     "relation": ConceptHelper.relation("rel#2", "rel-type"),
                     "player": ConceptHelper.entity("player#2", "player-type"),
@@ -186,7 +186,7 @@ const TEST_EXPRESSION: E2ETestCase = {
                     "x": ConceptHelper.valueInteger(3),
                     "y": ConceptHelper.valueInteger(8)
                 },
-                provenance: 0
+                provenance: [0],
             }
         ],
         queryStructure: {
