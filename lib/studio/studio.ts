@@ -10,6 +10,7 @@ import {TypeDBAnswerAny, TypeDBQueryType} from "../typedb/answer.js";
 import {TypeDBResult} from "../typedb/driver.js";
 import FA2Layout from "graphology-layout-forceatlas2/worker";
 import {LayoutWrapper} from "./layouts.js";
+import chroma from "chroma-js";
 
 export interface StudioState {
     activeQueryDatabase: string | null;
@@ -56,6 +57,7 @@ export class TypeDBStudio {
         if (term != "") {
             this.graph.nodes().forEach(node => {
                 let attributes = this.graph.getNodeAttributes(node);
+                // check concept.type.label if you want to match types of things.
                 let any_match = -1 != safe_str(attributes.metadata.concept.iid).indexOf(term)
                     || -1 != safe_str(attributes.metadata.concept.label).indexOf(term)
                     || -1 != safe_str(attributes.metadata.concept.value).indexOf(term);
@@ -64,5 +66,23 @@ export class TypeDBStudio {
                 }
             });
         }
+    }
+
+    colorEdgesByConstraintIndex(reset: boolean): void {
+        function getColorForConstraintIndex(graph: MultiGraph, edgeKey: string): chroma.Color {
+            let attributes = graph.getEdgeAttributes(edgeKey);
+            let constraintIndex = attributes.metadata.structureEdgeCoordinates.constraintIndex;
+            let r = ((constraintIndex+1) * 153 % 256);
+            let g = ((constraintIndex+1) * 173 % 256);
+            let b = ((constraintIndex+1) * 199 % 256);
+            return chroma([r,g,b]);
+        }
+
+        this.graph.edges().forEach(edgeKey => {
+            let color = reset ?
+                this.interactionHandler.styleParameters.edge_color :
+                getColorForConstraintIndex(this.graph, edgeKey);
+            this.graph.setEdgeAttribute(edgeKey, "color", color.hex());
+        })
     }
 }
