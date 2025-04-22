@@ -6,11 +6,13 @@ import * as studioDefaultSettings from "./defaults";
 import {StudioInteractionHandler} from "./interaction";
 import {StudioDriverWrapper} from "./driverwrapper.js";
 import {StudioVisualiser} from "./visualiser.js";
-import {TypeDBAnswerAny, TypeDBQueryType} from "../typedb/answer.js";
+import {TypeDBAnswerAny, TypeDBQueryStructure, TypeDBQueryType} from "../typedb/answer.js";
 import {TypeDBResult} from "../typedb/driver.js";
 import FA2Layout from "graphology-layout-forceatlas2/worker";
 import {LayoutWrapper} from "./layouts.js";
 import chroma from "chroma-js";
+import {mustDrawEdge, StudioConverter} from "./converter.js";
+import {setDefaultAutoSelectFamily} from "node:net";
 
 export interface StudioState {
     activeQueryDatabase: string | null;
@@ -69,20 +71,61 @@ export class TypeDBStudio {
     }
 
     colorEdgesByConstraintIndex(reset: boolean): void {
-        function getColorForConstraintIndex(graph: MultiGraph, edgeKey: string): chroma.Color {
+
+        function getColorForEdge(graph: MultiGraph, edgeKey: string): chroma.Color {
             let attributes = graph.getEdgeAttributes(edgeKey);
             let constraintIndex = attributes.metadata.structureEdgeCoordinates.constraintIndex;
-            let r = ((constraintIndex+1) * 153 % 256);
-            let g = ((constraintIndex+1) * 173 % 256);
-            let b = ((constraintIndex+1) * 199 % 256);
-            return chroma([r,g,b]);
+            return TypeDBStudio.getColorForConstraintIndex(constraintIndex);
         }
-
         this.graph.edges().forEach(edgeKey => {
             let color = reset ?
                 this.interactionHandler.styleParameters.edge_color :
-                getColorForConstraintIndex(this.graph, edgeKey);
+                getColorForEdge(this.graph, edgeKey);
             this.graph.setEdgeAttribute(edgeKey, "color", color.hex());
         })
+    }
+
+    colorQuery(queryString: string, queryStructure: TypeDBQueryStructure): string {
+        let spans: Array<Array<number>> = [];
+        queryStructure.branches.forEach(branch => {
+            branch.edges.forEach((edge, constraintIndex) => {
+                if (mustDrawEdge(edge, studioDefaultSettings.defaultStructureParameters)) {
+                    if (edge.span != null) {
+                        spans.push([edge.span.begin, edge.span.end, constraintIndex]);
+                    }
+                }
+            })
+        })
+        spans = spans.sort((a,b) => {
+            return (a[0] != b[0]) ?
+                a[0] - b[0]:
+                b[1] - a[1]; // open ascending, end descending
+        });
+        let starts_ends_separate = spans.flatMap(span => [[span[0], span[2]], [span[1], -1]]);
+        starts_ends_separate.sort((a,b) => a[0] - b[0]);
+        let se_index = 0;
+        let highlighted = "";
+        for(let i=0;i<queryString.length;i++) {
+            while (se_index < starts_ends_separate.length && starts_ends_separate[se_index][0] == i) {
+                let constraintIndexOrEnd = starts_ends_separate[se_index][1];
+                if (constraintIndexOrEnd == -1) {
+                    highlighted += "</span>"
+                } else {
+                    let color = TypeDBStudio.getColorForConstraintIndex(constraintIndexOrEnd)
+                    highlighted += "<span style=\"background: " + color.hex() + "\">";
+                }
+                se_index += 1;
+            }
+            highlighted += queryString[i];
+        }
+        console.log(highlighted);
+        return highlighted;
+    }
+
+    private static getColorForConstraintIndex(constraintIndex: number): chroma.Color {
+        let r = ((constraintIndex+1) * 153 % 256);
+        let g = ((constraintIndex+1) * 173 % 256);
+        let b = ((constraintIndex+1) * 199 % 256);
+        return chroma([r,g,b]);
     }
 }

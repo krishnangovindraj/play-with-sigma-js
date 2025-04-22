@@ -41,6 +41,7 @@ export type StructureEdge = {
     type: StructureEdgTypeAny,
     to: StructureVertex,
     from: StructureVertex,
+    span: { begin: number, end: number }
 };
 export type StructureEdgTypeAny = { kind: EdgeKind, param: StructureVertex | null | string };
 

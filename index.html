@@ -42,6 +42,12 @@
             resetStatus();
             let result = await studio.runQuery(form.database.value, form.query.value, form.txType);
             query_result = updateStatus(result);
+            let highlightedQuery = "";
+            if (query_result != undefined && query_result.queryStructure != null) {
+                highlightedQuery = studio.colorQuery(form.query.value, query_result.queryStructure);
+                studio.colorEdgesByConstraintIndex(false);
+            }
+            document.getElementById("query-highlight-div").innerHTML = highlightedQuery;
         }
 
         // Status bar control
@@ -70,6 +76,7 @@
     <div id="sigma-container" style="background-color: blueviolet; height: 800px;">
         <!-- The graph will be draw in here. Leave empty -->
     </div>
+    <div id="query-highlight-div" style="text-align: center; border: 2px solid black;"><b>Status: </b><span id="query-highlight">(uninitialised)</span></div>
     <div id="status-div" style="text-align: center; border: 2px solid black;"><b>Status: </b><span id="status-message">(uninitialised)</span></div>
     <table id="login-db-admin-div" style="width: 100%;">
         <tr>

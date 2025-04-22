@@ -236,7 +236,7 @@ function determineEdgesToDraw(queryStructure: TypeDBQueryStructure, structurePar
     return edgesToDraw;
 }
 
-function mustDrawEdge(edge: StructureEdge, structureParameters: StudioConverterStructureParameters) : boolean {
+export function mustDrawEdge(edge: StructureEdge, structureParameters: StudioConverterStructureParameters) : boolean {
     let isLabelledEdge = (edge.from.kind == StructureVertexKind.label || edge.to.kind == StructureVertexKind.label);
     if (isLabelledEdge && structureParameters.ignoreEdgesInvolvingLabels.includes(edge.type.kind)) {
         return false;
