@@ -98,6 +98,7 @@
                     in database: <input name="database" type="text" placeholder="database"/>
                 </span>
                 <span id="input-buttons-right" style="float: right;">
+                    <input type="text" name="search"  placeholder="search nodes" onkeyup="studio.searchGraph(this.value)" />
                     GraphControls:
                     <button onclick="studio.layout.stop(); return false">freeze</button>
                     <button onclick="studio.layout.start(); return false">unfreeze</button>

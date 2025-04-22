@@ -45,4 +45,24 @@ export class TypeDBStudio {
            return result;
         });
     }
+
+    searchGraph(term: string) {
+
+        function safe_str(str: string | undefined): string {
+            return (str == undefined) ? "" : str.toLowerCase();
+        }
+
+        this.graph.nodes().forEach(node => this.graph.setNodeAttribute(node, "highlighted", false));
+        if (term != "") {
+            this.graph.nodes().forEach(node => {
+                let attributes = this.graph.getNodeAttributes(node);
+                let any_match = -1 != safe_str(attributes.metadata.concept.iid).indexOf(term)
+                    || -1 != safe_str(attributes.metadata.concept.label).indexOf(term)
+                    || -1 != safe_str(attributes.metadata.concept.value).indexOf(term);
+                if (any_match) {
+                    this.graph.setNodeAttribute(node, "highlighted", true);
+                }
+            });
+        }
+    }
 }
