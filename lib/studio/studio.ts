@@ -112,11 +112,11 @@ export class TypeDBStudio {
                     highlighted += "</span>"
                 } else {
                     let color = TypeDBStudio.getColorForConstraintIndex(constraintIndexOrEnd)
-                    highlighted += "<span style=\"background: " + color.hex() + "\">";
+                    highlighted += "<span style=\"color: " + color.hex() + "\">";
                 }
                 se_index += 1;
             }
-            highlighted += queryString[i];
+            highlighted += (queryString[i] == "\n") ? "<br/>": queryString[i];
         }
         console.log(highlighted);
         return highlighted;

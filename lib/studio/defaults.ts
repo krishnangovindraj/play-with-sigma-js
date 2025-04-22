@@ -35,11 +35,11 @@ export const defaultQueryStyleParameters: StudioConverterStyleParameters = {
         [SpecialVertexKind.expr]: "circle",
         [SpecialVertexKind.func]: "circle",
     },
-    vertex_size: 10,
+    vertex_size: 6,
 
     edge_color: chroma("grey"),
     edge_highlight_color: chroma("cyan"),
-    edge_size: 4,
+    edge_size: 2,
 
     vertex_default_label(vertex: LogicalVertex): string {
         switch (vertex.kind) {
@@ -131,6 +131,7 @@ export const defaultStructureParameters: StudioConverterStructureParameters = {
 };
 
 export const defaultSigmaSettings: Partial<SigmaSettings> = {
+    zoomToSizeRatioFunction: (x) => x,
     minCameraRatio: 0.1,
     maxCameraRatio: 10,
     renderEdgeLabels: true,
