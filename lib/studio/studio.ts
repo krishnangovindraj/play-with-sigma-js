@@ -101,11 +101,12 @@ export class TypeDBStudio {
                 a[0] - b[0]:
                 b[1] - a[1]; // open ascending, end descending
         });
-        let starts_ends_separate = spans.flatMap(span => [[span[0], span[2]], [span[1], -1]]);
+        // Add one to end-offset so we're AFTER the last character
+        let starts_ends_separate = spans.flatMap(span => [[span[0], span[2]], [span[1] + 1, -1]]);
         starts_ends_separate.sort((a,b) => a[0] - b[0]);
         let se_index = 0;
         let highlighted = "";
-        for(let i=0;i<queryString.length;i++) {
+        for(let i= 0; i<queryString.length; i++) {
             while (se_index < starts_ends_separate.length && starts_ends_separate[se_index][0] == i) {
                 let constraintIndexOrEnd = starts_ends_separate[se_index][1];
                 if (constraintIndexOrEnd == -1) {
