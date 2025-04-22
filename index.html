@@ -7,14 +7,14 @@
     <script>
         // Set a few globals
         var query_result = null;
-        var logicalGraph = null;
         var studio = null;
 
         // Initialisation on load
         window.onload= (()=> {
             let graph = new graphology.MultiGraph();
             let renderer = createSigmaRenderer('sigma-container', studioDefaults.defaultSigmaSettings, graph);
-            studio = new TypeDBStudio(graph, renderer);
+            let layout = Layouts.createForceLayoutSupervisor(graph);
+            studio = new TypeDBStudio(graph, renderer, layout);
             updateStatusImpl("ready", "white");
          });
 
@@ -99,8 +99,9 @@
                 </span>
                 <span id="input-buttons-right" style="float: right;">
                     GraphControls:
-                    <button onclick="studio.freeze(); return false">freeze</button>
-                    <button onclick="studio.unfreeze(); return false">unfreeze</button>
+                    <button onclick="studio.layout.stop(); return false">freeze</button>
+                    <button onclick="studio.layout.start(); return false">unfreeze</button>
+                    <button onclick="studio.layout.redraw(); return false">redraw</button>
                 </span>
             </div>
             <textarea name="query" id='query-or-graph-input' style="width:100%;height: 400px" placeholder='Query or Graph (See source for format)'></textarea>

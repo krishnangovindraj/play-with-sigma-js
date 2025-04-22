@@ -8,6 +8,7 @@ import {connectToTypeDB} from "./typedb/driver";
 import {TypeDBStudio} from "./studio/studio";
 import * as graphology from "graphology";
 import * as studioDefaults from "./studio/defaults";
+import {Layouts} from "./studio/layouts.js";
 
 /////////////
 // EXPORTS //
@@ -19,3 +20,5 @@ window.constructGraphFromRowsResult = constructGraphFromRowsResult;
 window.TypeDBStudio = TypeDBStudio;
 window.drawLogicalGraphWith = convertLogicalGraphWith;
 window.connectToTypeDB = connectToTypeDB;
+
+window.Layouts = Layouts;

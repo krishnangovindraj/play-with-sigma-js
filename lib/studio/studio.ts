@@ -8,6 +8,8 @@ import {StudioDriverWrapper} from "./driverwrapper.js";
 import {StudioVisualiser} from "./visualiser.js";
 import {TypeDBAnswerAny, TypeDBQueryType} from "../typedb/answer.js";
 import {TypeDBResult} from "../typedb/driver.js";
+import FA2Layout from "graphology-layout-forceatlas2/worker";
+import {LayoutWrapper} from "./layouts.js";
 
 export interface StudioState {
     activeQueryDatabase: string | null;
@@ -16,16 +18,16 @@ export interface StudioState {
 export class TypeDBStudio {
     graph: MultiGraph;
     renderer: Sigma;
-    layout:  ForceSupervisor;
+    layout:  LayoutWrapper;
     interactionHandler: StudioInteractionHandler;
     visualiser: StudioVisualiser;
     driver: StudioDriverWrapper;
     state: StudioState;
 
-    constructor(graph: MultiGraph, renderer: Sigma) {
+    constructor(graph: MultiGraph, renderer: Sigma, layout: LayoutWrapper) {
         this.graph = graph;
         this.renderer = renderer;
-        this.layout = new ForceSupervisor(graph, { isNodeFixed: (_, attr) => attr.highlighted, settings: studioDefaultSettings.defaultForceSupervisorSettings});
+        this.layout = layout;
         this.layout.start();
 
         this.state = { activeQueryDatabase: null };
@@ -33,14 +35,6 @@ export class TypeDBStudio {
         this.visualiser = new StudioVisualiser(graph);
         this.driver = new StudioDriverWrapper(this.visualiser);
         this.interactionHandler = new StudioInteractionHandler(graph, renderer, this.driver, this.state, studioDefaultSettings.defaultQueryStyleParameters);
-    }
-
-    unfreeze() {
-        this.layout.start();
-    }
-
-    freeze() {
-        this.layout.stop();
     }
 
     runQuery(database: string, query: string, transactionType: TypeDBQueryType) : Promise<TypeDBResult<TypeDBAnswerAny>> {
