@@ -11,6 +11,13 @@ import { Attributes } from "graphology-types";
 
 export class Layouts {
 
+    // This one seems quite versatile. It just needs to be frozen to be able to drag and drop stuff.
+    static createForceAtlasSupervisor(graph: MultiGraph, settings: ForceAtlas2LayoutParameters | undefined): LayoutWrapper {
+        let layout = new FA2Layout(graph, settings);
+        return new LayoutSupervisorWrapper(graph, layout);
+    }
+
+    // This one is great at interaction, but it might need parameter tweaking depending on the graph rendered.
     static createForceLayoutSupervisor(graph: MultiGraph, settings: ForceLayoutSettings | undefined): LayoutWrapper {
         if (settings == undefined) {
             settings = studioDefaultSettings.defaultForceSupervisorSettings;
@@ -22,15 +29,13 @@ export class Layouts {
         return new LayoutSupervisorWrapper(graph, layout);
     }
 
-    static createForceAtlasSupervisor(graph: MultiGraph, settings: ForceAtlas2LayoutParameters | undefined): LayoutWrapper {
-        let layout = new FA2Layout(graph, settings);
-        return new LayoutSupervisorWrapper(graph, layout);
-    }
-
+    // This isn't great. I just used it as an example without a supervisor, though I could just have used the force ones.
     static createLayoutNoOverlap(graph: MultiGraph, settings: NoverlapLayoutParameters | undefined): LayoutWrapper {
         let layout = new NoverlapWrapper();
         return new StaticLayoutWrapper(graph, layout, settings);
     }
+
+    // We can add our own layouts too. We just have to set the nodeAttributes "x" and "y".
 }
 
 
