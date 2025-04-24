@@ -3,17 +3,21 @@ import {TypeDBRowsResult} from "../typedb/answer.js";
 import {constructGraphFromRowsResult} from "../graph.js";
 import {convertLogicalGraphWith} from "../visualisation.js";
 import {StudioConverter} from "./converter.js";
-import * as studioDefaultSettings from "./defaults.js";
+import {StudioConverterStructureParameters, StudioConverterStyleParameters} from "./config.js";
 
 export class StudioVisualiser {
     private graph: MultiGraph;
-    constructor(graph: MultiGraph) {
+    private styleParameters: StudioConverterStyleParameters;
+    private structureParameters: StudioConverterStructureParameters;
+    constructor(graph: MultiGraph, styleParameters: StudioConverterStyleParameters, structureParameters: StudioConverterStructureParameters) {
         this.graph = graph;
+        this.styleParameters = styleParameters;
+        this.structureParameters = structureParameters;
     }
 
     handleQueryResult(query_result: TypeDBRowsResult) {
         if (query_result.answerType == "conceptRows" && query_result.queryStructure != null) {
-            let converter = new StudioConverter(this.graph, query_result.queryStructure, false, studioDefaultSettings.defaultStructureParameters, studioDefaultSettings.defaultQueryStyleParameters);
+            let converter = new StudioConverter(this.graph, query_result.queryStructure, false, this.structureParameters, this.styleParameters);
             let logicalGraph = constructGraphFromRowsResult(query_result); // In memory, not visualised
             this.graph.clear();
             convertLogicalGraphWith(logicalGraph, converter);
@@ -22,7 +26,7 @@ export class StudioVisualiser {
 
     handleExplorationQueryResult(query_result: TypeDBRowsResult) {
         if (query_result.answerType == "conceptRows" && query_result.queryStructure != null) {
-            let converter = new StudioConverter(this.graph, query_result.queryStructure, true, studioDefaultSettings.defaultStructureParameters, studioDefaultSettings.defaultExplorationQueryStyleParameters);
+            let converter = new StudioConverter(this.graph, query_result.queryStructure, true, this.structureParameters, this.styleParameters);
             let logicalGraph = constructGraphFromRowsResult(query_result); // In memory, not visualised
             convertLogicalGraphWith(logicalGraph, converter);
         }

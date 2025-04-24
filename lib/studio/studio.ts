@@ -4,15 +4,13 @@ import ForceSupervisor from "graphology-layout-force/worker";
 
 import * as studioDefaultSettings from "./defaults";
 import {StudioInteractionHandler} from "./interaction";
-import {StudioDriverWrapper} from "./driverwrapper.js";
-import {StudioVisualiser} from "./visualiser.js";
-import {TypeDBAnswerAny, TypeDBQueryStructure, TypeDBQueryType} from "../typedb/answer.js";
-import {TypeDBResult} from "../typedb/driver.js";
-import FA2Layout from "graphology-layout-forceatlas2/worker";
-import {LayoutWrapper} from "./layouts.js";
+import {StudioDriverWrapper} from "./driverwrapper";
+import {StudioVisualiser} from "./visualiser";
+import {TypeDBAnswerAny, TypeDBQueryStructure, TypeDBQueryType} from "../typedb/answer";
+import {TypeDBResult} from "../typedb/driver";
+import {LayoutWrapper} from "./layouts";
 import chroma from "chroma-js";
-import {mustDrawEdge, StudioConverter} from "./converter.js";
-import {setDefaultAutoSelectFamily} from "node:net";
+import {mustDrawEdge} from "./converter";
 
 export interface StudioState {
     activeQueryDatabase: string | null;
@@ -35,7 +33,7 @@ export class TypeDBStudio {
 
         this.state = { activeQueryDatabase: null };
 
-        this.visualiser = new StudioVisualiser(graph);
+        this.visualiser = new StudioVisualiser(graph, studioDefaultSettings.defaultQueryStyleParameters, studioDefaultSettings.defaultStructureParameters);
         this.driver = new StudioDriverWrapper(this.visualiser);
         this.interactionHandler = new StudioInteractionHandler(graph, renderer, this.driver, this.state, studioDefaultSettings.defaultQueryStyleParameters);
     }
