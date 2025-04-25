@@ -4,12 +4,20 @@ import Graph from "graphology";
 import MultiGraph from "graphology";
 import {ForceLayoutSettings} from "graphology-layout-force";
 import FA2Layout from 'graphology-layout-forceatlas2/worker';
-import {ForceAtlas2LayoutParameters} from "graphology-layout-forceatlas2";
+import forceAtlas2, {
+    ForceAtlas2LayoutParameters,
+    ForceAtlas2SynchronousLayoutParameters
+} from "graphology-layout-forceatlas2";
 import FA2LayoutSupervisor from "graphology-layout-forceatlas2/worker";
 import noverlap, {NoverlapLayoutParameters} from "graphology-layout-noverlap";
 import { Attributes } from "graphology-types";
 
 export class Layouts {
+
+    // Simple, static with no supervisor
+    static createForceAtlasStatic(graph: MultiGraph, settings: ForceAtlas2SynchronousLayoutParameters | undefined): LayoutWrapper {
+        return new StaticLayoutWrapper(graph, new ForceAtlasStaticWrapper(), settings);
+    }
 
     // This one seems quite versatile. It just needs to be frozen to be able to drag and drop stuff.
     static createForceAtlasSupervisor(graph: MultiGraph, settings: ForceAtlas2LayoutParameters | undefined): LayoutWrapper {
@@ -46,6 +54,10 @@ export interface LayoutWrapper {
 
     // For those that aren't actually animated:
     redraw(): void;
+
+    // Call when you change the graph
+    startOrRedraw(): void;
+
 }
 
 class LayoutSupervisorWrapper implements LayoutWrapper {
@@ -71,6 +83,10 @@ class LayoutSupervisorWrapper implements LayoutWrapper {
             this.graph.setNodeAttribute(node, "x", Math.random());
             this.graph.setNodeAttribute(node, "y", Math.random());
         })
+        this.start();
+    }
+
+    startOrRedraw() {
         this.start();
     }
 }
@@ -99,16 +115,33 @@ class StaticLayoutWrapper<LayoutParams> implements LayoutWrapper {
     redraw(): void {
         this.layout.assign(this.graph, this.params);
     }
+
+    startOrRedraw() {
+        this.redraw();
+    }
+}
+
+class ForceAtlasStaticWrapper implements StaticLayoutInner<ForceAtlas2SynchronousLayoutParameters> {
+    static DEFAULT_MAX_ITERATIONS: number = 500;
+    assign(graph: MultiGraph, params: ForceAtlas2SynchronousLayoutParameters | undefined): void {
+        if (params == undefined) {
+            params = {
+                iterations: ForceAtlasStaticWrapper.DEFAULT_MAX_ITERATIONS,
+                settings: forceAtlas2.inferSettings(graph.nodes().length),
+            };
+
+        }
+        forceAtlas2.assign(graph, params);
+    }
 }
 
 class NoverlapWrapper implements StaticLayoutInner<NoverlapLayoutParameters> {
     static DEFAULT_MAX_ITERATIONS: number = 50;
     assign(graph: MultiGraph, params: NoverlapLayoutParameters | undefined): void {
         if (params == undefined) {
-            noverlap.assign(graph, { maxIterations: NoverlapWrapper.DEFAULT_MAX_ITERATIONS });
-        } else {
-            noverlap.assign(graph, params);
+            params =  { maxIterations: NoverlapWrapper.DEFAULT_MAX_ITERATIONS };
         }
-
+        noverlap.assign(graph, params);
     }
 }
+

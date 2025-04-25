@@ -29,7 +29,6 @@ export class TypeDBStudio {
         this.graph = graph;
         this.renderer = renderer;
         this.layout = layout;
-        this.layout.start();
 
         this.state = { activeQueryDatabase: null };
 
@@ -42,6 +41,7 @@ export class TypeDBStudio {
         return this.driver.runQuery(database, query, transactionType).then(result => {
            if (result.ok) {
                this.state.activeQueryDatabase = database;
+               this.layout.startOrRedraw();
            }
            return result;
         });

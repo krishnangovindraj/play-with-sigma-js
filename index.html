@@ -13,7 +13,8 @@
         window.onload= (()=> {
             let graph = new graphology.MultiGraph();
             let renderer = createSigmaRenderer('sigma-container', studioDefaults.defaultSigmaSettings, graph);
-            let layout = Layouts.createForceLayoutSupervisor(graph);
+            // let layout = Layouts.createForceAtlasStatic(graph); // This is the safe option
+            let layout = Layouts.createForceLayoutSupervisor(graph, studioDefaults.defaultForceSupervisorSettings);
             studio = new TypeDBStudio(graph, renderer, layout);
             updateStatusImpl("ready", "white");
          });
@@ -76,7 +77,7 @@
     <div id="sigma-container" style="background-color: blueviolet; height: 800px;">
         <!-- The graph will be draw in here. Leave empty -->
     </div>
-    <div id="query-highlight-div" style="border: 2px solid black;"><b>Status: </b><span id="query-highlight"></span></div>
+    <div id="query-highlight-div" style="border: 2px solid black;"><span id="query-highlight"></span></div>
     <div id="status-div" style="text-align: center; border: 2px solid black;"><b>Status: </b><span id="status-message">(uninitialised)</span></div>
     <table id="login-db-admin-div" style="width: 100%;">
         <tr>
