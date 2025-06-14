@@ -52,7 +52,6 @@
     <div id="sigma-container" style="background-color: #0e0d17; height: 800px;">
         <!-- The graph will be draw in here. Leave empty -->
     </div>
-    <div id="query-highlight-div" style="border: 2px solid black;"><span id="query-highlight"></span></div>
     <div id="graph-controls">
         <span>
             <input type="text" name="search"  placeholder="search nodes" onkeyup="visualiser.searchGraph(this.value)" />
@@ -64,6 +63,7 @@
             <button onclick="visualiser.layout.redraw(); return false">redraw</button>
         </span>
     </div>
+    <div id="query-highlight-div" style="border: 2px solid black;"><span id="query-highlight"></span></div>
     <div id="input-form-div">
         <form id="query-or-graph-form" onsubmit="visualiseFromAnswer(this); return false">
             <div id="buttons" style="align-content: center">
