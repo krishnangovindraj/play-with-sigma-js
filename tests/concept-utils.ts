@@ -1,6 +1,6 @@
 import {Attribute, Entity, RoleType, ThingKind, TypeDBValue, TypeKind, ValueType} from "../lib/typedb/concept";
 import {LogicalVertex, SpecialVertexKind} from "../lib/graph.js";
-import {unavailable_key} from "../lib/studio/converter.js";
+import {unavailable_key} from "../lib/converter.js";
 
 export class ConceptHelper {
     static valueString(value: string): TypeDBValue {

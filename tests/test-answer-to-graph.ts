@@ -4,9 +4,9 @@ import {EdgeKind, TypeKind, ValueType} from "../lib/typedb/concept";
 import {GraphHelper} from "./logical-graph-utils";
 import {ConceptHelper} from "./concept-utils";
 import {StructureHelper} from "./other-utils";
-import {StudioConverter} from "../lib/studio/converter";
+import {StudioConverter} from "../lib/converter.js";
 import Graph from "graphology";
-import * as studioDefaults from "../lib/studio/defaults";
+import * as studioDefaults from "../lib/defaults.js";
 import {convertLogicalGraphWith} from "../lib/visualisation";
 
 function checkTranslation(name: string, rows_result: TypeDBRowsResult, expectedLogicalGraph: LogicalGraph) {

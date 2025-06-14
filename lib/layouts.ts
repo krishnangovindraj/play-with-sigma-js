@@ -10,7 +10,6 @@ import forceAtlas2, {
 } from "graphology-layout-forceatlas2";
 import FA2LayoutSupervisor from "graphology-layout-forceatlas2/worker";
 import noverlap, {NoverlapLayoutParameters} from "graphology-layout-noverlap";
-import { Attributes } from "graphology-types";
 
 export class Layouts {
 
@@ -31,7 +30,7 @@ export class Layouts {
             settings = studioDefaultSettings.defaultForceSupervisorSettings;
         }
         let layout = new ForceSupervisor(graph, {
-            isNodeFixed: (_, attr) => attr.highlighted,
+            isNodeFixed: (_, attr) => attr["highlighted"],
             settings: settings,
         });
         return new LayoutSupervisorWrapper(graph, layout);

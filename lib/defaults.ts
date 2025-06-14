@@ -1,39 +1,59 @@
-import {EdgeKind, RoleType, ThingKind, TypeKind} from "../typedb/concept";
 import chroma from "chroma-js";
-import {LogicalVertex, SpecialVertexKind, VertexUnavailable} from "../graph";
+import { RoleType } from "./typedb-driver/concept";
+import { vertexMapKey } from "./converter.js";
+import {DataVertex, VertexUnavailable} from "./graph";
 import {NodeSquareProgram} from "@sigma/node-square";
 import EdgeCurveProgram from "@sigma/edge-curve";
 import {ForceLayoutSettings} from "graphology-layout-force";
 import {Settings as SigmaSettings} from "sigma/settings";
-import {unavailable_key} from "./converter";
-import {StudioConverterStructureParameters, StudioConverterStyleParameters} from "./config";
+import {StudioConverterStructureParameters, StudioConverterStyleParameters} from "./config.js";
+import { NodeDiamondProgram } from "./node-diamond";
+
+const darkPalette = {
+    black:    "#09022F",
+    blue1:    "#7BA0FF",
+    green:    "#02DAC9",
+    orange:   "#B0740C",
+    yellow:   "#F6C94C",
+    pink:     "#FF87DC",
+    purple1:  "#0E0D17",
+    purple2:  "#14121F",
+    purple3:  "#151322",
+    purple4:  "#1A182A",
+    purple5:  "#232135",
+    purple6:  "#2D2A46",
+    red1:     "#CF4A55",
+    red2:     "#FF8080",
+    white:    "#FFFFFF",
+    white2:   "#D5CCFF"
+};
 
 export const defaultQueryStyleParameters: StudioConverterStyleParameters = {
     vertex_colors: {
-        [ThingKind.entity]: chroma("pink"),
-        [ThingKind.relation]: chroma("yellow"),
-        [ThingKind.attribute]: chroma("green"),
-        [TypeKind.entityType]: chroma("magenta"),
-        [TypeKind.relationType]: chroma("orange"),
-        [TypeKind.attributeType]: chroma("darkgreen"),
-        [TypeKind.roleType]: chroma("darkorange"),
-        value: chroma("white"),
-        [SpecialVertexKind.unavailable]: chroma("darkgrey"),
-        [SpecialVertexKind.expr]: chroma("black"),
-        [SpecialVertexKind.func]: chroma("black")
+        entity: darkPalette.pink,
+        relation: darkPalette.yellow,
+        attribute: darkPalette.blue1,
+        entityType: darkPalette.pink,
+        relationType: darkPalette.yellow,
+        attributeType: darkPalette.blue1,
+        roleType: darkPalette.orange,
+        value: "#999",
+        unavailable: "#666",
+        expression: darkPalette.white2,
+        functionCall: darkPalette.white2,
     },
     vertex_shapes: {
-        [ThingKind.entity]: "circle",
-        [ThingKind.relation]: "square",
-        [ThingKind.attribute]: "circle",
-        [TypeKind.entityType]: "circle",
-        [TypeKind.relationType]: "square",
-        [TypeKind.attributeType]: "circle",
-        [TypeKind.roleType]: "circle",
+        entity: "square",
+        relation: "diamond",
+        attribute: "circle",
+        entityType: "square",
+        relationType: "diamond",
+        attributeType: "circle",
+        roleType: "circle",
         value: "circle",
-        [SpecialVertexKind.unavailable]: "circle",
-        [SpecialVertexKind.expr]: "circle",
-        [SpecialVertexKind.func]: "circle",
+        unavailable: "circle",
+        expression: "circle",
+        functionCall: "circle",
     },
     vertex_size: 6,
 
@@ -41,63 +61,62 @@ export const defaultQueryStyleParameters: StudioConverterStyleParameters = {
     edge_highlight_color: chroma("cyan"),
     edge_size: 2,
 
-    vertex_default_label(vertex: LogicalVertex): string {
+    vertex_default_label(vertex: DataVertex): string {
         switch (vertex.kind) {
-            case TypeKind.entityType:
-            case TypeKind.relationType:
-            case TypeKind.roleType:
-            case TypeKind.attributeType: {
+            case "entityType":
+            case "relationType":
+            case "roleType":
+            case "attributeType": {
                 return vertex.label;
             }
 
-            case ThingKind.entity:
-            case ThingKind.relation:{
+            case "entity":
+            case "relation":{
                 return vertex.type.label;
             }
-            case ThingKind.attribute: {
+            case "attribute": {
                 return vertex.value;
             }
             case "value": {
                 return vertex.value;
             }
-            case SpecialVertexKind.unavailable: {
-                return "?" + vertex.variable + "?";
+            case "unavailable": {
+                return `?${vertex.variable}?`;
             }
-            case SpecialVertexKind.func: {
+            case "functionCall": {
                 let argStart = vertex.repr.indexOf("(");
                 return vertex.repr.substring(0, argStart) + "(...)";
             }
-            case SpecialVertexKind.expr: {
+            case "expression": {
                 let parts = vertex.repr.split("=");
-                return parts[0] + "=" + "(...)"
+                return `${parts[0]}=(...)`
             }
         }
     },
 
-    vertex_hover_label(vertex: LogicalVertex): string {
+    vertex_hover_label(vertex: DataVertex): string {
         switch (vertex.kind) {
-            case TypeKind.entityType:
-            case TypeKind.relationType:
-            case TypeKind.roleType:
-            case TypeKind.attributeType: {
+            case "entityType":
+            case "relationType":
+            case "roleType":
+            case "attributeType": {
                 return vertex.label;
             }
-
-            case ThingKind.entity:
-            case ThingKind.relation: {
-                return vertex.type.label + ":" + vertex.iid;
+            case "entity":
+            case "relation": {
+                return `${vertex.type.label}:${vertex.iid}`;
             }
-            case ThingKind.attribute: {
-                return vertex.type.label + ":" + vertex.value;
+            case "attribute": {
+                return `${vertex.type.label}:${vertex.value}`;
             }
             case "value": {
-                return vertex.valueType +":" + vertex.value;
+                return `${vertex.valueType}:${vertex.value}`;
             }
-            case SpecialVertexKind.unavailable: {
-                return unavailable_key(vertex);
+            case "unavailable": {
+                return vertexMapKey(vertex);
             }
-            case SpecialVertexKind.func:
-            case SpecialVertexKind.expr: {
+            case "functionCall":
+            case "expression": {
                 return vertex.repr;
             }
         }
@@ -127,20 +146,24 @@ export const defaultExplorationQueryStyleParameters: StudioConverterStyleParamet
 
 
 export const defaultStructureParameters: StudioConverterStructureParameters = {
-    ignoreEdgesInvolvingLabels: [EdgeKind.isa, EdgeKind.sub, EdgeKind.relates, EdgeKind.plays],
+    ignoreEdgesInvolvingLabels: ["isa", "sub", "relates", "plays"],
 };
 
 export const defaultSigmaSettings: Partial<SigmaSettings> = {
     zoomToSizeRatioFunction: (x) => x,
     minCameraRatio: 0.1,
     maxCameraRatio: 10,
+    labelColor: {
+        color: `#958fa8`,
+    },
     renderEdgeLabels: true,
     nodeProgramClasses: {
         square: NodeSquareProgram,
+        diamond: NodeDiamondProgram,
     },
     edgeProgramClasses: {
         curved: EdgeCurveProgram,
-    }
+    },
 };
 
 export const defaultForceSupervisorSettings: ForceLayoutSettings = {

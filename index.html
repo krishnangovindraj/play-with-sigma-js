@@ -6,69 +6,25 @@
     <script src="typedb-visualisation.js" type="text/javascript"></script>
     <script>
         // Set a few globals
-        var query_result = null;
-        var studio = null;
+        var visualiser = null;
 
         // Initialisation on load
         window.onload= (()=> {
             let graph = new graphology.MultiGraph();
-            let renderer = createSigmaRenderer('sigma-container', studioDefaults.defaultSigmaSettings, graph);
+            let renderer = createSigmaRenderer(document.getElementById('sigma-container'), studioDefaults.defaultSigmaSettings, graph);
             // let layout = Layouts.createForceAtlasStatic(graph); // This is the safe option
             let layout = Layouts.createForceLayoutSupervisor(graph, studioDefaults.defaultForceSupervisorSettings);
-            studio = new TypeDBStudio(graph, renderer, layout);
-            updateStatusImpl("ready", "white");
+            visualiser = new GraphVisualiser(graph, renderer, layout);
          });
 
-        // TypeDB requests run by UI
-        async function doSignin(form) {
-            let result = await studio.driver.tryConnect(form.address.value, form.username.value, form.password.value);
-            updateStatus(result);
-        }
-
-        async function doCreateDatabase(form) {
-            resetStatus();
-            let dbName = document.getElementById("input-database-name").value;
-            let result = await studio.driver.createDatabase(dbName);
-            updateStatus(result);
-        }
-
-        async function doDeleteDatabase(form) {
-            resetStatus();
-            let dbName = document.getElementById("input-database-name").value;
-            let result = await studio.driver.deleteDatabase(dbName);
-            updateStatus(result);
-        }
-
-        async function doRunQuery(form) {
-            resetStatus();
-            let result = await studio.runQuery(form.database.value, form.query.value, form.txType);
-            query_result = updateStatus(result);
+        async function visualiseFromAnswer(form) {
+            let query_result = form.query_answer.value;
             let highlightedQuery = "";
             if (query_result != undefined && query_result.queryStructure != null) {
-                highlightedQuery = studio.colorQuery(form.query.value, query_result.queryStructure);
-                studio.colorEdgesByConstraintIndex(false);
+                highlightedQuery = visualiser.colorQuery(form.query_text.value, query_result.queryStructure);
+                visualiser.colorEdgesByConstraintIndex(false);
             }
             document.getElementById("query-highlight-div").innerHTML = highlightedQuery;
-        }
-
-        // Status bar control
-        function resetStatus() {
-            updateStatusImpl("Running...", "white");
-        }
-
-        function updateStatus(result) {       
-            if (result.ok != undefined) {
-                updateStatusImpl("Success", "green");
-                return result.ok;
-            } else {
-                updateStatusImpl("Error: " + result.err, "red");
-                return null;
-            }
-        }
-
-        function updateStatusImpl(new_status, color) {       
-            document.getElementById("status-message").innerText = new_status;
-            document.getElementById("status-div").style.backgroundColor = color;
         }
     </script>
 </head>
@@ -78,23 +34,6 @@
         <!-- The graph will be draw in here. Leave empty -->
     </div>
     <div id="query-highlight-div" style="border: 2px solid black;"><span id="query-highlight"></span></div>
-    <div id="status-div" style="text-align: center; border: 2px solid black;"><b>Status: </b><span id="status-message">(uninitialised)</span></div>
-    <table id="login-db-admin-div" style="width: 100%;">
-        <tr>
-        <td id="login-span">
-            <form id="login-form" onsubmit="doSignin(this); return false">
-                <input type="text" name="address" placeholder="address" value="http://127.0.0.1:8000"/>
-                <input type="text" name="username"  placeholder="username" value="admin"/>
-                <input type="password" name="password" placeholder="password" value="password"/>
-                <input type="submit" value="login"/>
-            </form>
-        </td>
-        <td id="db-admin-span" style="text-align: right;">
-            <button onclick="doCreateDatabase()">create</button> or <button onclick="doDeleteDatabase()">delete</button> database: <input id="input-database-name" type="text" value="" placeholder="database"/>
-        </td>
-        </tr>
-    </table>
-
     <div id="input">
         <form id="query-or-graph-form" onsubmit="doRunQuery(this); return false">
             <div id="buttons">
@@ -106,14 +45,15 @@
                     in database: <input name="database" type="text" placeholder="database"/>
                 </span>
                 <span id="input-buttons-right" style="float: right;">
-                    <input type="text" name="search"  placeholder="search nodes" onkeyup="studio.searchGraph(this.value)" />
+                    <input type="text" name="search"  placeholder="search nodes" onkeyup="visualiser.searchGraph(this.value)" />
                     GraphControls:
-                    <button onclick="studio.layout.stop(); return false">freeze</button>
-                    <button onclick="studio.layout.start(); return false">unfreeze</button>
-                    <button onclick="studio.layout.redraw(); return false">redraw</button>
+                    <button onclick="visualiser.layout.stop(); return false">freeze</button>
+                    <button onclick="visualiser.layout.start(); return false">unfreeze</button>
+                    <button onclick="visualiser.layout.redraw(); return false">redraw</button>
                 </span>
             </div>
-            <textarea name="query" id='query-or-graph-input' style="width:100%;height: 400px" placeholder='Query or Graph (See source for format)'></textarea>
+            <textarea name="query_answer" id='query_answer' style="width:100%;height: 400px" placeholder='Graph or response'></textarea>
+            <textarea name="query_text" id='query' style="width:100%;height: 400px" placeholder="query if you want to know what you're looking at"></textarea>
         </form>
     </div>
 </body>
