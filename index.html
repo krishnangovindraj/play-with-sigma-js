@@ -7,11 +7,12 @@
     <script>
         // Set a few globals
         var visualiser = null;
+        var renderer = null;
 
         // Initialisation on load
         window.onload= (()=> {
             let graph = new graphology.MultiGraph();
-            let renderer = createSigmaRenderer(document.getElementById('sigma-container'), studioDefaults.defaultSigmaSettings, graph);
+            renderer = createSigmaRenderer(document.getElementById('sigma-container'), studioDefaults.defaultSigmaSettings, graph);
             let layout = Layouts.createForceAtlasStatic(graph, undefined); // This is the safe option
             // let layout = Layouts.createForceLayoutSupervisor(graph, studioDefaults.defaultForceSupervisorSettings);
             visualiser = new GraphVisualiser(graph, renderer, layout);
@@ -31,7 +32,7 @@
 </head>
 
 <body>
-    <div id="sigma-container" style="background-color: blueviolet; height: 800px;">
+    <div id="sigma-container" style="background-color: #0e0d17; height: 800px;">
         <!-- The graph will be draw in here. Leave empty -->
     </div>
     <div id="query-highlight-div" style="border: 2px solid black;"><span id="query-highlight"></span></div>
