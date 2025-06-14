@@ -52,6 +52,7 @@ export class GraphVisualiser {
       let converter = new StudioConverter(this.graph, res.query, false, structureParameters, styleParameters);
       let logicalGraph = constructGraphFromRowsResult(res); // In memory, not visualised
       convertLogicalGraphWith(logicalGraph, converter);
+      this.layout.startOrRedraw();
     } else {
       console.log("ERROR: Can only visualise conceptRows responses with res.query set")
     }

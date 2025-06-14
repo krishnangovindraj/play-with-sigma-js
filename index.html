@@ -13,8 +13,8 @@
         window.onload= (()=> {
             let graph = new graphology.MultiGraph();
             renderer = createSigmaRenderer(document.getElementById('sigma-container'), studioDefaults.defaultSigmaSettings, graph);
-            // let layout = Layouts.createForceAtlasStatic(graph, undefined); // This is the safe option
-            let layout = Layouts.createForceLayoutSupervisor(graph, studioDefaults.defaultForceSupervisorSettings);
+            let layout = Layouts.createForceAtlasStatic(graph, undefined); // This is the safe option
+            // let layout = Layouts.createForceLayoutSupervisor(graph, studioDefaults.defaultForceSupervisorSettings);
             visualiser = new GraphVisualiser(graph, renderer, layout);
          });
 
