@@ -1,0 +1,7713 @@
+{
+  "queryType": "read",
+  "answerType": "conceptRows",
+  "answers": [
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn-13",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn-10",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "title",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "page-count",
+          "valueType": "integer"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "genre",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "price",
+          "valueType": "double"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:work"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:work"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn-13",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn-10",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:work"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "title",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:work"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:work"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "page-count",
+          "valueType": "integer"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:work"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "genre",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:work"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "price",
+          "valueType": "double"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "publishing:published"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn-13",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "publishing:published"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn-10",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "publishing:published"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "publishing:published"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "title",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "publishing:published"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "page-count",
+          "valueType": "integer"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "genre",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "publishing:published"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "price",
+          "valueType": "double"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "publishing:published"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "promotion-inclusion:item"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn-13",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "promotion-inclusion:item"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn-10",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "promotion-inclusion:item"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "title",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "promotion-inclusion:item"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "page-count",
+          "valueType": "integer"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "promotion-inclusion:item"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "promotion-inclusion:item"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "genre",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "price",
+          "valueType": "double"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "promotion-inclusion:item"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "order-line:item"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "order-line:item"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn-13",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn-10",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "order-line:item"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "title",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "order-line:item"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "order-line:item"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "page-count",
+          "valueType": "integer"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "genre",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "order-line:item"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "price",
+          "valueType": "double"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "order-line:item"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "rating:rated"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn-13",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "rating:rated"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn-10",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "rating:rated"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "rating:rated"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "title",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "rating:rated"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "page-count",
+          "valueType": "integer"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "rating:rated"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "genre",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "rating:rated"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "price",
+          "valueType": "double"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "recommendation:recommended"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn-13",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "recommendation:recommended"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn-10",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "recommendation:recommended"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "title",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "recommendation:recommended"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "recommendation:recommended"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "page-count",
+          "valueType": "integer"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "genre",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "recommendation:recommended"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "price",
+          "valueType": "double"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "recommendation:recommended"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "book"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "hardback"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "hardback"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "entityType",
+          "label": "hardback"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "hardback"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "stock",
+          "valueType": "integer"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "paperback"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "paperback"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "entityType",
+          "label": "paperback"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "stock",
+          "valueType": "integer"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "paperback"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "ebook"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "ebook"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "entityType",
+          "label": "contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "name",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "entityType",
+          "label": "contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "authoring:author"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "authoring:author"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "name",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "editing:editor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "entityType",
+          "label": "contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "editing:editor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "name",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "illustrating:illustrator"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "illustrating:illustrator"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "name",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "company"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "company"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "entityType",
+          "label": "company"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "name",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "company"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "publisher"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "publisher"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "publisher"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "publisher"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "publishing:publisher"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "courier"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "courier"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "delivery:deliverer"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "courier"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "courier"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "entityType",
+          "label": "publication"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "publication"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "publication"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "year",
+          "valueType": "integer"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "publication"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "entityType",
+          "label": "publication"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "publishing:publication"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "publication"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "entityType",
+          "label": "publication"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "publication"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "year",
+          "valueType": "integer"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "publishing:publication"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "locating:located"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "publication"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "publication"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "publication"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "locating:located"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "publication"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "year",
+          "valueType": "integer"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "user"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "user"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "id",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "user"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "user"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "entityType",
+          "label": "user"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "user"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "name",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "entityType",
+          "label": "user"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "user"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "birth-date",
+          "valueType": "datetime"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "user"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "action-execution:executor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "user"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "entityType",
+          "label": "user"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "id",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "action-execution:executor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "user"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "entityType",
+          "label": "user"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "user"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "action-execution:executor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "name",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "action-execution:executor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "user"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "user"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "birth-date",
+          "valueType": "datetime"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "entityType",
+          "label": "user"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "locating:located"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "user"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "id",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "locating:located"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "user"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "user"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "user"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "user"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "locating:located"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "name",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "birth-date",
+          "valueType": "datetime"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "user"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "locating:located"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "user"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "entityType",
+          "label": "user"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "recommendation:recipient"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "user"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "entityType",
+          "label": "user"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "id",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "recommendation:recipient"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "user"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "recommendation:recipient"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "user"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "user"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "name",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "user"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "birth-date",
+          "valueType": "datetime"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "recommendation:recipient"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "user"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "order"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "order"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "id",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "order"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "order"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "order"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "order"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "status",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "entityType",
+          "label": "order"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "order-line:order"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "order"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "order-line:order"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "order"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "order"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "id",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "order-line:order"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "status",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "order"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "order"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "action-execution:action"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "order"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "order"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "order"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "order"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "id",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "action-execution:action"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "entityType",
+          "label": "order"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "order"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "action-execution:action"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "status",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "delivery:delivered"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "order"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "order"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "id",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "delivery:delivered"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "order"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "order"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "delivery:delivered"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "status",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "order"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "order"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "promotion"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "promotion"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "promotion"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "promotion"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "code",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "promotion"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "name",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "promotion"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "entityType",
+          "label": "promotion"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "start-timestamp",
+          "valueType": "datetime"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "promotion"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "entityType",
+          "label": "promotion"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "promotion"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "end-timestamp",
+          "valueType": "datetime"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "promotion-inclusion:promotion"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "promotion"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "promotion"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "code",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "promotion"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "promotion-inclusion:promotion"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "promotion"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "name",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "promotion-inclusion:promotion"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "promotion"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "promotion"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "entityType",
+          "label": "promotion"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "promotion"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "promotion-inclusion:promotion"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "start-timestamp",
+          "valueType": "datetime"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "end-timestamp",
+          "valueType": "datetime"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "promotion"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "promotion-inclusion:promotion"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "promotion"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "entityType",
+          "label": "review"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "review"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "id",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "review"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "review"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "entityType",
+          "label": "review"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "score",
+          "valueType": "integer"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "review"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "entityType",
+          "label": "review"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "verified",
+          "valueType": "boolean"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "review"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "rating:review"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "review"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "review"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "rating:review"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "review"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "review"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "id",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "score",
+          "valueType": "integer"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "rating:review"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "review"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "review"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "rating:review"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "review"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "verified",
+          "valueType": "boolean"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "review"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "action-execution:action"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "review"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "review"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "id",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "action-execution:action"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "review"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "review"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "action-execution:action"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "review"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "score",
+          "valueType": "integer"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "review"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "entityType",
+          "label": "review"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "review"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "verified",
+          "valueType": "boolean"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "action-execution:action"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "login"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "login"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "login"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "login"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "success",
+          "valueType": "boolean"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "entityType",
+          "label": "login"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "login"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "action-execution:action"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "success",
+          "valueType": "boolean"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "login"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "action-execution:action"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "login"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "address"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "address"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "address"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "address"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "street",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "address"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "delivery:destination"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "address"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "street",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "address"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "delivery:destination"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "address"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "entityType",
+          "label": "address"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "locating:located"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "address"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "street",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "locating:located"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "address"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "address"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "entityType",
+          "label": "place"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "place"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "entityType",
+          "label": "place"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "name",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "place"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "locating:located"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "place"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "place"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "entityType",
+          "label": "place"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "name",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "locating:located"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "place"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "place"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "locating:location"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "place"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "place"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "locating:location"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "name",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "place"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "entityType",
+          "label": "city"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "city"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "entityType",
+          "label": "state"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "state"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "entityType",
+          "label": "country"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "country"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "relationType",
+          "label": "contribution"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "contribution"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:work"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "contribution"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "contribution"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "relationType",
+          "label": "authoring"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "authoring"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "relationType",
+          "label": "authoring"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "authoring:author"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "authoring"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "relationType",
+          "label": "editing"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "editing"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "relationType",
+          "label": "editing"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "editing:editor"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "editing"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "relationType",
+          "label": "illustrating"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "illustrating"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "illustrating:illustrator"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "illustrating"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "illustrating"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "publishing"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "publishing"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "relationType",
+          "label": "publishing"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "publishing"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "publishing:publisher"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "publishing:published"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "publishing"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "publishing"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "publishing:publication"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "publishing"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "publishing"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "relationType",
+          "label": "promotion-inclusion"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "promotion-inclusion"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "relationType",
+          "label": "promotion-inclusion"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "promotion-inclusion"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "discount",
+          "valueType": "double"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "promotion-inclusion:promotion"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "promotion-inclusion"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "promotion-inclusion"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "discount",
+          "valueType": "double"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "promotion-inclusion"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "promotion-inclusion"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "promotion-inclusion:promotion"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "relationType",
+          "label": "promotion-inclusion"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "promotion-inclusion"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "promotion-inclusion:item"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "relationType",
+          "label": "promotion-inclusion"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "discount",
+          "valueType": "double"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "promotion-inclusion:item"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "promotion-inclusion"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "relationType",
+          "label": "order-line"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "order-line"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "relationType",
+          "label": "order-line"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "order-line"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "price",
+          "valueType": "double"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "quantity",
+          "valueType": "integer"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "order-line"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "order-line"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "order-line:order"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "order-line"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "order-line"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "relationType",
+          "label": "order-line"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "order-line:order"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "price",
+          "valueType": "double"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "order-line"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "relationType",
+          "label": "order-line"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "order-line:order"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "quantity",
+          "valueType": "integer"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "order-line"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "relationType",
+          "label": "order-line"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "order-line"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "order-line:item"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "relationType",
+          "label": "order-line"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "price",
+          "valueType": "double"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "order-line:item"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "order-line"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "quantity",
+          "valueType": "integer"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "order-line:item"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "order-line"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "order-line"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "rating"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "rating"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "relationType",
+          "label": "rating"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "rating"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "rating:review"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "relationType",
+          "label": "rating"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "rating"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "rating:rated"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "relationType",
+          "label": "action-execution"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "action-execution"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "relationType",
+          "label": "action-execution"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "action-execution"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "timestamp",
+          "valueType": "datetime"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "action-execution:action"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "action-execution"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "action-execution"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "relationType",
+          "label": "action-execution"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "timestamp",
+          "valueType": "datetime"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "action-execution:action"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "action-execution"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "action-execution:executor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "action-execution"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "action-execution"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "timestamp",
+          "valueType": "datetime"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "action-execution:executor"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "action-execution"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "action-execution"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        3,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "delivery"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "delivery"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "relationType",
+          "label": "delivery"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "delivery"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "delivery:deliverer"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "relationType",
+          "label": "delivery"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "delivery:delivered"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "delivery"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "delivery:destination"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "delivery"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "delivery"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "locating"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "locating"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "locating:located"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "locating"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "locating"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "relationType",
+          "label": "locating"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "locating"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "locating:location"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "recommendation"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "recommendation"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "recommendation:recommended"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "recommendation"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "recommendation"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "recommendation:recipient"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "recommendation"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "recommendation"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "attributeType",
+          "label": "isbn-13",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "attributeType",
+          "label": "isbn-13",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "attributeType",
+          "label": "isbn-10",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "attributeType",
+          "label": "isbn-10",
+          "valueType": "string"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "attributeType",
+          "label": "title",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "attributeType",
+          "label": "title",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "attributeType",
+          "label": "page-count",
+          "valueType": "integer"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "attributeType",
+          "label": "page-count",
+          "valueType": "integer"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "attributeType",
+          "label": "genre",
+          "valueType": "string"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "attributeType",
+          "label": "genre",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "attributeType",
+          "label": "stock",
+          "valueType": "integer"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "attributeType",
+          "label": "stock",
+          "valueType": "integer"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "attributeType",
+          "label": "price",
+          "valueType": "double"
+        },
+        "supertype": {
+          "kind": "attributeType",
+          "label": "price",
+          "valueType": "double"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "attributeType",
+          "label": "discount",
+          "valueType": "double"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "attributeType",
+          "label": "discount",
+          "valueType": "double"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "attributeType",
+          "label": "id",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "attributeType",
+          "label": "id",
+          "valueType": "string"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "attributeType",
+          "label": "code",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "attributeType",
+          "label": "code",
+          "valueType": "string"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "attributeType",
+          "label": "name",
+          "valueType": "string"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "attributeType",
+          "label": "name",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "attributeType",
+          "label": "birth-date",
+          "valueType": "datetime"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "attributeType",
+          "label": "birth-date",
+          "valueType": "datetime"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "attributeType",
+          "label": "street",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "attributeType",
+          "label": "street",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "attributeType",
+          "label": "year",
+          "valueType": "integer"
+        },
+        "supertype": {
+          "kind": "attributeType",
+          "label": "year",
+          "valueType": "integer"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "attributeType",
+          "label": "quantity",
+          "valueType": "integer"
+        },
+        "t": {
+          "kind": "attributeType",
+          "label": "quantity",
+          "valueType": "integer"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "attributeType",
+          "label": "score",
+          "valueType": "integer"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "attributeType",
+          "label": "score",
+          "valueType": "integer"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "attributeType",
+          "label": "verified",
+          "valueType": "boolean"
+        },
+        "t": {
+          "kind": "attributeType",
+          "label": "verified",
+          "valueType": "boolean"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "attributeType",
+          "label": "timestamp",
+          "valueType": "datetime"
+        },
+        "t": {
+          "kind": "attributeType",
+          "label": "timestamp",
+          "valueType": "datetime"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "attributeType",
+          "label": "start-timestamp",
+          "valueType": "datetime"
+        },
+        "t": {
+          "kind": "attributeType",
+          "label": "start-timestamp",
+          "valueType": "datetime"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "attributeType",
+          "label": "end-timestamp",
+          "valueType": "datetime"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "attributeType",
+          "label": "end-timestamp",
+          "valueType": "datetime"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "attributeType",
+          "label": "status",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "attributeType",
+          "label": "status",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "attributeType",
+          "label": "success",
+          "valueType": "boolean"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "attributeType",
+          "label": "success",
+          "valueType": "boolean"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "hardback"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        1,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "t": {
+          "kind": "entityType",
+          "label": "hardback"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "stock",
+          "valueType": "integer"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        1,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "paperback"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        1,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "stock",
+          "valueType": "integer"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "paperback"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        1,
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "entityType",
+          "label": "book"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "ebook"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        1,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "entityType",
+          "label": "company"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "publisher"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        1,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "played": {
+          "kind": "roleType",
+          "label": "publishing:publisher"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "company"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "publisher"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        1,
+        4,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "courier"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "company"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        1,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "delivery:deliverer"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "courier"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "company"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        1,
+        4,
+        6,
+        7
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "place"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "city"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        1,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "place"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "state"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        1,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "entityType",
+          "label": "place"
+        },
+        "t": {
+          "kind": "entityType",
+          "label": "country"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        1,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "contribution"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "authoring"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        1,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "authoring:author"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "contribution"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "authoring"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        1,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "supertype": {
+          "kind": "relationType",
+          "label": "contribution"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "editing"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        1,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "editing:editor"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "contribution"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "editing"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        1,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "illustrating"
+        },
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "contribution"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        1,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "illustrating:illustrator"
+        },
+        "supertype": {
+          "kind": "relationType",
+          "label": "contribution"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "relationType",
+          "label": "illustrating"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        1,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "supertype": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "t": {
+          "kind": "attributeType",
+          "label": "isbn-13",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        1,
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "data": {
+        "attr": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "related": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "played": {
+          "kind": "roleType",
+          "label": "contribution:contributor"
+        },
+        "supertype": {
+          "kind": "attributeType",
+          "label": "isbn",
+          "valueType": "string"
+        },
+        "t": {
+          "kind": "attributeType",
+          "label": "isbn-10",
+          "valueType": "string"
+        }
+      },
+      "involvedBlocks": [
+        0,
+        1,
+        4,
+        6,
+        8
+      ]
+    }
+  ],
+  "query": {
+    "blocks": [
+      {
+        "constraints": [
+          {
+            "textSpan": null,
+            "tag": "kind",
+            "kind": "attribute",
+            "type": {
+              "tag": "variable",
+              "id": "0"
+            }
+          },
+          {
+            "textSpan": {
+              "begin": 35,
+              "end": 56
+            },
+            "tag": "relates",
+            "relation": {
+              "tag": "variable",
+              "id": "1"
+            },
+            "role": {
+              "tag": "variable",
+              "id": "2"
+            }
+          }
+        ]
+      },
+      {
+        "constraints": [
+          {
+            "textSpan": {
+              "begin": 79,
+              "end": 94
+            },
+            "tag": "sub!",
+            "subtype": {
+              "tag": "variable",
+              "id": "3"
+            },
+            "supertype": {
+              "tag": "variable",
+              "id": "4"
+            }
+          }
+        ]
+      },
+      {
+        "constraints": [
+          {
+            "textSpan": {
+              "begin": 105,
+              "end": 119
+            },
+            "tag": "sub",
+            "subtype": {
+              "tag": "variable",
+              "id": "3"
+            },
+            "supertype": {
+              "tag": "variable",
+              "id": "4"
+            }
+          },
+          {
+            "textSpan": {
+              "begin": 121,
+              "end": 137
+            },
+            "tag": "is",
+            "lhs": {
+              "tag": "variable",
+              "id": "3"
+            },
+            "rhs": {
+              "tag": "variable",
+              "id": "4"
+            }
+          }
+        ]
+      },
+      {
+        "constraints": [
+          {
+            "textSpan": {
+              "begin": 153,
+              "end": 163
+            },
+            "tag": "owns",
+            "owner": {
+              "tag": "variable",
+              "id": "3"
+            },
+            "attribute": {
+              "tag": "variable",
+              "id": "5"
+            }
+          }
+        ]
+      },
+      {
+        "constraints": [
+          {
+            "textSpan": {
+              "begin": 214,
+              "end": 236
+            },
+            "tag": "is",
+            "lhs": {
+              "tag": "variable",
+              "id": "5"
+            },
+            "rhs": {
+              "tag": "variable",
+              "id": "0"
+            }
+          }
+        ]
+      },
+      {
+        "constraints": [
+          {
+            "textSpan": {
+              "begin": 246,
+              "end": 262
+            },
+            "tag": "relates",
+            "relation": {
+              "tag": "variable",
+              "id": "3"
+            },
+            "role": {
+              "tag": "variable",
+              "id": "7"
+            }
+          }
+        ]
+      },
+      {
+        "constraints": [
+          {
+            "textSpan": {
+              "begin": 320,
+              "end": 345
+            },
+            "tag": "is",
+            "lhs": {
+              "tag": "variable",
+              "id": "7"
+            },
+            "rhs": {
+              "tag": "variable",
+              "id": "2"
+            }
+          }
+        ]
+      },
+      {
+        "constraints": [
+          {
+            "textSpan": {
+              "begin": 354,
+              "end": 367
+            },
+            "tag": "plays",
+            "player": {
+              "tag": "variable",
+              "id": "3"
+            },
+            "role": {
+              "tag": "variable",
+              "id": "9"
+            }
+          }
+        ]
+      },
+      {
+        "constraints": [
+          {
+            "textSpan": {
+              "begin": 423,
+              "end": 447
+            },
+            "tag": "is",
+            "lhs": {
+              "tag": "variable",
+              "id": "9"
+            },
+            "rhs": {
+              "tag": "variable",
+              "id": "2"
+            }
+          }
+        ]
+      }
+    ],
+    "variables": {
+      "4": {
+        "name": "supertype"
+      },
+      "7": {
+        "name": "related"
+      },
+      "3": {
+        "name": "t"
+      },
+      "2": {
+        "name": "default-role"
+      },
+      "1": {
+        "name": null
+      },
+      "9": {
+        "name": "played"
+      },
+      "5": {
+        "name": "attr"
+      },
+      "0": {
+        "name": "default-attr"
+      }
+    },
+    "outputs": [
+      "3",
+      "4",
+      "5",
+      "7",
+      "9"
+    ]
+  },
+  "warning": null
+}

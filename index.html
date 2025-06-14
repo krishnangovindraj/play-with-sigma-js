@@ -16,9 +16,26 @@
             let layout = Layouts.createForceAtlasStatic(graph, undefined); // This is the safe option
             // let layout = Layouts.createForceLayoutSupervisor(graph, studioDefaults.defaultForceSupervisorSettings);
             visualiser = new GraphVisualiser(graph, renderer, layout);
+            // If we have url params, render it
+            mayPopulateFormFromUrlParams();
          });
 
+        async function mayPopulateFormFromUrlParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let dataUrl = urlParams.get("graph");
+            let queryUrl = urlParams.get("query");
+            if (dataUrl != null) {
+                document.getElementById("query_response").value = await fetch(dataUrl).then(r => r.text());
+                if (queryUrl!= null) {
+                    document.getElementById("query_text").value = await fetch(queryUrl).then(r => r.text());
+                }
+                visualiseFromAnswer(document.getElementById("query-or-graph-form"));
+                document.getElementById("input-form-div").style.visibility = "hidden";
+            }
+            return false;
+        }
         async function visualiseFromAnswer(form) {
+            console.log("Submit got", form.query_response.value);
             let query_result = {ok: JSON.parse(form.query_response.value)}; // Mimic ApiResponse
             let highlightedQuery = "";
             if (query_result.ok.query != null) {
@@ -32,26 +49,28 @@
 </head>
 
 <body>
-    <div id="query-highlight-div" style="border: 2px solid black;"><span id="query-highlight"></span></div>
     <div id="sigma-container" style="background-color: #0e0d17; height: 800px;">
         <!-- The graph will be draw in here. Leave empty -->
     </div>
-    <div id="input">
+    <div id="query-highlight-div" style="border: 2px solid black;"><span id="query-highlight"></span></div>
+    <div id="graph-controls">
+        <span>
+            <input type="text" name="search"  placeholder="search nodes" onkeyup="visualiser.searchGraph(this.value)" />
+        </span>
+        <span>
+            GraphControls:
+            <button onclick="visualiser.layout.stop(); return false">freeze</button>
+            <button onclick="visualiser.layout.start(); return false">unfreeze</button>
+            <button onclick="visualiser.layout.redraw(); return false">redraw</button>
+        </span>
+    </div>
+    <div id="input-form-div">
         <form id="query-or-graph-form" onsubmit="visualiseFromAnswer(this); return false">
-            <div id="buttons">
-                <span id="input-buttons-left">
-                    <input type="submit" onclick="this.form.txType=this.value;" value="draw"/>
-                </span>
-                <span id="input-buttons-right" style="float: right;">
-                    <input type="text" name="search"  placeholder="search nodes" onkeyup="visualiser.searchGraph(this.value)" />
-                    GraphControls:
-                    <button onclick="visualiser.layout.stop(); return false">freeze</button>
-                    <button onclick="visualiser.layout.start(); return false">unfreeze</button>
-                    <button onclick="visualiser.layout.redraw(); return false">redraw</button>
-                </span>
+            <div id="buttons" style="align-content: center">
+                <input width="80%" style="width: 80%;" type="submit" onclick="this.form.txType=this.value;" value="draw"/>
             </div>
             <textarea name="query_response" id='query_response' style="width:100%;height: 400px" placeholder='TypeDB HTTP API Response'></textarea>
-            <textarea name="query_text" id='query' style="width:100%;height: 400px" placeholder="query if you want to know what you're looking at"></textarea>
+            <textarea name="query_text" id='query_text' style="width:100%;height: 400px" placeholder="query if you want to know what you're looking at"></textarea>
         </form>
     </div>
 </body>

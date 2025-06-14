@@ -1,0 +1,10 @@
+match
+attribute $default-attr; $_ relates $default-role;
+limit 1;
+match
+{ $t sub! $supertype; } or {$t sub $supertype; $t is $supertype; };
+match
+{ $t owns $attr; not { $t sub! $sown; $sown owns $attr; }; } or { $attr is $default-attr; };
+{ $t relates $related; not { $t sub! $srel; $srel relates $related; };  } or { $related is $default-role;};
+{ $t plays $played; not { $t sub! $splay; $splay plays $played; }; } or { $played is $default-role; };
+select $t, $supertype, $attr, $related, $played;
