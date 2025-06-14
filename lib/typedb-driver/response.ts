@@ -5,7 +5,6 @@
  */
 
 import { Concept } from "./concept";
-import { Database } from "./database";
 import { QueryStructure } from "./query-structure";
 
 export interface SignInResponse {
@@ -17,10 +16,6 @@ export type Distribution = `TypeDB Cluster` | `TypeDB CE`;
 export interface VersionResponse {
     distribution: Distribution;
     version: string;
-}
-
-export interface DatabasesListResponse {
-    databases: Database[];
 }
 
 export interface TransactionOpenResponse {

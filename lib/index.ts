@@ -1,17 +1,9 @@
-import {
-  convertLogicalGraphWith, createSigmaRenderer,
-
-} from "./studio.js";
-
-import {constructGraphFromRowsResult} from "./graph";
-import {GraphVisualiser} from "./studio";
 import * as graphology from "graphology";
 import * as studioDefaults from "./defaults";
 import {Layouts} from "./layouts";
 
 import MultiGraph from "graphology";
 import Sigma from "sigma";
-import ForceSupervisor from "graphology-layout-force/worker";
 import { Settings as SigmaSettings } from "sigma/settings";
 import {QueryConstraintAny, QueryStructure} from "./typedb-driver/query-structure";
 import {ApiResponse, ConceptRowsQueryResponse, isApiErrorResponse, QueryResponse} from "./typedb-driver/response";
