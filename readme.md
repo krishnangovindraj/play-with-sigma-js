@@ -1,3 +1,4 @@
+# TypeDB visualisation tool
 This was the development bed for the graph visualiser and has since been repurposed to visualise saved graphs, and hopefully allow some customisation.
 To customise colours, go to `lib/defaults.ts` and play around with the styling objects.
 
