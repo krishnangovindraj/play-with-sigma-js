@@ -2,12 +2,11 @@ This was the development bed for the graph visualiser and has since been repurpo
 To customise colours, go to `lib/defaults.ts` and play around with the styling objects.
 
 ## Usage
-`npm run build`
+Run `npm run build` to generate `typedb-visualisation.js`
+Just open `index.html` in your browser. 
 
-And serve somehow. Example: `python3 -m http.server 8001`
-
-Non-obvious things:
-* You can drag.
+## Other notes
+* You can drag. When using a `LayoutSupervisor`, the animation can be unfrozen & frozen using the buttons.
 * There are some extra layouts available under `layouts.ts`. 
   - You can also implement your own. 
   ```typescript

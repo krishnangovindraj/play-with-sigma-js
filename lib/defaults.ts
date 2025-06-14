@@ -167,8 +167,8 @@ export const defaultSigmaSettings: Partial<SigmaSettings> = {
 };
 
 export const defaultForceSupervisorSettings: ForceLayoutSettings = {
-    attraction: 0.00005,
-    repulsion: 0.5,
+    attraction: 0.000001,
+    repulsion: 1,
     gravity: 0.00000005,
     inertia: 0.2,
     maxMove: 200,

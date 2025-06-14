@@ -128,7 +128,6 @@ class ForceAtlasStaticWrapper implements StaticLayoutInner<ForceAtlas2Synchronou
                 iterations: ForceAtlasStaticWrapper.DEFAULT_MAX_ITERATIONS,
                 settings: forceAtlas2.inferSettings(graph.nodes().length),
             };
-
         }
         forceAtlas2.assign(graph, params);
     }

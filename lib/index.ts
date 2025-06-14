@@ -14,7 +14,7 @@ import Sigma from "sigma";
 import ForceSupervisor from "graphology-layout-force/worker";
 import { Settings as SigmaSettings } from "sigma/settings";
 import {QueryConstraintAny, QueryStructure} from "./typedb-driver/query-structure";
-import { ApiResponse, isApiErrorResponse, QueryResponse } from "./typedb-driver/response";
+import {ApiResponse, ConceptRowsQueryResponse, isApiErrorResponse, QueryResponse} from "./typedb-driver/response";
 import { StudioConverterStructureParameters, StudioConverterStyleParameters } from "./config.js";
 
 import * as studioDefaultSettings from "./defaults.js";
@@ -35,8 +35,8 @@ export class GraphVisualiser {
   layout: LayoutWrapper;
   interactionHandler: InteractionHandler;
   state: StudioState;
-  private styleParameters: StudioConverterStyleParameters = studioDefaultSettings.defaultQueryStyleParameters;
-  private structureParameters: StudioConverterStructureParameters = studioDefaultSettings.defaultStructureParameters;
+  styleParameters: StudioConverterStyleParameters = studioDefaultSettings.defaultQueryStyleParameters;
+  structureParameters: StudioConverterStructureParameters = studioDefaultSettings.defaultStructureParameters;
 
   constructor(graph: VisualGraph, sigma: Sigma, layout: LayoutWrapper) {
     this.graph = graph;
@@ -46,23 +46,14 @@ export class GraphVisualiser {
     this.interactionHandler = new InteractionHandler(graph, sigma, this.state, studioDefaultSettings.defaultQueryStyleParameters);
   }
 
-  handleQueryResponse(res: ApiResponse<QueryResponse>, database: string) {
-    if (isApiErrorResponse(res)) return;
-
-    if (res.ok.answerType === "conceptRows") {
-      this.state.activeQueryDatabase = database;
-      this.handleQueryResult(res);
-      this.layout.startOrRedraw();
-    }
-  }
-
-  handleQueryResult(res: ApiResponse<QueryResponse>) {
-    if (isApiErrorResponse(res)) return;
-    if (res.ok.answerType == "conceptRows" && res.ok.query != null) {
-      (window as any)._lastQueryAnswers = res.ok.answers; // TODO: Remove once schema based autocomplete is stable.
-      let converter = new StudioConverter(this.graph, res.ok.query, false, this.structureParameters, this.styleParameters);
-      let logicalGraph = constructGraphFromRowsResult(res.ok); // In memory, not visualised
+  drawGraph(res: ConceptRowsQueryResponse, structureParameters: StudioConverterStructureParameters, styleParameters: StudioConverterStyleParameters) {
+    if (res.answerType == "conceptRows" && res.query != null) {
+      (window as any)._lastQueryAnswers = res.answers; // TODO: Remove once schema based autocomplete is stable.
+      let converter = new StudioConverter(this.graph, res.query, false, structureParameters, styleParameters);
+      let logicalGraph = constructGraphFromRowsResult(res); // In memory, not visualised
       convertLogicalGraphWith(logicalGraph, converter);
+    } else {
+      console.log("ERROR: Can only visualise conceptRows responses with res.query set")
     }
   }
 

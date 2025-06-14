@@ -4,6 +4,7 @@
   "main": "lib.ts",
   "scripts": {
     "build": "./node_modules/.bin/esbuild lib/index.ts --bundle --outfile=typedb-visualisation.js",
+    "copy-to-dist": "rm -r dist; mkdir dist; cp typedb-visualisation.js dist/ && cp index.html dist/",
     "tests": "./node_modules/.bin/esbuild tests/index.ts --bundle --outfile=tests.js && node tests.js"
   },
   "type": "module",

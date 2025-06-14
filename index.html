@@ -13,8 +13,8 @@
         window.onload= (()=> {
             let graph = new graphology.MultiGraph();
             renderer = createSigmaRenderer(document.getElementById('sigma-container'), studioDefaults.defaultSigmaSettings, graph);
-            let layout = Layouts.createForceAtlasStatic(graph, undefined); // This is the safe option
-            // let layout = Layouts.createForceLayoutSupervisor(graph, studioDefaults.defaultForceSupervisorSettings);
+            // let layout = Layouts.createForceAtlasStatic(graph, undefined); // This is the safe option
+            let layout = Layouts.createForceLayoutSupervisor(graph, studioDefaults.defaultForceSupervisorSettings);
             visualiser = new GraphVisualiser(graph, renderer, layout);
          });
 
@@ -22,7 +22,7 @@
             let query_result = {ok: JSON.parse(form.query_response.value)}; // Mimic ApiResponse
             let highlightedQuery = "";
             if (query_result.ok.query != null) {
-                visualiser.handleQueryResult(query_result);
+                visualiser.drawGraph(query_result.ok, visualiser.structureParameters, visualiser.styleParameters);
                 highlightedQuery = visualiser.colorQuery(form.query_text.value, query_result.ok.query);
                 visualiser.colorEdgesByConstraintIndex(false);
             }
