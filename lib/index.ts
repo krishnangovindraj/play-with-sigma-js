@@ -50,16 +50,6 @@ export class GraphVisualiser {
     }
   }
 
-  handleExplorationQueryResult(res: ApiResponse<QueryResponse>) {
-    if (isApiErrorResponse(res)) return;
-
-    if (res.ok.answerType == "conceptRows" && res.ok.query != null) {
-      let converter = new StudioConverter(this.graph, res.ok.query, true, this.structureParameters, this.styleParameters);
-      let logicalGraph = constructGraphFromRowsResult(res.ok); // In memory, not visualised
-      convertLogicalGraphWith(logicalGraph, converter);
-    }
-  }
-
   searchGraph(term: string) {
 
     function safe_str(str: string | undefined): string {
