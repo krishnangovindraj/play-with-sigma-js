@@ -12,16 +12,17 @@
         window.onload= (()=> {
             let graph = new graphology.MultiGraph();
             let renderer = createSigmaRenderer(document.getElementById('sigma-container'), studioDefaults.defaultSigmaSettings, graph);
-            // let layout = Layouts.createForceAtlasStatic(graph); // This is the safe option
-            let layout = Layouts.createForceLayoutSupervisor(graph, studioDefaults.defaultForceSupervisorSettings);
+            let layout = Layouts.createForceAtlasStatic(graph, undefined); // This is the safe option
+            // let layout = Layouts.createForceLayoutSupervisor(graph, studioDefaults.defaultForceSupervisorSettings);
             visualiser = new GraphVisualiser(graph, renderer, layout);
          });
 
         async function visualiseFromAnswer(form) {
-            let query_result = form.query_answer.value;
+            let query_result = {ok: JSON.parse(form.query_response.value)}; // Mimic ApiResponse
             let highlightedQuery = "";
-            if (query_result != undefined && query_result.queryStructure != null) {
-                highlightedQuery = visualiser.colorQuery(form.query_text.value, query_result.queryStructure);
+            if (query_result.ok.query != null) {
+                visualiser.handleQueryResult(query_result);
+                highlightedQuery = visualiser.colorQuery(form.query_text.value, query_result.ok.query);
                 visualiser.colorEdgesByConstraintIndex(false);
             }
             document.getElementById("query-highlight-div").innerHTML = highlightedQuery;
@@ -35,14 +36,10 @@
     </div>
     <div id="query-highlight-div" style="border: 2px solid black;"><span id="query-highlight"></span></div>
     <div id="input">
-        <form id="query-or-graph-form" onsubmit="doRunQuery(this); return false">
+        <form id="query-or-graph-form" onsubmit="visualiseFromAnswer(this); return false">
             <div id="buttons">
                 <span id="input-buttons-left">
-                    Run query as:
-                    <input type="submit" onclick="this.form.txType=this.value;" value="schema"/>
-                    <input type="submit" onclick="this.form.txType=this.value;" value="write"/>
-                    <input type="submit" onclick="this.form.txType=this.value;" value="read"/>
-                    in database: <input name="database" type="text" placeholder="database"/>
+                    <input type="submit" onclick="this.form.txType=this.value;" value="draw"/>
                 </span>
                 <span id="input-buttons-right" style="float: right;">
                     <input type="text" name="search"  placeholder="search nodes" onkeyup="visualiser.searchGraph(this.value)" />
@@ -52,7 +49,7 @@
                     <button onclick="visualiser.layout.redraw(); return false">redraw</button>
                 </span>
             </div>
-            <textarea name="query_answer" id='query_answer' style="width:100%;height: 400px" placeholder='Graph or response'></textarea>
+            <textarea name="query_response" id='query_response' style="width:100%;height: 400px" placeholder='Graph or response'></textarea>
             <textarea name="query_text" id='query' style="width:100%;height: 400px" placeholder="query if you want to know what you're looking at"></textarea>
         </form>
     </div>
