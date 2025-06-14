@@ -5,6 +5,9 @@ To customise colours, go to `lib/defaults.ts` and play around with the styling o
 Run `npm run build` to generate `typedb-visualisation.js`
 Just open `index.html` in your browser. 
 
+The format expected is the full JSON response returned by the TypeDB HTTP API on a pipelined query (without a fetch).
+See `ConceptRowsQueryResponse` in [response.ts](src/typedb-driver/response.ts)
+
 ## Other notes
 * You can drag. When using a `LayoutSupervisor`, the animation can be unfrozen & frozen using the buttons.
 * There are some extra layouts available under `layouts.ts`. 

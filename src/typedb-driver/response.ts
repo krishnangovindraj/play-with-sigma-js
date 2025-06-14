@@ -7,24 +7,7 @@
 import { Concept } from "./concept";
 import { QueryStructure } from "./query-structure";
 
-export interface SignInResponse {
-    token: string;
-}
-
-export type Distribution = `TypeDB Cluster` | `TypeDB CE`;
-
-export interface VersionResponse {
-    distribution: Distribution;
-    version: string;
-}
-
-export interface TransactionOpenResponse {
-    transactionId: string;
-}
-
 export type QueryType = "read" | "write" | "schema";
-
-export type AnswerType = "ok" | "conceptRows" | "conceptDocuments";
 
 export interface ConceptRow {
     [varName: string]: Concept | undefined;
@@ -35,50 +18,10 @@ export interface ConceptRowAnswer {
     data: ConceptRow;
 }
 
-export type ConceptDocument = Object;
-
-export type Answer = ConceptRowAnswer | ConceptDocument;
-
-export interface QueryResponseBase {
-    answerType: AnswerType;
+export interface ConceptRowsQueryResponse {
     queryType: QueryType;
-    comment: string | null;
-    query: QueryStructure | null;
-}
-
-export interface OkQueryResponse extends QueryResponseBase {
-    answerType: "ok";
-}
-
-export interface ConceptRowsQueryResponse extends QueryResponseBase {
     answerType: "conceptRows";
     answers: ConceptRowAnswer[];
-}
-
-export interface ConceptDocumentsQueryResponse extends QueryResponseBase {
-    answerType: "conceptDocuments";
-    answers: ConceptDocument[];
-}
-
-export type QueryResponse = OkQueryResponse | ConceptRowsQueryResponse | ConceptDocumentsQueryResponse;
-
-export type ApiError = { code: string; message: string };
-
-export interface ApiErrorResponse {
-    err: ApiError;
-    status: number;
-}
-
-export function isApiError(err: any): err is ApiError {
-    return typeof err.code === "string" && typeof err.message === "string";
-}
-
-export type ApiResponse<OK_RES = {} | null> = { ok: OK_RES } | ApiErrorResponse;
-
-export function isOkResponse<OK_RES>(res: ApiResponse<OK_RES>): res is { ok: OK_RES } {
-    return "ok" in res;
-}
-
-export function isApiErrorResponse(res: ApiResponse): res is ApiErrorResponse {
-    return "err" in res;
+    comment: string | null;
+    query: QueryStructure | null;
 }

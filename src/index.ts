@@ -6,7 +6,7 @@ import MultiGraph from "graphology";
 import Sigma from "sigma";
 import { Settings as SigmaSettings } from "sigma/settings";
 import {QueryConstraintAny, QueryConstraintSpan, QueryStructure} from "./typedb-driver/query-structure";
-import {ApiResponse, ConceptRowsQueryResponse, isApiErrorResponse, QueryResponse} from "./typedb-driver/response";
+import {ConceptRowsQueryResponse} from "./typedb-driver/response";
 import { StudioConverterStructureParameters, StudioConverterStyleParameters } from "./config.js";
 
 import * as studioDefaultSettings from "./defaults.js";
