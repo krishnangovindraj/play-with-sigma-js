@@ -1,9 +1,8 @@
 {
   "name": "sigmajs-playground",
   "version": "1.0.0",
-  "main": "lib.ts",
   "scripts": {
-    "build": "./node_modules/.bin/esbuild lib/index.ts --bundle --outfile=typedb-visualisation.js",
+    "build": "./node_modules/.bin/esbuild src/index.ts --bundle --outfile=typedb-visualisation.js",
     "copy-to-dist": "rm -r dist; mkdir dist; cp typedb-visualisation.js dist/ && cp index.html dist/"
   },
   "type": "module",
